@@ -1,0 +1,12 @@
+# dirs
+vendor/ruby/*
+bin/
+tmp/
+
+# tempfiles
+*[~#]
+.#*
+*_flymake*
+/.emacs-project
+/.irbrc
+*_out
