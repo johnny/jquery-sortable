@@ -3,6 +3,7 @@ source "http://rubygems.org"
 gem 'thin'
 
 gem 'haml'
+gem 'sass'
 
 group :development do
   gem 'guard-livereload'

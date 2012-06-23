@@ -29,6 +29,17 @@ else
   end
 end
 
+require 'sass/plugin/rack'
+
+Sass::Plugin.options.merge!(
+                            :cache_location => './tmp/sass-cache',
+                            :template_location => './app/sass',
+                            :css_location => './public/css',
+                            :never_update => !App.development?, 
+                            :full_exception => App.development?)
+use Sass::Plugin::Rack
+
+
 use Rack::MethodOverride
 
 run App

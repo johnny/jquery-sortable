@@ -1,0 +1,27 @@
+$error: red
+
+ul
+  list-style-type: none
+  &.simpleDD
+    position: relative
+
+  li
+    cursor: pointer
+  li.placeholder
+    background: red
+    position: relative
+    &:before
+      content: ""
+      position: absolute
+      width: 0
+      height: 0
+      border: 5px solid transparent
+      border-left-color: $error
+      top: 50%
+      margin-top: -5px
+      left: -5px
+      border-right: none
+  li.dragged
+    position: absolute
+    top: 0
+    opacity: .5

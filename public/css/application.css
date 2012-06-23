@@ -1,0 +1,24 @@
+ul {
+  list-style-type: none; }
+  ul.simpleDD {
+    position: relative; }
+  ul li {
+    cursor: pointer; }
+  ul li.placeholder {
+    background: red;
+    position: relative; }
+    ul li.placeholder:before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-left-color: red;
+      top: 50%;
+      margin-top: -5px;
+      left: -5px;
+      border-right: none; }
+  ul li.dragged {
+    position: absolute;
+    top: 0;
+    opacity: 0.5; }

@@ -15,11 +15,6 @@
 		var list = null, lastPos = null;
 
 		this.each(function(i, cont) {
-
-			//if list container is table, the browser automatically wraps rows in tbody if not specified so change list container to tbody so that children returns rows as user expected
-			if ($(cont).is("table") && $(cont).children().size() == 1 && $(cont).children().is("tbody"))
-				cont = $(cont).children().get(0);
-
 			var newList = {
 				draggedItem: null,
 				placeHolderItem: null,
@@ -41,21 +36,19 @@
 
 					//listidx allows reference back to correct list variable instance
 					$(this.container).attr("data-listidx", i).mousedown(this.grabItem).bind("dragsort-uninit", this.uninit);
-					this.styleDragHandlers(true);
+          this.getItems().bind("mouseenter", function  (e) {
+            console.log("success", this);
+          }
+)
 				},
 
 				uninit: function() {
 					var list = lists[$(this).attr("data-listidx")];
 					$(list.container).unbind("mousedown", list.grabItem).unbind("dragsort-uninit");
-					list.styleDragHandlers(false);
 				},
 
 				getItems: function() {
 					return $(this.container).children(opts.itemSelector);
-				},
-
-				styleDragHandlers: function(cursor) {
-					this.getItems().map(function() { return $(this).is(opts.dragSelector) ? this : $(this).find(opts.dragSelector).get(); }).css("cursor", cursor ? "pointer" : "");
 				},
 
 				grabItem: function(e) {
@@ -63,8 +56,6 @@
 					if (e.which != 1 || $(e.target).is(opts.dragSelectorExclude) || $(e.target).closest(opts.dragSelectorExclude).size() > 0 || $(e.target).closest(opts.itemSelector).size() == 0)
 						return;
 
-					//prevents selection, stops issue on Fx where dragging hyperlink doesn't work and on IE where it triggers mousemove even though mouse hasn't moved,
-					//does also stop being able to click text boxes hence dragging on text boxes by default is disabled in dragSelectorExclude
 					e.preventDefault();
 
 					//change cursor to move while dragging
@@ -73,8 +64,6 @@
 						if (dragHandle == this) return;
 						dragHandle = dragHandle.parentNode;
 					}
-					$(dragHandle).attr("data-cursor", $(dragHandle).css("cursor"));
-					$(dragHandle).css("cursor", "move");
 
 					//on mousedown wait for movement of mouse before triggering dragsort script (dragStart) to allow clicking of hyperlinks to work
 					var list = lists[$(this).attr("data-listidx")];
@@ -83,7 +72,11 @@
 						list.dragStart.call(item, e);
 						$(list.container).unbind("mousemove", trigger);
 					};
-					$(list.container).mousemove(trigger).mouseup(function() { $(list.container).unbind("mousemove", trigger); $(dragHandle).css("cursor", $(dragHandle).attr("data-cursor")); });
+					$(list.container)
+            .mousemove(trigger)
+            .mouseup(function() {
+              $(list.container).unbind("mousemove", trigger)
+            });
 				},
 
 				dragStart: function(e) {
@@ -247,8 +240,6 @@
 					if (orig == "")
 						list.draggedItem.removeAttr("style");
 					list.draggedItem.removeAttr("data-origstyle");
-
-					list.styleDragHandlers(true);
 
 					list.placeHolderItem.before(list.draggedItem);
 					list.placeHolderItem.remove();
