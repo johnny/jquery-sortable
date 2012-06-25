@@ -3,7 +3,12 @@
   defaultMethod = 'init',
   document = window.document,
   defaults = {
-    itemSelector: "li"
+    itemSelector: "li",
+    tolerance: 0.7
+  }
+
+  function d(a,b) {
+    return Math.sqrt(Math.pow(a[0]-b[0],2) + Math.pow(a[1] - b[1],2))
   }
 
   function List( element) {
@@ -13,7 +18,6 @@
   List.prototype = {
     init: function  (options) {
       this.options = $.extend( {}, defaults, options)
-      console.log("init");
 
       this.placeholder = $('<li class="placeholder"/>')
 
@@ -22,7 +26,6 @@
       $(document).on("mouseup", $.proxy(this.drop, this))
     },
     dragInit: function  (e) {
-      console.log("success");
       e.preventDefault()
       this.el.on("mousemove", $.proxy(this.drag, this))
 
@@ -35,13 +38,12 @@
       this.setPointer(e)
     },
     drag: function  (e) {
-      console.log("move");
       e.preventDefault()
 
       if(!this.dragInitDone){
         this.item.addClass("dragged")
         this.getItems()
-        this.getItemPositions()
+        this.setItemCenters()
         this.dragInitDone = true
       }
       
@@ -50,16 +52,17 @@
       this.item.css(this.pointer)
 
       // get Element right below the pointer
-      var underlyingItem = this.getUnderlyingItem()
-      if(this.movingUp())
-        underlyingItem.before(this.placeholder)
-      else if(this.movingDown())
-        underlyingItem.after(this.placeholder)
+      var item = this.getNearestItem()
+      if(item){
+        if(this.movingUp())
+          item.before(this.placeholder)
+        else if(this.movingDown())
+          item.after(this.placeholder)
+      }
 
     },
     drop: function  (e) {
       e.preventDefault()
-      console.log("stop");
 
       this.el.off("mousemove")
 
@@ -82,24 +85,23 @@
         this.pointer = pointer
       }
     },
-    getUnderlyingItem: function  () {
-      var pos, diff,
-      i = this.items.length,
-      y = this.pointer.top,
-      nearest = this.height,
-      nearestIndex = i - 1
+    getNearestItem: function  () {
+      var pointerCord = [this.pointer.left,this.pointer.top],
+      distances = this.itemCenters.map( function  (pos,i) {
+        return [d(pointerCord, pos), i]
+      }).sort(function  (a,b) {
+        return a[0] - b[0]
+      }),
+      minDistance = distances[0][0] + this.options.tolerance
 
-      while(i--){
-        pos = this.itemPositions[i]
-        diff = (pos.top + pos.bottom) / 2
-        console.log(diff, y, nearest);
-        if(Math.abs(diff - y) < nearest){
-          nearest = Math.abs(diff - pos.top)
-          nearestIndex = i
-        }
-      }
-      console.log($(this.items[nearestIndex]));
-      return $(this.items[nearestIndex]);
+      var indexes = distances.filter(function  (item) {
+        return item[0] < minDistance
+      }).map(function (item) {
+        return item[1]
+      })
+
+      if(indexes.length == 1 )
+        return $(this.items[indexes[0]])
     },
     movingUp: function  () {
       return this.lastPointer.top - this.pointer.top > 0
@@ -114,15 +116,14 @@
         return !(t.hasClass("dragged") || t.hasClass("placeholder"))
       })
     },
-    getItemPositions: function  () {
-      this.itemPositions = $.map(this.items, function  (item, i) {
-        var $i = $(item),
+    setItemCenters: function  () {
+      this.itemCenters = []
+      var i = this.items.length
+      while(i--){
+        var $i = $(this.items[i]),
         pos = $i.position()
-        pos.bottom = pos.top + $i.height()
-        pos.right = pos.left + $i.width()
-        return pos
-      })
-      console.log(this.items, this.itemPositions);
+        this.itemCenters[i] = [ pos.left + $i.width()/2, pos.top + $i.height() / 2]
+      }
     }
   }
 
@@ -142,7 +143,6 @@
    * @param {String} [method="check"] The method to call
    */
   $.fn[pluginName] = function(method, options) {
-    console.log('here');
     if(typeof method !== "string"){
       options = method
       method = defaultMethod

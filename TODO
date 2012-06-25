@@ -5,10 +5,10 @@
   - [X] style placeholder
   - [X] drag
   - [X] drop
-- [ ] improve drag target detection
+- [-] improve drag target detection
   - [ ] handle margin
-  - [ ] find nearest more reliably
-  - [ ] prevent defaulting to last element
+  - [X] find nearest more reliably
+  - [X] prevent defaulting to last element
   - [ ] drag between lists
   - [ ] handle nested lists
 - [ ] implement scroll
