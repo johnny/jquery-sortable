@@ -6,9 +6,17 @@
   - [X] drag
   - [X] drop
 - [-] improve drag target detection
-  - [ ] handle margin
   - [X] find nearest more reliably
   - [X] prevent defaulting to last element
-  - [ ] drag between lists
+  - [X] drag between lists
+    - [X] within same position container
+    - [X] between different position containers
+    - [X] recalculate centers in containers if dragged over
+    - [X] The placeholder can not be placed before the first item
+    - [X] on container change, add the placeholder, even if moving sideways
   - [ ] handle nested lists
-- [ ] implement scroll
+    - [ ] Initialize ContainerGroups based on jQuery lists
+    - [ ] Define slim container group that has a root group
+  - [ ] handle margin
+- [ ] implement scroll on moving to the border of a scroll area
+- [ ] calculate item/container centers relative to the container => Not all centers have to be recalculated

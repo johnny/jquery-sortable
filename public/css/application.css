@@ -1,7 +1,8 @@
+.row {
+  position: relative; }
+
 ul {
   list-style-type: none; }
-  ul.simpleDD {
-    position: relative; }
   ul li {
     cursor: pointer; }
   ul li.placeholder {

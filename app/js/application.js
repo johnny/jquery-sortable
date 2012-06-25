@@ -2,6 +2,6 @@
 //= require "simpleDD"
 
 $(function  () {
-  $("ul.simpleDD").simpleDD()
+  $("ul.simpleDD").simpleDD({group: 'notNested'})
 }
 )
