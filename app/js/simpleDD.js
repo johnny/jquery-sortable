@@ -10,18 +10,36 @@
   containerGroups = {},
   groupCounter = 0
 
+  /*
+   * a is Array [left, right, top, bottom]
+   * b is array [left, top]
+   */
   function d(a,b) {
-    return Math.sqrt(Math.pow(a[0]-b[0],2) + Math.pow(a[1] - b[1],2))
+    var x = Math.max(0, a[0] - b[0], b[0] - a[1]),
+    y = Math.max(0, a[2] - b[1], b[1] - a[3])
+    return (x+y)/2;
   }
 
-  function setCenters(array, centers, offsetMethod) {
+  Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+  }
+
+  function setDimensions(array, dimensions, offsetMethod) {
     var i = array.length
+    offsetMethod = offsetMethod || "position"
     while(i--){
-      var el = array[i].el ? array[i].el : array.eq(i),
+      var el = array[i].el ? array[i].el : $(array[i]),
       // use fitting method
       pos = el[offsetMethod]()
       
-      centers[i] = [ pos.left + el.width()/2, pos.top + el.height() / 2]
+      dimensions[i] = [
+        pos.left,
+        pos.left + el.width(),
+        pos.top,
+        pos.top + el.height()
+      ]
     }
   }
 
@@ -33,30 +51,47 @@
     }
   }
 
-  function  getNearestIndexes(centers, pointer, tolerance) {
+  function filterClosest(distances) {
+    distances = distances.sort(function  (a,b) {
+        return a[0] - b[0]
+      })
+    var minDistance = distances[0][0]
+    return distances.filter(function  (item) {
+      return item[0] < minDistance
+    })
+  }
+
+  function getNearestIndex(dimensions, pointer, oldPointer) {
+    if(dimensions.length === 0)
+      return ;
+
     pointer = [pointer.left, pointer.top]
     // TODO optimize
-    var distances = centers.map( function  (pos,i) {
-      return [d(pointer, pos), i]
-    })
-    distances = distances.sort(function  (a,b) {
-      return a[0] - b[0]
-    }),
-    minDistance = distances[0][0] + tolerance
+    var indexes = filterClosest(dimensions.map( function  (dim,i) {
+      return [d(dim, oldPointer), i]
+    }))
 
-    var indexes = distances.filter(function  (item) {
-      return item[0] < minDistance
-    }).map(function (item) {
-      return item[1]
-    })
+    if(indexes.length > 1){
+      indexes = filterClosest(indexes.map( function  (i) {
+        i[0] -= d(dimensions[i[1]], oldPointer)
+      }))
+      if(indexes.length > 1)
+        indexes = indexes.sort(function  (a,b) {
+          return a[1] - b[1];
+        })
+    }
 
-    return indexes
+    return indexes[0]
   }
   
   function ContainerGroup(options) {
-    this.options = options
+    this.options = $.extend({},options)
     this.containers = []
-    this.placeholder = $('<li class="placeholder"/>')
+    this.childGroups = []
+    if(this.options.parentGroup)
+      this.options.parentGroup.childGroups.push(this)
+    else
+      this.placeholder = $('<li class="placeholder"/>')
   }
 
   ContainerGroup.get = function  (options) {
@@ -72,23 +107,24 @@
     addContainer: function  (container) {
       this.containers.push(container)
     },
-    dragInit: function  (e) {
-      e.preventDefault()
+    dragInit: function  (e, itemContainer) {
       $(document).on("mousemove", $.proxy(this.drag, this))
+      $(document).on("mouseup", $.proxy(this.drop, this))
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
-      this.itemContainer = this.getContainer(this.item)
+      this.itemContainer = itemContainer
+      this.itemCildGroup = itemContainer.removeItem(this.item)
       
       this.setPointer(e)
     },
     drag: function  (e) {
       e.preventDefault()
 
-      if(!this.dragInitDone){
+      if(!this.dragging){
         this.item.addClass("dragged")
         this.setupCoordinates()
-        this.dragInitDone = true
+        this.dragging = true
       }
 
       this.setPointer(e)
@@ -103,17 +139,18 @@
 
       $(document).off("mousemove")
 
-      if(!this.dragInitDone)
+      if(!this.dragging)
         return;
 
-      // delete cached items and centers
-      this.resetCache()
+      this.getContainer(this.placeholder).addItem(this.item, this.itemChildGroup)
 
+      this.deleteDimensions()
+      
       // replace placeholder with current item
       this.placeholder.before(this.item).detach()
       this.item.removeClass("dragged")
 
-      this.dragInitDone = false
+      this.dragging = false
     },
     getContainer: function  (element) {
       return element.closest(this.options.containerSelector).data(pluginName)
@@ -132,7 +169,7 @@
         else
           pointer = this.pointer
       }
-      var indexes = getNearestIndexes(this.getContainerCenters(),
+      var indexes = getNearestIndexes(this.getContainerDimensions(),
                                       pointer,
                                       this.options.tolerance)
 
@@ -143,10 +180,10 @@
         container.movePlaceholder(containerPointer, placeholder)
       }
     },
-    getContainerCenters: function  () {
-      if(!this.containerCenters)
-        setCenters(this.containers, this.containerCenters = [], this.options.offsetMethodName)
-      return this.containerCenters
+    getContainerDimensions: function  () {
+      if(!this.containerDimensions)
+        setDimensions(this.containers, this.containerDimensions = [], this.options.offsetMethodName)
+      return this.containerDimensions
     },
     setPointer: function (e) {
       var pointer = {
@@ -196,29 +233,26 @@
       this.width = offsetParent.width()
     },
     scrolled: function  () {
-      delete this.containerCenters
+      delete this.containerDimensions
     },
-    resetCache: function  () {
-      // delete cached items 
-      delete this.itemContainer.items
-      delete this.getContainer(this.placeholder).items
-
-      this.deleteCenters()
-
-    },
-    deleteCenters: function  () {
+    deleteDimensions: function  () {
+      console.log("deleting",this.options.group);
       // delete centers in every container and containergroup
-      // TODO delete centers of every child containergroup
-      delete this.containerCenters
+      delete this.containerDimensions
       var i = this.containers.length
       while(i--){
-        delete this.containers[i].itemCenters
+        delete this.containers[i].itemDimensions
+      }
+      i = this.childGroups.length
+      while(i--){
+        this.childGroups[i].deleteDimensions()
       }
     }
   }
 
   function Container( element) {
     this.el = element;
+    this.childGroups = []
   }
 
   Container.prototype = {
@@ -228,53 +262,82 @@
       this.group = ContainerGroup.get(this.options)
       this.group.addContainer(this)
 
-      // TODO use rootgroup
-      this.el.on("mousedown", this.options.itemSelector, $.proxy(this.group.dragInit, this.group))
+      this.rootGroup = this.options.rootGroup = this.options.rootGroup || this.group
+      this.parentGroup = this.options.parentGroup = this.options.parentGroup || this.group
 
-      // TODO on scroll inside this container delete itemCenters (triggers recalculation)
+      this.el.on("mousedown", this.options.itemSelector, $.proxy(this.dragInit, this))
+    },
+    dragInit: function  (e) {
+      e.preventDefault()
+      e.stopPropagation()
 
-      $(document).on("mouseup", $.proxy(this.group.drop, this.group))
+      this.getItems()
+
+      this.rootGroup.dragInit(e, this)
     },
     movePlaceholder: function  (pointer, placeholder) {
-      if(!this.itemCenters){
-        console.log('recalculate Centers');
-        setCenters(this.getItems(), this.itemCenters = [], "position")
-      }
+      if(!this.itemDimensions)
+        setDimensions(this.getItems(), this.itemDimensions = [])
 
       // get Element right below the pointer
-      var indexes = getNearestIndexes(this.itemCenters,
+      var indexes = getNearestIndexes(this.itemDimensions,
                                       pointer,
                                       this.options.tolerance)
-      if(indexes.length === 1){
-        var containerGroup = this.getContainerGroup(indexes[0])
-        if(containerGroup){
-          containerGroup.movePlaceholder(pointer, placeholder)
-        } else {
-          var item = this.items.eq(indexes[0])
-          if(this.group.movingUp())
-            item.before(placeholder)
-          else if(this.group.movingDown())
-            item.after(placeholder)
+      if(indexes.length > 0){
+        if(indexes.length === 1){
+          var containerGroup = this.getContainerGroup(indexes[0])
+          if(containerGroup){
+            console.log("must go deeper");
+            containerGroup.movePlaceholder(placeholder, pointer)
+          } else {
+            var item = $(this.items[indexes[0]])
+            this.rootGroup.lastContainer = this
+            if(this.rootGroup.movingUp())
+              item.before(placeholder)
+            else if(this.rootGroup.movingDown())
+              item.after(placeholder)
+          }
+        } else if(this.rootGroup.lastContainer !== this){
+          // TODO for nested containers, this has to be moved up
+          this.rootGroup.lastContainer = this
+          $(this.items[indexes[0]]).after(placeholder)
         }
-      } else if(!this.items[0]) {
+      } else {
         this.el.append(placeholder)
-      } else if(this.group.itemContainer !== this){
-        // TODO rootgroup
-        // TODO for nested containers, this has to be moved up
-        this.items.eq(indexes[0]).after(placeholder)
       }
     },
     getItems: function  () {
-      // TODO optimize
       if(!this.items)
-        this.items = this.el.find(this.options.itemSelector).filter(function  () {
-          var t = $(this)
-          return !(t.hasClass("dragged") || t.hasClass("placeholder"))
-        })
+        this.items = this.el.find(this.options.itemSelector).toArray()
       return this.items
     },
     getContainerGroup: function  (index) {
-      
+      if(this.childGroups[index] === undefined){
+        var childContainers = $(this.items[index]).find("> " + this.options.containerSelector)
+
+        if(childContainers[0]){
+          var options = $.extend({}, this.options, {
+            parentGroup: this.group,
+            group: groupCounter ++
+          })
+          console.log("creating new", childContainers);
+          this.childGroups[index] = childContainers[pluginName](options).data(pluginName).group
+        } else
+          this.childGroups[index] = false
+      }
+      return this.childGroups[index]
+    },
+    removeItem: function (item) {
+      var i = this.items.indexOf(item[0])
+
+      this.items.remove(i)
+      if(this.childGroups.length > i)
+        this.childGroups.remove(i)
+    },
+    addItem: function(item, childGroup) {
+      this.items.push(item[0])
+      if(childGroup !== undefined)
+        this.childGroups[this.items.length - 1] = childGroup
     }
   }
 

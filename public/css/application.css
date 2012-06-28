@@ -4,7 +4,8 @@
 ul {
   list-style-type: none; }
   ul li {
-    cursor: pointer; }
+    cursor: pointer;
+    outline: 1px solid grey; }
   ul li.placeholder {
     background: red;
     position: relative; }
