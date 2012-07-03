@@ -14,11 +14,18 @@
     - [X] recalculate centers in containers if dragged over
     - [X] The placeholder can not be placed before the first item
     - [X] on container change, add the placeholder, even if moving sideways
-  - [ ] handle nested lists
-    - [ ] ditch center based sorting, because for it to work we need containers of the same size
+  - [X] handle nested lists
+    - [X] ditch center based sorting, because for it to work we need containers of the same size
           Otherwise some containers might have such a big weight, that they pull the placeholder to itself, even if the cursor is over another container
-    - [ ] dragging an item with child containers searches within itself
-    - [ ] childGroup should not be recreated after a move
+    - [X] dragging an item with child containers searches within itself
+    - [X] childGroup should not be recreated after a move
+  - [ ] save placeholder position to prevent unnecessary DOM interactions
+  - [ ] make sorting work with bootstrap menu
+    - [ ] implement vertical detection
+    - [ ] implement float right detection
+    - [ ] disable child container creation as option
+    - [ ] don't find invisible child containers 
+  - [ ] set width/height of a dragged item on drag start and remove those values on drop
   - [ ] handle margin
 - [ ] implement scroll on moving to the border of a scroll area
 - [ ] calculate item/container centers relative to the container => Not all centers have to be recalculated
