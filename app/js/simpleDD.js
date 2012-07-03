@@ -5,6 +5,7 @@
   defaults = {
     itemSelector: "li",
     containerSelector: "ul",
+    nested: true,
     tolerance: 0.7
   },
   containerGroups = {},
@@ -33,7 +34,6 @@
       var el = array[i].el ? array[i].el : $(array[i]),
       // use fitting method
       pos = el[offsetMethod]()
-      
       dimensions[i] = [
         pos.left,
         pos.left + el.width(),
@@ -125,6 +125,10 @@
       e.preventDefault()
 
       if(!this.dragging){
+        this.item.css({
+          height: this.item.height(),
+          width: this.item.width()
+        })
         this.item.addClass("dragged")
         this.setupCoordinates()
         this.dragging = true
@@ -151,7 +155,7 @@
       
       // replace placeholder with current item
       this.placeholder.before(this.item).detach()
-      this.item.removeClass("dragged")
+      this.item.removeClass("dragged").attr("style","")
 
       this.dragging = false
     },
@@ -177,8 +181,8 @@
       if(index !== undefined){
         var container = this.containers[index]
         if(this.options.offsetMethodName === "offset"){
-          pointer = getRelativePosition(pointer, container.el.offsetParent())
-          lastPointer = getRelativePosition(lastPointer, container.el.offsetParent())
+          pointer = getRelativePosition(pointer, container.getItemOffsetParent())
+          lastPointer = getRelativePosition(lastPointer, container.getItemOffsetParent())
         }
         container.movePlaceholder(placeholder, pointer, lastPointer)
       }
@@ -212,12 +216,13 @@
       // If every container has the same offset parent,
       // use position() which is relative to this parent,
       // otherwise use offset()
-      var offsetMethodName,
+      var offsetMethodName, 
       sameOffsetParent = true,
       i = this.containers.length - 1,
-      offsetParent = this.containers[i].el.offsetParent()
+      offsetParent = this.containers[i].getItemOffsetParent()
+
       while(i--){
-        if(offsetParent[0] != this.containers[i].el.offsetParent()[0]){
+        if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
           sameOffsetParent = false
           break;
         }
@@ -257,7 +262,6 @@
   function Container( element) {
     this.el = element
     this.childGroups = []
-    this.isVertical = true
     this.floatRight = false
   }
 
@@ -274,6 +278,9 @@
       this.el.on("mousedown", this.options.itemSelector, $.proxy(this.dragInit, this))
     },
     dragInit: function  (e) {
+      if(e.button !== 0)
+        return;
+      
       e.preventDefault()
       e.stopPropagation()
 
@@ -282,18 +289,14 @@
       this.rootGroup.dragInit(e, this)
     },
     movePlaceholder: function  (placeholder, pointer, lastPointer) {
-      if(!this.itemDimensions)
-        setDimensions(this.getItems(), this.itemDimensions = [])
-
       // get Element right below the pointer
-      var index = getNearestIndex(this.itemDimensions,
+      var index = getNearestIndex(this.getItemDimensions(),
                                   pointer,
                                   lastPointer)
       if(index !== undefined){
-        var containerGroup = this.getContainerGroup(index)
-        if(containerGroup){
+        if(this.options.nested && this.getContainerGroup(index)){
           console.log("must go deeper");
-          containerGroup.movePlaceholder(placeholder, pointer, lastPointer)
+          this.getContainerGroup(index).movePlaceholder(placeholder, pointer, lastPointer)
         } else {
           var item = $(this.items[index]),
           dim = this.itemDimensions[index],
@@ -305,8 +308,8 @@
               method = "before"
           } else {
             var xCenter = (dim[0] + dim[1]) / 2,
-            inLowerHalf = pointer.left <= xCenter
-            if(inLowerHalf != this.floatRight)
+            inLeftHalf = pointer.left <= xCenter
+            if(inLeftHalf != this.floatRight)
               method = "before"
           }
           item[method](placeholder)
@@ -314,6 +317,23 @@
       } else {
         this.el.append(placeholder)
       }
+    },
+    getItemDimensions: function  () {
+      if(!this.itemDimensions){
+        setDimensions(this.getItems(), this.itemDimensions = [])
+        var dims = this.itemDimensions
+        this.isVertical = dims[0][2] !== dims[1][2]
+      }
+      return this.itemDimensions
+    },
+    getItemOffsetParent: function  () {
+      var offsetParent,
+      el = this.el
+      if(el.css("position") === "relative" || el.css("position") === "absolute")
+        offsetParent = el
+      else
+        offsetParent = el.offsetParent()
+      return offsetParent
     },
     getItems: function  () {
       if(!this.items)

@@ -19,13 +19,19 @@
           Otherwise some containers might have such a big weight, that they pull the placeholder to itself, even if the cursor is over another container
     - [X] dragging an item with child containers searches within itself
     - [X] childGroup should not be recreated after a move
-  - [ ] save placeholder position to prevent unnecessary DOM interactions
-  - [ ] make sorting work with bootstrap menu
-    - [ ] implement vertical detection
-    - [ ] implement float right detection
-    - [ ] disable child container creation as option
-    - [ ] don't find invisible child containers 
-  - [ ] set width/height of a dragged item on drag start and remove those values on drop
-  - [ ] handle margin
+  - [X] set width/height of a dragged item on drag start and remove those values on drop
+  - [X] only use left mouse button
+  - [X] make sorting work with bootstrap menu
+    - [X] add bootstrap menu to html
+    - [X] implement vertical detection/option
+    - [X] disable child container creation as option
+    - [X] don't find invisible child containers (this is the responsibility of the user)
+  - [ ] handle margin ?
+- [ ] optional sort handle
+- [ ] pure drag container
+- [ ] pure drop container
+- [ ] enable/disable sorting
 - [ ] implement scroll on moving to the border of a scroll area
-- [ ] calculate item/container centers relative to the container => Not all centers have to be recalculated
+- [ ] save placeholder position to prevent unnecessary DOM interactions
+- [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated
+- [ ] implement float right detection

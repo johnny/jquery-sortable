@@ -6,9 +6,10 @@ $error: red
 ul
   list-style-type: none
 
+ul.simpleDD, ul.simpleDD2
+
   li
-    cursor: pointer
-    outline: 1px solid grey
+    cursor: move
   li.placeholder
     background: red
     position: relative
@@ -19,7 +20,6 @@ ul
       height: 0
       border: 5px solid transparent
       border-left-color: $error
-      top: 50%
       margin-top: -5px
       left: -5px
       border-right: none
@@ -27,3 +27,35 @@ ul
     position: absolute
     top: 0
     opacity: .5
+
+ul.nav
+  li, li a
+    cursor: move
+
+  li.dragged
+    position: absolute
+    top: 0
+    opacity: .5
+    background-color: #2C2C2C
+  li.placeholder
+    background: red
+    position: relative
+    &:before
+      content: ""
+      position: absolute
+      width: 0
+      height: 0
+      border: 5px solid transparent
+      border-top-color: $error
+      top: -6px
+      margin-left: -5px
+      border-bottom: none
+  ul.dropdown-menu
+    li.placeholder:before
+      border: 5px solid transparent
+      border-left-color: $error
+      margin-top: -5px
+      margin-left: none
+      top: 0
+      left: 10px
+      border-right: none

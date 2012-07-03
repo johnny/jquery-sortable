@@ -3,24 +3,52 @@
 
 ul {
   list-style-type: none; }
-  ul li {
-    cursor: pointer;
-    outline: 1px solid grey; }
-  ul li.placeholder {
-    background: red;
-    position: relative; }
-    ul li.placeholder:before {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 0;
-      border: 5px solid transparent;
-      border-left-color: red;
-      top: 50%;
-      margin-top: -5px;
-      left: -5px;
-      border-right: none; }
-  ul li.dragged {
+
+ul.simpleDD li, ul.simpleDD2 li {
+  cursor: move; }
+ul.simpleDD li.placeholder, ul.simpleDD2 li.placeholder {
+  background: red;
+  position: relative; }
+  ul.simpleDD li.placeholder:before, ul.simpleDD2 li.placeholder:before {
+    content: "";
     position: absolute;
-    top: 0;
-    opacity: 0.5; }
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-left-color: red;
+    margin-top: -5px;
+    left: -5px;
+    border-right: none; }
+ul.simpleDD li.dragged, ul.simpleDD2 li.dragged {
+  position: absolute;
+  top: 0;
+  opacity: 0.5; }
+
+ul.nav li, ul.nav li a {
+  cursor: move; }
+ul.nav li.dragged {
+  position: absolute;
+  top: 0;
+  opacity: 0.5;
+  background-color: #2c2c2c; }
+ul.nav li.placeholder {
+  background: red;
+  position: relative; }
+  ul.nav li.placeholder:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: red;
+    top: -6px;
+    margin-left: -5px;
+    border-bottom: none; }
+ul.nav ul.dropdown-menu li.placeholder:before {
+  border: 5px solid transparent;
+  border-left-color: red;
+  margin-top: -5px;
+  margin-left: none;
+  top: 0;
+  left: 10px;
+  border-right: none; }
