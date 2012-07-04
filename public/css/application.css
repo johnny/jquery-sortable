@@ -4,12 +4,20 @@
 ul {
   list-style-type: none; }
 
-ul.simpleDD li, ul.simpleDD2 li {
+.switch-container {
+  display: inline; }
+
+ul.nested li {
   cursor: move; }
-ul.simpleDD li.placeholder, ul.simpleDD2 li.placeholder {
+
+ul.simple li, ul.nested li, ul.no-drop li {
+  background-color: white; }
+ul.simple i.icon-move, ul.nested i.icon-move, ul.no-drop i.icon-move {
+  cursor: move; }
+ul.simple li.placeholder, ul.nested li.placeholder, ul.no-drop li.placeholder {
   background: red;
   position: relative; }
-  ul.simpleDD li.placeholder:before, ul.simpleDD2 li.placeholder:before {
+  ul.simple li.placeholder:before, ul.nested li.placeholder:before, ul.no-drop li.placeholder:before {
     content: "";
     position: absolute;
     width: 0;
@@ -19,10 +27,11 @@ ul.simpleDD li.placeholder, ul.simpleDD2 li.placeholder {
     margin-top: -5px;
     left: -5px;
     border-right: none; }
-ul.simpleDD li.dragged, ul.simpleDD2 li.dragged {
+ul.simple li.dragged, ul.nested li.dragged, ul.no-drop li.dragged {
   position: absolute;
   top: 0;
-  opacity: 0.5; }
+  opacity: 0.5;
+  z-index: 2000; }
 
 ul.nav li, ul.nav li a {
   cursor: move; }
@@ -30,7 +39,8 @@ ul.nav li.dragged {
   position: absolute;
   top: 0;
   opacity: 0.5;
-  background-color: #2c2c2c; }
+  background-color: #2c2c2c;
+  z-index: 2000; }
 ul.nav li.placeholder {
   background: red;
   position: relative; }

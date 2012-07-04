@@ -3,36 +3,65 @@
 .row
   .span4
     %h1 Simple List 1
-    %ul.simpleDD
-      %li First
-      %li Second
-      %li Third
-      %li Fourth
-      %li Fifth
-      %li Sixth
+    %ul.simple
+      %li
+        %i.icon-move
+        First
+      %li
+        %i.icon-move
+        Second
+      %li
+        %i.icon-move
+        Third
+      %li
+        %i.icon-move
+        Fourth
+      %li
+        %i.icon-move
+        Fifth
+      %li
+        %i.icon-move
+        Sixth
   .span4
     %h1 Simple List 2
-    %ul.simpleDD
-      %li First
-      %li Second
-      %li Third
-      %li Fourth
-      %li Fifth
-      %li Sixth
+    %ul.simple
+      %li
+        %i.icon-move
+        First
+      %li
+        %i.icon-move
+        Second
+      %li
+        %i.icon-move
+        Third
+      %li
+        %i.icon-move
+        Fourth
+      %li
+        %i.icon-move
+        Fifth
+      %li
+        %i.icon-move
+        Sixth
   .span4
-    %h1 Simple List 3
-    %ul.simpleDD
-      %li First
+    %h1 Pure drag List 3
+    %ul.no-drop
+      %li
+        %i.icon-move
+        First
 .row
   .span6
-    %h1 Nested List 1
-    %ul.simpleDD2
+    %h1
+      Nested List 1
+      .switch-container
+        .switch.active(data-toggle="switch" data-on="ON" data-off="OFF")
+    %ul.nested
       %li First
       %li Second
       %li
         Third
         %ul
-          %li First
+          %li First Nested
           %li Second
           %li Third
           %li Fourth
@@ -42,8 +71,11 @@
       %li Fifth
       %li Sixth
   .span6
-    %h1 Nested List 2
-    %ul.simpleDD2
+    %h1
+      Nested List 2
+      .switch-container
+        .switch.active(data-toggle="switch" data-on="ON" data-off="OFF")
+    %ul.nested
       %li First
       %li Second
       %li

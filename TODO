@@ -1,37 +1,7 @@
-- [X] basic setup
-- [X] functionality
-  - [X] view different solutions
-  - [X] boilerplate
-  - [X] style placeholder
-  - [X] drag
-  - [X] drop
-- [-] improve drag target detection
-  - [X] find nearest more reliably
-  - [X] prevent defaulting to last element
-  - [X] drag between lists
-    - [X] within same position container
-    - [X] between different position containers
-    - [X] recalculate centers in containers if dragged over
-    - [X] The placeholder can not be placed before the first item
-    - [X] on container change, add the placeholder, even if moving sideways
-  - [X] handle nested lists
-    - [X] ditch center based sorting, because for it to work we need containers of the same size
-          Otherwise some containers might have such a big weight, that they pull the placeholder to itself, even if the cursor is over another container
-    - [X] dragging an item with child containers searches within itself
-    - [X] childGroup should not be recreated after a move
-  - [X] set width/height of a dragged item on drag start and remove those values on drop
-  - [X] only use left mouse button
-  - [X] make sorting work with bootstrap menu
-    - [X] add bootstrap menu to html
-    - [X] implement vertical detection/option
-    - [X] disable child container creation as option
-    - [X] don't find invisible child containers (this is the responsibility of the user)
-  - [ ] handle margin ?
-- [ ] optional sort handle
-- [ ] pure drag container
-- [ ] pure drop container
-- [ ] enable/disable sorting
-- [ ] implement scroll on moving to the border of a scroll area
-- [ ] save placeholder position to prevent unnecessary DOM interactions
+- [X] bug: move last li out of container, back in again, out again => container not droppable
+- [ ] use middleman (if rack compatible again)
+- [ ] build example page
+- [ ] find telling name (bootstrap-sortable)
+- [ ] push to github
 - [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated
-- [ ] implement float right detection
+- [ ] pure drop container ?

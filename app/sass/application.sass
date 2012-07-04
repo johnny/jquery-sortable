@@ -6,9 +6,21 @@ $error: red
 ul
   list-style-type: none
 
-ul.simpleDD, ul.simpleDD2
+// .simpleDD li
+//   margin: 10px
+
+.switch-container
+  display: inline
+
+ul.nested
+  li
+    cursor: move
+
+ul.simple, ul.nested, ul.no-drop
 
   li
+    background-color: white
+  i.icon-move
     cursor: move
   li.placeholder
     background: red
@@ -27,6 +39,7 @@ ul.simpleDD, ul.simpleDD2
     position: absolute
     top: 0
     opacity: .5
+    z-index: 2000
 
 ul.nav
   li, li a
@@ -37,6 +50,7 @@ ul.nav
     top: 0
     opacity: .5
     background-color: #2C2C2C
+    z-index: 2000
   li.placeholder
     background: red
     position: relative
