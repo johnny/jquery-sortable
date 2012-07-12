@@ -1,0 +1,142 @@
+@import base
+@import jquery-sortable
+$error: red
+
+.hero-unit
+  background: white
+  text-align: center
+.example
+  display: none
+.row
+  position: relative
+#examples, #docs, #features, #alternatives, #connected, #handle, #nested, #bootstrap
+  padding-top: 40px
+
+ol
+  list-style-type: none
+
+.dragged
+  position: absolute
+  top: 0
+  opacity: .5
+  z-index: 2000
+
+ol.vertical
+  margin: 0 0 9px 0
+  i.icon-move
+    cursor: pointer
+  li
+    background-color: white
+    border: 1px solid #CCC
+    background: $grayLighter
+    color: $linkColor
+    margin: 5px
+    padding: 5px
+    display: block
+  li.highlight
+    background: $grayDark
+    color: $grayLight
+    i.icon-move
+      background-image: url($iconWhiteSpritePath)
+  li.placeholder
+    background: red
+    position: relative
+    margin: 0
+    padding: 0
+    border: none
+    &:before
+      content: ""
+      position: absolute
+      width: 0
+      height: 0
+      border: 5px solid transparent
+      border-left-color: $error
+      margin-top: -5px
+      left: -5px
+      top: -4px
+      border-right: none
+
+ol.nested_with_switch, ol.simple_with_animation, ol.default
+  li
+    cursor: pointer
+
+.switch-container
+  display: block
+  margin-left: auto
+  margin-right: auto
+  width: 80px
+
+.navbar-sort-container
+  height: 200px
+
+ol.nav
+  li, li a
+    cursor: pointer
+  .divider-vertical
+    cursor: default
+
+  li.dragged
+    background-color: #2C2C2C
+  li.placeholder
+    position: relative
+    &:before
+      content: ""
+      position: absolute
+      width: 0
+      height: 0
+      border: 5px solid transparent
+      border-top-color: $error
+      top: -6px
+      margin-left: -5px
+      border-bottom: none
+  ol.dropdown-menu
+    li.placeholder:before
+      border: 5px solid transparent
+      border-left-color: $error
+      margin-top: -5px
+      margin-left: none
+      top: 0
+      left: 10px
+      border-right: none
+
+.sorted_table
+  tr
+    cursor: pointer
+  tr.placeholder
+    display: block
+    background: red
+    position: relative
+    margin: 0
+    padding: 0
+    border: none
+    &:before
+      content: ""
+      position: absolute
+      width: 0
+      height: 0
+      border: 5px solid transparent
+      border-left-color: $error
+      margin-top: -5px
+      left: -5px
+      border-right: none
+.sorted_head
+  th
+    cursor: pointer
+  th.placeholder
+    display: block
+    background: red
+    position: relative
+    width: 0
+    height: 0
+    margin: 0
+    padding: 0
+    &:before
+      content: ""
+      position: absolute
+      width: 0
+      height: 0
+      border: 5px solid transparent
+      border-top-color: $error
+      top: -6px
+      margin-left: -5px
+      border-bottom: none

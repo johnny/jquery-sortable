@@ -1,0 +1,44 @@
+%h2 Connected lists with drop animation
+.row
+  .span12.example
+    %pre(lang="js")= example("simple_with_animation")
+  .span4
+    %ul
+      %li
+        Define your own
+        %strong drop animation
+      %li
+        Connect lists by placing them in the same
+        %code group
+      %li
+        Only sort if the cursor is
+        %strong above a container
+    %p= show_code_button
+  .span4
+    %ol.simple_with_animation.vertical
+      %li
+        First
+      %li
+        Second
+      %li
+        Third
+      %li
+        Fourth
+      %li
+        Fifth
+      %li
+        Sixth
+  .span4
+    %ol.simple_with_animation.vertical
+      %li.highlight
+        First
+      %li.highlight
+        Second
+      %li.highlight
+        Third
+      %li.highlight
+        Fourth
+      %li.highlight
+        Fifth
+      %li.highlight
+        Sixth

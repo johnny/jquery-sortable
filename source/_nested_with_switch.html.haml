@@ -1,0 +1,46 @@
+%h2 Toggable nested lists
+.row
+  .span12.example
+    %pre(lang="js")= example("nested_with_switch")
+  .span4
+    %ul
+      %li
+        %strong Nest lists
+        of arbitrary depth
+      %li
+        %strong Enable/disable
+        lists
+    %p= show_code_button
+  .span4
+    .switch-container
+      .switch.active(data-toggle="switch" data-on="ON" data-off="OFF")
+    %ol.nested_with_switch.vertical
+      %li First
+      %li Second
+      %li
+        Third
+        %ol
+          %li First
+          %li Second
+          %li Third
+          %li Fourth
+          %li Fifth
+          %li Sixth
+      %li Fourth
+      %li Fifth
+      %li Sixth
+  .span4
+    .switch-container
+      .switch.active(data-toggle="switch" data-on="ON" data-off="OFF")
+    %ol.nested_with_switch.vertical
+      %li First
+      %li Second
+      %li
+        Third
+        %ol
+          %li First
+          %li Second
+          %li Third
+          %li Fourth
+          %li Fifth
+          %li Sixth

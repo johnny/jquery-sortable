@@ -1,0 +1,58 @@
+%h2 Sort handle and limited drag/drop
+.row
+  .span12.example
+    %pre(lang="js")= example("simple_with_no_drop")
+  .span4
+    %ul
+      %li
+        Drag the items by a
+        %strong handle
+      %li
+        Pure
+        %strong drag/drop
+        container
+    %p= show_code_button
+  .span4
+    %h3 I'm draggable and droppable
+    %ol.simple_with_drop.vertical
+      %li
+        %i.icon-move
+        First
+      %li
+        %i.icon-move
+        Second
+      %li
+        %i.icon-move
+        Third
+      %li
+        %i.icon-move
+        Fourth
+      %li
+        %i.icon-move
+        Fifth
+      %li
+        %i.icon-move
+        Sixth
+  .span4
+    %h3 I'm only draggable
+    %ol.simple_with_no_drop.vertical
+      %li.highlight
+        %i.icon-move
+        First
+      %li.highlight
+        %i.icon-move
+        Second
+      %li.highlight
+        %i.icon-move
+        Third
+    %h3 I'm only droppable
+    %ol.simple_with_no_drag.vertical
+      %li
+        %i.icon-move
+        First
+      %li
+        %i.icon-move
+        Second
+      %li
+        %i.icon-move
+        Third

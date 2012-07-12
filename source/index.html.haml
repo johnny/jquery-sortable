@@ -1,0 +1,132 @@
+#home
+  .hero-unit
+    %h1 jQuery Sortable
+    %p A flexible, opinionated sorting plugin for jQuery
+    %p
+      %a.btn.btn-large.btn-primary
+        %i.icon-eye-open.icon-white
+        View on GitHub
+      %a.btn.btn-large.btn-success
+        %i.icon-hdd.icon-white
+        Download
+#features
+  .page-header
+    %h1 Features
+  .row
+    .span6
+      %h3 So what does it do?
+      %ul
+        %li Sorts any items in any container
+        %li Fully supports nested containers
+        %li Connect lists
+        %li Callbacks and events (see docs)
+        %li Pure drag/drop lists
+        %li Vertical and horizontal sorting
+      %h3 Why another sortable plugin?
+      %p
+        you might ask.
+        Aren't there
+        %a(href="#alternatives") many
+        others?
+      %p
+        %strong The answer is: nested lists.
+        None of the other solutions had a decent support for nested lists.
+        %a(href="http://mjsarfatti.com/sandbox/nestedSortable/") nestedSortable
+        relies on a fixed width hierarchy.
+        Others mimic the way jQuery UI does
+        %a(href="http://jqueryui.com/demos/sortable/") sortables
+        and therefore require ugly
+        %a(href="https://github.com/jquery/jquery-ui/pull/555") hacks
+        that suffer from sudden jumps.
+      %h3 The opinionated part
+      %p
+        This plugin does one and only one thing:
+        %strong sorting
+        \. If you need animations or autoscrolling, do them
+        %a(href="#connected") yourself
+        \.
+      %p
+        Moreover this plugin assumes, that the placeholder has zero height/width.
+        This way we can cache the item dimensions.
+        %small This might change in the future, if need be.
+    .span6
+      %h3
+        Show it to me!
+        %small
+          With default options.
+      %ol.default.vertical
+        %li First
+        %li Second
+        %li
+          Third
+          %ol
+            %li First
+            %li Second
+            %li
+              Third
+              %ol
+                %li First
+                %li Second
+        %li Fourth
+        %li Fifth
+        %li Sixth
+#examples
+  .page-header
+    %h1 Examples
+  #connected
+    = partial "simple_with_animation"
+  #handle
+    = partial "simple_with_no_drop"
+  #nested
+    = partial "nested_with_switch"
+  #bootstrap
+    = partial "nested_bootstrap"
+  #table
+    = partial "table"
+#docs
+  .page-header
+    %h1 Documentation
+  %h2 Group options
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th Option
+        %th Default
+        %th Description
+    %tbody
+      = render_options('group') do |option, default, description|
+        %td
+          %code= option
+        %td
+          %pre(lang="js")= default
+        %td= description
+  %h2 Container options
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th Option
+        %th Default
+        %th Description
+    %tbody
+      = render_options('container') do |option, default, description|
+        %td
+          %code= option
+        %td
+          %pre(lang="js")= default
+        %td= description
+
+#alternatives
+  .page-header
+    %h1 Alternatives
+  %p Listed in alphabetical order
+  %ul
+    %li
+      %a(href="http://farhadi.ir/projects/html5sortable/") HTML5 Sortable
+      ( uses native dnd events)
+    %li
+      %a(href="http://jqueryui.com/demos/sortable/") jQuery UI sortable
+    %li
+      %a(href="http://mjsarfatti.com/sandbox/nestedSortable/") nestedSortable
+      (an extension of jQuery UI)
+    %li
+      %a(href="http://yuilibrary.com/yui/docs/sortable/") YUI sortable

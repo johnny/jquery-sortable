@@ -1,7 +1,21 @@
-- [X] bug: move last li out of container, back in again, out again => container not droppable
-- [ ] use middleman (if rack compatible again)
-- [ ] build example page
-- [ ] find telling name (bootstrap-sortable)
+- [0/0] bugs
+- [X] decide if the callbacks are defined on the rootgroup, or on the containers
+- [-] build example page
+  - [X] basics
+  - [X] use same render methods for defaults and examples (use the one for defaults)
+  - [X] build table example
+  - [ ] link buttons
+  - [ ] provide minified download
+  - [ ] show basic stylesheet
+  - [-] docs
+    - [X] extract default options and parse description from the comments
+    - [ ] add explanations
 - [ ] push to github
-- [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated
-- [ ] pure drop container ?
+- [1/5] consider
+  - [ ] support placeholder with height/width
+  - [ ] shortcut on getNearest()
+    - [ ] if items, break if distance is growing again
+    - [ ] if containers, break if distance is 0
+  - [ ] use own cache for childContainers (jQuery knows all the edge cases)
+  - [X] keep the order of the items in Container.items/itemChildren
+  - [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated

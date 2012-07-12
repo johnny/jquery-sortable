@@ -2,16 +2,16 @@ source "http://rubygems.org"
 
 gem 'thin'
 
-gem 'haml'
-gem 'sass'
+gem 'sass', :git => 'https://github.com/nex3/sass.git'
 
-group :development do
-  gem 'guard-livereload'
-  gem 'rack-livereload'
-end
+gem 'middleman', '>= 3'
 
-gem 'sinatra'
-gem 'sinatra-contrib'
-gem 'json'
-gem 'sprockets'
-gem 'yui-compressor'
+gem 'guard-livereload'
+gem 'rack-livereload'
+
+gem 'rack-coderay'
+
+gem 'therubyracer'
+gem 'closure-compiler'
+
+gem 'sass-twitter-bootstrap', '2.0.4', :git => 'https://github.com/johnny/sass-twitter-bootstrap.git', :branch => 'customizations'

@@ -1,0 +1,39 @@
+!!!
+%html
+  %head
+    %title jQuery Sortable
+    %link(rel="stylesheet" href="css/vendor.css")
+    %link(rel="stylesheet" href="css/application.css")
+  %body(data-spy="scroll")
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .bootstrap-container
+          %ul.nav
+            %li
+              %a(href="#home") Home
+            %li
+              %a(href="#features") Features
+            %li.dropdown
+              %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
+                Examples
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  %a(href="#connected") Connected lists with drop animation
+                %li
+                  %a(href="#handle") Sort handle and limited drag/drop
+                %li
+                  %a(href="#nested") Toggable nested lists
+                %li
+                  %a(href="#bootstrap") Sorting a bootstrap menu
+                %li
+                  %a(href="#table") Sort tables
+            %li
+              %a(href="#docs") Documentation
+            %li
+              %a(href="#alternatives") Alternatives
+          .pull-right
+            %a(href="#" class="brand") jQuery Sortable
+    .bootstrap-container
+      = yield
+    %script(src="js/application.js")
