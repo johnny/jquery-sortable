@@ -1,1 +1,4 @@
 /build
+/vendor
+/.sass-cache
+/bin

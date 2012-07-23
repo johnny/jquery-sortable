@@ -4674,7 +4674,7 @@ body.dragging, body.dragging * {
   position: relative; }
 
 /* line 13, application.css.sass */
-#examples, #docs, #features, #alternatives, #connected, #handle, #nested, #bootstrap {
+.page-header h1, h2 {
   padding-top: 40px; }
 
 /* line 16, application.css.sass */
