@@ -1,0 +1,3 @@
+/* line 1, jquery-sortable.css.sass */
+body.dragging, body.dragging * {
+  cursor: move !important; }
