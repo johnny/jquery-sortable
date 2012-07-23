@@ -4,7 +4,7 @@ cp README.mkd ..
 ./bin/middleman build
 git commit -am 'Update minified file'
 git checkout gh-pages
-rm -R js css
+rm -R js css img
 mv build/* .
 mv ../README.mkd .
 git add .
