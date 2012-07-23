@@ -1,0 +1,11 @@
+# jQuery Sortable
+
+jQuery Sortable is a flexible, opinionated sorting plugin. Its aim is to do one thing: sorting
+
+## Dependencies
+
+jquery
+
+## Development Dependencies
+
+See the Gemfile

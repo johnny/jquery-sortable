@@ -55,7 +55,7 @@ helpers do
   def render_options(type, &block)
     content = File.open('source/js/jquery-sortable.js').read
     options = content.match(%r{#{type}Defaults = \{\s*(.*)\s*\}, // end #{type} defaults}mi)[1]
-    options.scan(/((?:^\s*\/\/[^\n]*\n)*)^\s*([^:\n]*):\s(fun.*? {2}\}|[^\n,]*),?$/m).
+    options.scan(/((?:^\s*\/\/[^\n]*\n)*)^\s*([^:\n]*):\s(fun.*? {2}\}|[^\n]*?),?$/m).
       map do |description, option, default|
       content_tag(:tr, capture_html(option,
                                     html_escape(default.gsub(/\n\s{4}/, "\n")),
@@ -99,6 +99,7 @@ configure :build do
   
   # Or use a different image path
   # set :http_path, "/Content/images/"
+  set :http_prefix, "/jquery-sortable"
 end
 
 require 'rack-livereload'

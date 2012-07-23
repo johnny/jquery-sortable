@@ -15,7 +15,7 @@
     afterMove: function (placeholder, container, _super) {
     },
     // The css selector of the containers
-    containerSelector: "ol",
+    containerSelector: "ol, ul",
     handle: "",
     itemSelector: "li",
     onDrag: function (item, position, _super) {

@@ -4,12 +4,13 @@
   - [X] basics
   - [X] use same render methods for defaults and examples (use the one for defaults)
   - [X] build table example
-  - [ ] link buttons
+  - [X] link buttons
   - [ ] provide minified download
   - [ ] show basic stylesheet
   - [-] docs
     - [X] extract default options and parse description from the comments
     - [ ] add explanations
+  - [ ] License
 - [ ] push to github
 - [1/5] consider
   - [ ] support placeholder with height/width
