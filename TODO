@@ -1,11 +1,9 @@
 - [0/0] bugs
-- [X] License
-- [ ] finish docs (arguments to sortable)
-- [1/5] consider
+- [ ] on build update version in jquery-sortable.js
+- [0/4] consider
   - [ ] support placeholder with height/width
   - [ ] shortcut on getNearest()
     - [ ] if items, break if distance is growing again
     - [ ] if containers, break if distance is 0
   - [ ] use own cache for childContainers (jQuery knows all the edge cases)
-  - [X] keep the order of the items in Container.items/itemChildren
   - [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated

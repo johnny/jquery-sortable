@@ -43,7 +43,7 @@
 # Methods defined in the helpers block are available in templates
 helpers do
   def escape_file(name)
-    html_escape File.open("source/"+ name).read
+    html_escape File.read("source/"+ name)
   end
   def example(name)
     content = escape_file("js/examples/"+ name + ".js")
@@ -55,7 +55,7 @@ helpers do
                  :class => "btn btn-primary show-code", "data-toggle" => "button")
   end
   def render_options(type, &block)
-    content = File.open('source/js/jquery-sortable.js').read
+    content = File.read('source/js/jquery-sortable.js')
     options = content.match(%r{#{type}Defaults = \{\s*(.*)\s*\}, // end #{type} defaults}mi)[1]
     options.scan(/((?:^\s*\/\/[^\n]*\n)*)^\s*([^:\n]*):\s(fun.*? {2}\}|[^\n]*?),?$/m).
       map do |description, option, default|

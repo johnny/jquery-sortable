@@ -12,5 +12,5 @@ $(function  () {
   $('.show-code').on('click', function  () {
     $(this).closest('.row').children('.example').slideToggle()
   })
-  $('.default').sortable()
+  $('ol.default').sortable()
 })

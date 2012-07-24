@@ -9,11 +9,13 @@
       %a.btn.btn-large.btn-success(href="js/jquery-sortable.js")
         %i.icon-hdd.icon-white
         Download
+        (v#{File.read("VERSION").strip})
     %p
       %small
         Download
         %a(href="js/jquery-sortable-min.js") minified
         version
+        (#{(File.size("source/js/jquery-sortable-min.js")/100.0).round / 10.0} kb)
 #features
   .page-header
     %h1 Features
@@ -54,6 +56,19 @@
         Moreover this plugin assumes, that the placeholder has zero height/width.
         This way we can cache the item dimensions.
         %small This might change in the future, if need be.
+      %h3 Compatibility
+      %p
+        %code jquery-sortable.js
+        has been tested with the following browsers
+      %ul
+        %li Firefox >= 3.5
+        %li Chrome
+        %li Konqueror
+        %li IE > 7
+      %p
+        If you confirmed, that it works on other browsers please
+        %a(href="mailto:jvadev@gmail.com") tell me
+        \.
     .span6
       %h3
         Show it to me!
@@ -111,7 +126,39 @@
 #docs
   .page-header
     %h1 Documentation
-  %h2 Group options
+  %h2 jQuery API
+  %p
+    The
+    %code sortable()
+    method must be invoked on valid containers,
+    meaning they must match the
+    %code containerSelector
+    option.
+  .row
+    .span6
+      %h3
+        %code .sortable([options])
+      %p
+        Instantiate sortable on each matched element.
+        The available options are divided into
+        %a(href="#group-options") group options
+        and
+        %a(href="#container-options") container options
+        \.
+      %p
+        Group options are shared between all member containers and
+        are set on the first instantiation of a member container.
+        Subsequent instantiations of further containers in the same group do not change the group options.
+      %p
+        Container options can be set seperately for each member of a group.
+    .span6
+      %h3
+        %code .sortable("enable")
+      %p Enable all instantiated sortables in the set of matched elements
+      %h3
+        %code .sortable("disable")
+      %p Disable all instantiated sortables in the set of matched elements
+  %h2#group-options Group options
   %table.table.table-striped.table-bordered.docs
     %thead
       %tr
@@ -125,7 +172,7 @@
         %td
           %pre(lang="js")= default
         %td= description
-  %h2 Container options
+  %h2#container-options Container options
   %table.table.table-striped.table-bordered.docs
     %thead
       %tr
