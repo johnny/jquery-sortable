@@ -42,10 +42,12 @@
 
 # Methods defined in the helpers block are available in templates
 helpers do
+  def escape_file(name)
+    html_escape File.open("source/"+ name).read
+  end
   def example(name)
-    content = File.open("source/js/examples/"+ name + ".js").read
-    content = content.match(/\A\$\(function\s*\(\)\s*\{\s*(.*)\s*\}\s*\)\s*\z/mi)[1].gsub(/^  /, "")
-    html_escape content
+    content = escape_file("js/examples/"+ name + ".js")
+    content.match(/\A\$\(function\s*\(\)\s*\{\s*(.*)\s*\}\s*\)\s*\z/mi)[1].gsub(/^  /, "")
   end
   def show_code_button
     content_tag( :div,

@@ -77,9 +77,24 @@
         %li Sixth
 #getting-started
   .page-header
-    %h1 Geting started
-  %row
-    %p TODO
+    %h1 Getting started
+  %p Making a list sortable consists of 3 easy steps
+  .row
+    .span4
+      %h3 Add styles
+      %pre(lang="css")= escape_file("css/example.css")
+      %p
+        %small
+          Look
+          %a(href="https://github.com/johnny/jquery-sortable/blob/master/source/css/jquery-sortable.css.sass") here
+          for a complete example
+    .span4
+      %h3 Define your HTML
+      %pre(lang="html")= escape_file("example.html")
+    .span4
+      %h3 Call the initializer
+      %pre(lang="js")= escape_file("js/examples/basic.js")
+
 #examples
   .page-header
     %h1 Examples
@@ -97,7 +112,7 @@
   .page-header
     %h1 Documentation
   %h2 Group options
-  %table.table.table-striped.table-bordered
+  %table.table.table-striped.table-bordered.docs
     %thead
       %tr
         %th Option
@@ -111,7 +126,7 @@
           %pre(lang="js")= default
         %td= description
   %h2 Container options
-  %table.table.table-striped.table-bordered
+  %table.table.table-striped.table-bordered.docs
     %thead
       %tr
         %th Option

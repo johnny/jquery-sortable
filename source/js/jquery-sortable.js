@@ -1,39 +1,82 @@
+/**
+ *  Copyright (c) 2012 Jonas von Andrian
+ *  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  * Redistributions of source code must retain the above copyright
+ *  notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *  notice, this list of conditions and the following disclaimer in the
+ *  documentation and/or other materials provided with the distribution.
+ *  * The name of the author may not be used to endorse or promote products
+ *  derived from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *  DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ *  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
 !function ( $, window, undefined){
   var pluginName = 'sortable',
   document = window.document,
   $document = $(document),
   containerDefaults = {
-    // If true, items can be dragged within this container
+    // If true, items can be dragged from this container
     drag: true,
+    // If true, items can be droped onto this container
     drop: true,
+    // Exclude items from being draggable, if the
+    // selector matches the item
     exclude: "",
+    // If true, search for nested containers within an item
     nested: true,
+    // If true, the items are assumed to be arranged vertically
     vertical: true
   }, // end container defaults
   groupDefaults = {
     // This is executed after the placeholder has been moved.
-    afterMove: function (placeholder, container, _super) {
+    afterMove: function (placeholder, container) {
     },
     // The css selector of the containers
     containerSelector: "ol, ul",
+    // The css selector of the drag handle
     handle: "",
+    // The css selector of the items
     itemSelector: "li",
+    // Executed at the beginning of a mouse move event.
+    // The Placeholder has not been moved yet
     onDrag: function (item, position, _super) {
       item.css(position)
     },
+    // Called after the drag has been started,
+    // that is the mouse button is beeing held down and
+    // the mouse is moving
     onDragStart: function (item, group, _super) {
       item.css({
         height: item.height(),
         width: item.width()
       })
       item.addClass("dragged")
-      $('body').addClass("dragging")
+      $("body").addClass("dragging")
     },
+    // Called when the mouse button is beeing released
     onDrop: function  (item, container, _super) {
       item.removeClass("dragged").attr("style","")
-      $('body').removeClass("dragging")
+      $("body").removeClass("dragging")
     },
+    // Template for the placeholder. Can be any valid jQuery input
+    // e.g. a string, a DOM element
     placeholder: '<li class="placeholder"/>',
+    // If true, the position of the placeholder is calculated on every mousemove.
+    // If false, it is only calculated when the mouse is above a container.
     pullPlaceholder: true
   }, // end group defaults
   containerGroups = {},
@@ -214,7 +257,7 @@
       item[method](this.placeholder)
       this.lastAppendedItem = item
       this.sameResultBox = sameResultBox
-      this.options.afterMove(this.placeholder, container, groupDefaults.afterMove)
+      this.options.afterMove(this.placeholder, container)
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)

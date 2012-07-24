@@ -1,17 +1,6 @@
 - [0/0] bugs
-- [X] decide if the callbacks are defined on the rootgroup, or on the containers
-- [-] build example page
-  - [X] basics
-  - [X] use same render methods for defaults and examples (use the one for defaults)
-  - [X] build table example
-  - [X] link buttons
-  - [ ] provide minified download
-  - [ ] show basic stylesheet
-  - [-] docs
-    - [X] extract default options and parse description from the comments
-    - [ ] add explanations
-  - [ ] License
-- [ ] push to github
+- [X] License
+- [ ] finish docs (arguments to sortable)
 - [1/5] consider
   - [ ] support placeholder with height/width
   - [ ] shortcut on getNearest()

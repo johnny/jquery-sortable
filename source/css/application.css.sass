@@ -1,5 +1,4 @@
 @import base
-@import jquery-sortable
 $error: red
 
 .hero-unit
@@ -13,49 +12,30 @@ $error: red
 .page-header h1, h2
   padding-top: 40px
 
+table.docs
+  table-layout: fixed
+
+  th:nth-child(1)
+    width: 150px
+  th:nth-child(2)
+    width: 350px
+
+@import jquery-sortable
+
 ol
   list-style-type: none
-
-.dragged
-  position: absolute
-  top: 0
-  opacity: .5
-  z-index: 2000
-
-ol.vertical
-  margin: 0 0 9px 0
   i.icon-move
     cursor: pointer
-  li
-    background-color: white
-    border: 1px solid #CCC
-    background: $grayLighter
-    color: $linkColor
-    margin: 5px
-    padding: 5px
-    display: block
   li.highlight
     background: $grayDark
     color: $grayLight
     i.icon-move
       background-image: url($iconWhiteSpritePath)
-  li.placeholder
-    background: red
-    position: relative
-    margin: 0
-    padding: 0
-    border: none
-    &:before
-      content: ""
-      position: absolute
-      width: 0
-      height: 0
-      border: 5px solid transparent
-      border-left-color: $error
-      margin-top: -5px
-      left: -5px
-      top: -4px
-      border-right: none
+
+ol.nested_with_switch, ol.nested_with_switch ol
+  border: 1px solid $grayLighter
+  &.active
+    border: 1px solid $grayDark
 
 ol.nested_with_switch, ol.simple_with_animation, ol.default
   li
