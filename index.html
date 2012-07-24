@@ -169,11 +169,63 @@
 </div>
 <div id='getting-started'>
   <div class='page-header'>
-    <h1>Geting started</h1>
+    <h1>Getting started</h1>
   </div>
-  <row>
-    <p>TODO</p>
-  </row>
+  <p>Making a list sortable consists of 3 easy steps</p>
+  <div class='row'>
+    <div class="span4">
+      <h3>Add styles</h3>
+      <div class="CodeRay">
+  <div class="code"><pre><span class="type">body</span><span class="class">.dragging</span>, <span class="type">body</span><span class="class">.dragging</span> <span class="type">*</span> {
+  <span class="key">cursor</span>: <span class="value">move</span> <span class="important">!important</span>;
+}
+
+<span class="class">.dragged</span> {
+  <span class="key">position</span>: <span class="value">absolute</span>;
+  <span class="key">opacity</span>: <span class="float">0</span><span class="float">.5</span>;
+  <span class="key">z-index</span>: <span class="float">2000</span>;
+}
+
+<span class="type">ol</span><span class="class">.example</span> <span class="type">li</span><span class="class">.placeholder</span> {
+  <span class="key">position</span>: <span class="value">relative</span>;
+  <span class="comment">/** More li styles **/</span>
+}
+<span class="type">ol</span><span class="class">.example</span> <span class="type">li</span><span class="class">.placeholder</span><span class="pseudo-class">:before</span> {
+  <span class="key">position</span>: <span class="value">absolute</span>;
+  <span class="comment">/** Define arrowhead **/</span>
+}</pre></div>
+</div>
+
+      <p>
+        <small>
+          Look
+          <a href='https://github.com/johnny/jquery-sortable/blob/master/source/css/jquery-sortable.css.sass'>here</a>
+          for a complete example
+        </small>
+      </p>
+    </div>
+    <div class="span4">
+      <h3>Define your HTML</h3>
+      <div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;ol</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">'</span><span class="content">example</span><span class="delimiter">'</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li&gt;</span>First<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Second<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Third<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+<span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">'</span><span class="content">js/jquery-sortable.js</span><span class="delimiter">'</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span></pre></div>
+</div>
+
+    </div>
+    <div class="span4">
+      <h3>Call the initializer</h3>
+      <div class="CodeRay">
+  <div class="code"><pre><span class="predefined">$</span>(<span class="keyword">function</span>  () {
+  <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.example</span><span class="delimiter">&quot;</span></span>).sortable()
+})</pre></div>
+</div>
+
+    </div>
+  </div>
 </div>
 <div id='examples'>
   <div class='page-header'>
@@ -366,8 +418,22 @@
 <div class='row'>
   <div class="span12 example">
     <div class="CodeRay">
-  <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.nested_with_switch</span><span class="delimiter">&quot;</span></span>).sortable({
-  <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nested</span><span class="delimiter">'</span></span>
+  <div class="code"><pre><span class="keyword">var</span> oldContainer
+<span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.nested_with_switch</span><span class="delimiter">&quot;</span></span>).sortable({
+  <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nested</span><span class="delimiter">'</span></span>,
+  <span class="function">afterMove</span>: <span class="keyword">function</span> (placeholder, container) {
+    <span class="keyword">if</span>(oldContainer != container){
+      <span class="keyword">if</span>(oldContainer)
+        oldContainer.el.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>)
+      container.el.addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>)
+      
+      oldContainer = container
+    }
+  },
+  <span class="function">onDrop</span>: <span class="keyword">function</span> (item, container, _super) {
+    container.el.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>)
+    _super(item)
+  }
 })
 
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">.switch-container</span><span class="delimiter">&quot;</span></span>).on(<span class="string"><span class="delimiter">&quot;</span><span class="content">click</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.switch</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>  (e) {
@@ -383,6 +449,7 @@
         <strong>Nest lists</strong>
         of arbitrary depth
       </li>
+      <li>Highlight the current container</li>
       <li>
         <strong>Enable/disable</strong>
         lists
@@ -680,7 +747,7 @@
     <h1>Documentation</h1>
   </div>
   <h2>Group options</h2>
-  <table class='table table-striped table-bordered'>
+  <table class='table table-striped table-bordered docs'>
     <thead>
       <tr>
         <th>Option</th>
@@ -694,7 +761,7 @@
 </td>
 <td>
   <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (placeholder, container, _super) {
+  <div class="code"><pre><span class="keyword">function</span> (placeholder, container) {
 }</pre></div>
 </div>
 
@@ -719,7 +786,7 @@
 </div>
 
 </td>
-<td></td>
+<td> The css selector of the drag handle</td>
 </tr><tr><td>
   <code>itemSelector</code>
 </td>
@@ -729,7 +796,7 @@
 </div>
 
 </td>
-<td></td>
+<td> The css selector of the items</td>
 </tr><tr><td>
   <code>onDrag</code>
 </td>
@@ -741,7 +808,7 @@
 </div>
 
 </td>
-<td></td>
+<td> Executed at the beginning of a mouse move event. The Placeholder has not been moved yet</td>
 </tr><tr><td>
   <code>onDragStart</code>
 </td>
@@ -753,12 +820,12 @@
     <span class="key">width</span>: item.width()
   })
   item.addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>)
-  <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">body</span><span class="delimiter">'</span></span>).addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
+  <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span>).addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
 }</pre></div>
 </div>
 
 </td>
-<td></td>
+<td> Called after the drag has been started, that is the mouse button is beeing held down and the mouse is moving</td>
 </tr><tr><td>
   <code>onDrop</code>
 </td>
@@ -766,12 +833,12 @@
   <div class="CodeRay">
   <div class="code"><pre><span class="keyword">function</span>  (item, container, _super) {
   item.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>).attr(<span class="string"><span class="delimiter">&quot;</span><span class="content">style</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
-  <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">body</span><span class="delimiter">'</span></span>).removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
+  <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span>).removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
 }</pre></div>
 </div>
 
 </td>
-<td></td>
+<td> Called when the mouse button is beeing released</td>
 </tr><tr><td>
   <code>placeholder</code>
 </td>
@@ -781,7 +848,7 @@
 </div>
 
 </td>
-<td></td>
+<td> Template for the placeholder. Can be any valid jQuery input e.g. a string, a DOM element</td>
 </tr><tr><td>
   <code>pullPlaceholder</code>
 </td>
@@ -791,12 +858,12 @@
 </div>
 
 </td>
-<td></td>
+<td> If true, the position of the placeholder is calculated on every mousemove. If false, it is only calculated when the mouse is above a container.</td>
 </tr>
     </tbody>
   </table>
   <h2>Container options</h2>
-  <table class='table table-striped table-bordered'>
+  <table class='table table-striped table-bordered docs'>
     <thead>
       <tr>
         <th>Option</th>
@@ -814,7 +881,7 @@
 </div>
 
 </td>
-<td> If true, items can be dragged within this container</td>
+<td> If true, items can be dragged from this container</td>
 </tr><tr><td>
   <code>drop</code>
 </td>
@@ -824,7 +891,7 @@
 </div>
 
 </td>
-<td></td>
+<td> If true, items can be droped onto this container</td>
 </tr><tr><td>
   <code>exclude</code>
 </td>
@@ -834,7 +901,7 @@
 </div>
 
 </td>
-<td></td>
+<td> Exclude items from being draggable, if the selector matches the item</td>
 </tr><tr><td>
   <code>nested</code>
 </td>
@@ -844,7 +911,7 @@
 </div>
 
 </td>
-<td></td>
+<td> If true, search for nested containers within an item</td>
 </tr><tr><td>
   <code>vertical</code>
 </td>
@@ -854,7 +921,7 @@
 </div>
 
 </td>
-<td></td>
+<td> If true, the items are assumed to be arranged vertically</td>
 </tr>
     </tbody>
   </table>
