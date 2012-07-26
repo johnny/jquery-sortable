@@ -78,6 +78,7 @@
       <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
         <i class='icon-hdd icon-white'></i>
         Download
+        (v0.9)
       </a>
     </p>
     <p>
@@ -85,6 +86,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
+        (7.0 kb)
       </small>
     </p>
   </div>
@@ -134,6 +136,22 @@
         Moreover this plugin assumes, that the placeholder has zero height/width.
         This way we can cache the item dimensions.
         <small>This might change in the future, if need be.</small>
+      </p>
+      <h3>Compatibility</h3>
+      <p>
+        <code>jquery-sortable.js</code>
+        has been tested with the following browsers
+      </p>
+      <ul>
+        <li>Firefox >= 3.5</li>
+        <li>Chrome</li>
+        <li>Konqueror</li>
+        <li>IE > 7</li>
+      </ul>
+      <p>
+        If you confirmed, that it works on other browsers please
+        <a href='mailto:jvadev@gmail.com'>tell me</a>
+        .
       </p>
     </div>
     <div class='span6'>
@@ -746,7 +764,49 @@
   <div class='page-header'>
     <h1>Documentation</h1>
   </div>
-  <h2>Group options</h2>
+  <h2>jQuery API</h2>
+  <p>
+    The
+    <code>sortable()</code>
+    method must be invoked on valid containers,
+    meaning they must match the
+    <code>containerSelector</code>
+    option.
+  </p>
+  <div class='row'>
+    <div class='span6'>
+      <h3>
+        <code>.sortable([options])</code>
+      </h3>
+      <p>
+        Instantiate sortable on each matched element.
+        The available options are divided into
+        <a href='#group-options'>group options</a>
+        and
+        <a href='#container-options'>container options</a>
+        .
+      </p>
+      <p>
+        Group options are shared between all member containers and
+        are set on the first instantiation of a member container.
+        Subsequent instantiations of further containers in the same group do not change the group options.
+      </p>
+      <p>
+        Container options can be set seperately for each member of a group.
+      </p>
+    </div>
+    <div class='span6'>
+      <h3>
+        <code>.sortable("enable")</code>
+      </h3>
+      <p>Enable all instantiated sortables in the set of matched elements</p>
+      <h3>
+        <code>.sortable("disable")</code>
+      </h3>
+      <p>Disable all instantiated sortables in the set of matched elements</p>
+    </div>
+  </div>
+  <h2 id='group-options'>Group options</h2>
   <table class='table table-striped table-bordered docs'>
     <thead>
       <tr>
@@ -862,7 +922,7 @@
 </tr>
     </tbody>
   </table>
-  <h2>Container options</h2>
+  <h2 id='container-options'>Container options</h2>
   <table class='table table-striped table-bordered docs'>
     <thead>
       <tr>

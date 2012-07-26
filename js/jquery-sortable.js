@@ -1,4 +1,7 @@
-/**
+/* ===================================================
+ * jquery-sortable.js v0.9
+ * http://johnny.github.com/jquery-sortable/
+ * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
  *  All rights reserved.
  *
@@ -22,8 +25,8 @@
  *  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- */
+ * ========================================================== */
+
 
 !function ( $, window, undefined){
   var pluginName = 'sortable',
@@ -346,7 +349,7 @@
 
   Container.prototype = {
     dragInit: function  (e) {
-      if(e.button !== 0 ||
+      if(e.which !== 1 ||
          !this.options.drag ||
          $(e.target).is(this.options.exclude))
         return;
@@ -484,10 +487,11 @@
     return this.each(function(){
       var $t = $(this),
       object = $t.data(pluginName)
-      if(!object)
-        $t.data(pluginName, new Container($t, methodOrOptions))
-      else if (API[methodOrOptions])
+      if(object && API[methodOrOptions])
         API[methodOrOptions].apply(object, args)
+      else if(!object && (methodOrOptions === undefined ||
+                          typeof methodOrOptions === "object"))
+        $t.data(pluginName, new Container($t, methodOrOptions))
     });
   };
 
