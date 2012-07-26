@@ -75,11 +75,18 @@ set :images_dir, 'img'
 
 # Build-specific configuration
 configure :build do
+  filename = 'source/js/jquery-sortable.js'
+  VERSION = File.read("VERSION").strip
+  updated_file = File.read(filename).gsub(/(^\s\*.*v)[\d\.]+$/, '\1' + VERSION)
+  File.open(filename, "w") do |file|
+    file.puts updated_file
+  end
+
   require 'closure-compiler'
   File.open('source/js/jquery-sortable-min.js','w') do |file|
     # closure = Closure::Compiler.new(:compilation_level => 'ADVANCED_OPTIMIZATIONS')
     closure = Closure::Compiler.new
-    file.puts closure.compile(File.open('source/js/jquery-sortable.js', 'r'))
+    file.puts closure.compile(updated_file)
   end
   
   # For example, change the Compass output style for deployment

@@ -1,7 +1,12 @@
 $(function() {
   $("ol.simple_with_drop").sortable({
     group: 'no-drop',
-    handle: 'i.icon-move'
+    handle: 'i.icon-move',
+    onDragStart: function (item, container, _super) {
+      if(!container.options.drop)
+        item.clone().insertAfter(item)
+      _super(item)
+    }
   })
   $("ol.simple_with_no_drop").sortable({
     group: 'no-drop',
