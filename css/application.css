@@ -4673,13 +4673,23 @@ a.label:hover, a.badge:hover {
 .page-header h1, h2 {
   padding-top: 40px; }
 
-/* line 15, application.css.sass */
+/* line 14, application.css.sass */
+.footer {
+  margin-top: 45px;
+  padding: 35px 0 36px;
+  border-top: 1px solid #e5e5e5; }
+  /* line 18, application.css.sass */
+  .footer p {
+    margin-bottom: 0;
+    color: #555555; }
+
+/* line 22, application.css.sass */
 table.docs {
   table-layout: fixed; }
-  /* line 18, application.css.sass */
+  /* line 25, application.css.sass */
   table.docs th:nth-child(1) {
     width: 150px; }
-  /* line 20, application.css.sass */
+  /* line 27, application.css.sass */
   table.docs th:nth-child(2) {
     width: 350px; }
 
@@ -4724,55 +4734,55 @@ ol.vertical {
       border-left-color: red;
       border-right: none; }
 
-/* line 25, application.css.sass */
+/* line 32, application.css.sass */
 ol {
   list-style-type: none; }
-  /* line 27, application.css.sass */
+  /* line 34, application.css.sass */
   ol i.icon-move {
     cursor: pointer; }
-  /* line 29, application.css.sass */
+  /* line 36, application.css.sass */
   ol li.highlight {
     background: #333333;
     color: #999999; }
-    /* line 32, application.css.sass */
+    /* line 39, application.css.sass */
     ol li.highlight i.icon-move {
       background-image: url("../img/glyphicons-halflings-white.png"); }
 
-/* line 35, application.css.sass */
+/* line 42, application.css.sass */
 ol.nested_with_switch, ol.nested_with_switch ol {
   border: 1px solid #eeeeee; }
-  /* line 37, application.css.sass */
+  /* line 44, application.css.sass */
   ol.nested_with_switch.active, ol.nested_with_switch ol.active {
     border: 1px solid #333333; }
 
-/* line 41, application.css.sass */
+/* line 48, application.css.sass */
 ol.nested_with_switch li, ol.simple_with_animation li, ol.default li {
   cursor: pointer; }
 
-/* line 44, application.css.sass */
+/* line 51, application.css.sass */
 .switch-container {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 80px; }
 
-/* line 50, application.css.sass */
+/* line 57, application.css.sass */
 .navbar-sort-container {
   height: 200px; }
 
-/* line 54, application.css.sass */
+/* line 61, application.css.sass */
 ol.nav li, ol.nav li a {
   cursor: pointer; }
-/* line 56, application.css.sass */
+/* line 63, application.css.sass */
 ol.nav .divider-vertical {
   cursor: default; }
-/* line 59, application.css.sass */
+/* line 66, application.css.sass */
 ol.nav li.dragged {
   background-color: #2c2c2c; }
-/* line 61, application.css.sass */
+/* line 68, application.css.sass */
 ol.nav li.placeholder {
   position: relative; }
-  /* line 63, application.css.sass */
+  /* line 70, application.css.sass */
   ol.nav li.placeholder:before {
     content: "";
     position: absolute;
@@ -4783,7 +4793,7 @@ ol.nav li.placeholder {
     top: -6px;
     margin-left: -5px;
     border-bottom: none; }
-/* line 74, application.css.sass */
+/* line 81, application.css.sass */
 ol.nav ol.dropdown-menu li.placeholder:before {
   border: 5px solid transparent;
   border-left-color: red;
@@ -4793,10 +4803,10 @@ ol.nav ol.dropdown-menu li.placeholder:before {
   left: 10px;
   border-right: none; }
 
-/* line 84, application.css.sass */
+/* line 91, application.css.sass */
 .sorted_table tr {
   cursor: pointer; }
-/* line 86, application.css.sass */
+/* line 93, application.css.sass */
 .sorted_table tr.placeholder {
   display: block;
   background: red;
@@ -4804,7 +4814,7 @@ ol.nav ol.dropdown-menu li.placeholder:before {
   margin: 0;
   padding: 0;
   border: none; }
-  /* line 93, application.css.sass */
+  /* line 100, application.css.sass */
   .sorted_table tr.placeholder:before {
     content: "";
     position: absolute;
@@ -4816,10 +4826,10 @@ ol.nav ol.dropdown-menu li.placeholder:before {
     left: -5px;
     border-right: none; }
 
-/* line 104, application.css.sass */
+/* line 111, application.css.sass */
 .sorted_head th {
   cursor: pointer; }
-/* line 106, application.css.sass */
+/* line 113, application.css.sass */
 .sorted_head th.placeholder {
   display: block;
   background: red;
@@ -4828,7 +4838,7 @@ ol.nav ol.dropdown-menu li.placeholder:before {
   height: 0;
   margin: 0;
   padding: 0; }
-  /* line 114, application.css.sass */
+  /* line 121, application.css.sass */
   .sorted_head th.placeholder:before {
     content: "";
     position: absolute;

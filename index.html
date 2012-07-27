@@ -78,7 +78,7 @@
       <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
         <i class='icon-hdd icon-white'></i>
         Download
-        (v0.9)
+        (v0.9.1)
       </a>
     </p>
     <p>
@@ -341,7 +341,12 @@
     <div class="CodeRay">
   <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_drop</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">no-drop</span><span class="delimiter">'</span></span>,
-  <span class="key">handle</span>: <span class="string"><span class="delimiter">'</span><span class="content">i.icon-move</span><span class="delimiter">'</span></span>
+  <span class="key">handle</span>: <span class="string"><span class="delimiter">'</span><span class="content">i.icon-move</span><span class="delimiter">'</span></span>,
+  <span class="function">onDragStart</span>: <span class="keyword">function</span> (item, container, _super) {
+    <span class="keyword">if</span>(!container.options.drop)
+      item.clone().insertAfter(item)
+    _super(item)
+  }
 })
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_no_drop</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">no-drop</span><span class="delimiter">'</span></span>,
@@ -364,6 +369,10 @@
         Pure
         <strong>drag/drop</strong>
         container
+      </li>
+      <li>
+        <strong>Clone</strong>
+        items on drag
       </li>
     </ul>
     <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
@@ -630,7 +639,10 @@
 </div>
   </div>
   <div id='table'>
-    <h2>Sort tables</h2>
+    <h2>
+  Sort tables
+  <small>(doesn't work well in Konqueror and IE)</small>
+</h2>
 <div class='row'>
   <div class="span12 example">
     <div class="CodeRay">
@@ -1008,6 +1020,16 @@
     </li>
   </ul>
 </div>
+<footer class='footer'>
+  <p>Created by
+  <a href="https://github.com/johnny">Jonas von Andrian</a>.</p>
+  
+  <p>jquery-sortable.js is released under the
+  <a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">Modified BSD License</a>.</p>
+  
+  <p>Built with <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.
+  Icons from <a href="http://glyphicons.com/">Glyphicons Free</a>.</p>
+</footer>
     </div>
     <script src='js/application.js'></script>
   </body>
