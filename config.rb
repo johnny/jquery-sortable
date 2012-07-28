@@ -111,9 +111,11 @@ configure :build do
   set :http_prefix, "/jquery-sortable"
 end
 
-require 'rack-livereload'
-use Rack::LiveReload,
-:source => :vendored
+if development?
+  require 'rack-livereload'
+  use Rack::LiveReload,
+  :source => :vendored
+end
 
 require 'rack/coderay'
 use Rack::Coderay, "//pre[@lang]"

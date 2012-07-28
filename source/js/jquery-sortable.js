@@ -1,5 +1,5 @@
 /* ===================================================
- *  jquery-sortable.js v0.9.1
+ *  jquery-sortable.js v0.9.2
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -61,8 +61,10 @@
     },
     // Called after the drag has been started,
     // that is the mouse button is beeing held down and
-    // the mouse is moving
-    onDragStart: function (item, group, _super) {
+    // the mouse is moving.
+    // The container is the closest initialized container.
+    // Therefore it might not be the container, that actually contains the item.
+    onDragStart: function (item, container, _super) {
       item.css({
         height: item.height(),
         width: item.width()
@@ -374,7 +376,7 @@
                                lastPointer),
       rootGroup = this.rootGroup
       if(!nearest)
-        rootGroup.movePlaceholder(this.el, "append")
+        rootGroup.movePlaceholder(this, this.el, "append")
       else {
         var index = nearest[0],
         distance = nearest[1]
