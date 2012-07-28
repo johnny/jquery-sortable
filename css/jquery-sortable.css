@@ -93,8 +93,6 @@ Backtrace:
 /home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-1.4.1/lib/rack/urlmap.rb:49:in `call'
 /home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-coderay-0.2.0/lib/rack/coderay/parser.rb:32:in `call!'
 /home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-coderay-0.2.0/lib/rack/coderay/parser.rb:26:in `call'
-/home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-livereload-0.3.6/lib/rack/livereload.rb:54:in `_call'
-/home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-livereload-0.3.6/lib/rack/livereload.rb:45:in `call'
 /home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-1.4.1/lib/rack/builder.rb:134:in `call'
 /home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-test-0.6.1/lib/rack/mock_session.rb:30:in `request'
 /home/jonas/jquery-sortable/vendor/ruby/1.8/gems/rack-test-0.6.1/lib/rack/test.rb:219:in `process_request'
