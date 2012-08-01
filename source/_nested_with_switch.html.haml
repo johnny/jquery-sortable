@@ -16,32 +16,21 @@
     .switch-container
       .switch.active(data-toggle="switch" data-on="ON" data-off="OFF")
     %ol.nested_with_switch.vertical
-      %li First
-      %li Second
-      %li
-        Third
-        %ol
-          %li First
-          %li Second
-          %li Third
-          %li Fourth
-          %li Fifth
-          %li Sixth
-      %li Fourth
-      %li Fifth
-      %li Sixth
+      = iterate(6) do |i, name|
+        %li
+          = name
+          - if i == 3
+            %ol
+              = iterate(6) do |j, name|
+                %li= name
   .span4
     .switch-container
       .switch.active(data-toggle="switch" data-on="ON" data-off="OFF")
     %ol.nested_with_switch.vertical
-      %li First
-      %li Second
-      %li
-        Third
-        %ol
-          %li First
-          %li Second
-          %li Third
-          %li Fourth
-          %li Fifth
-          %li Sixth
+      = iterate(6) do |i, name|
+        %li
+          = name
+          - if i == 3
+            %ol
+              = iterate(6) do |j, name|
+                %li= name

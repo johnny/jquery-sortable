@@ -65,6 +65,17 @@ helpers do
                                     &block))
     end.join
   end
+
+  def iterate(length, label = "Item", &block)
+    @nesting ||= []
+    prefix = @nesting.empty? ? '' : @nesting.join('.') + '.'
+    0.upto(length-1).map do |i|
+      @nesting.push(i)
+      out = capture_html(i, "#{label} #{prefix}#{i + 1}", &block)
+      @nesting.pop
+      out
+    end.join
+  end
 end
 
 set :css_dir, 'css'

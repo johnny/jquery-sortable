@@ -25,21 +25,10 @@
           %th A Column
           %th B Column
       %tbody.sorted_table
-        %tr
-          %td First A
-          %td First B
-        %tr
-          %td Second A
-          %td Second B
-        %tr
-          %td Third A
-          %td Third B
-        %tr
-          %td Fourth A
-          %td Fourth B
-        %tr
-          %td Fifth A
-          %td Fifth B
+        = iterate(6) do |i, name|
+          %tr
+            %td A #{name}
+            %td B #{name}
   .span4
     %h3 Sortable column heads
     %table.table.table-striped.table-bordered
@@ -48,18 +37,7 @@
           %th A Column
           %th B Column
       %tbody
-        %tr
-          %td First A
-          %td First B
-        %tr
-          %td Second A
-          %td Second B
-        %tr
-          %td Third A
-          %td Third B
-        %tr
-          %td Fourth A
-          %td Fourth B
-        %tr
-          %td Fifth A
-          %td Fifth B
+        = iterate(6) do |i, name|
+          %tr
+            %td A #{name}
+            %td B #{name}

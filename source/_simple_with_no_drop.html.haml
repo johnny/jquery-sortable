@@ -18,44 +18,20 @@
   .span4
     %h3 I'm draggable and droppable
     %ol.simple_with_drop.vertical
-      %li
-        %i.icon-move
-        First
-      %li
-        %i.icon-move
-        Second
-      %li
-        %i.icon-move
-        Third
-      %li
-        %i.icon-move
-        Fourth
-      %li
-        %i.icon-move
-        Fifth
-      %li
-        %i.icon-move
-        Sixth
+      = iterate(6,"Item") do |i,name|
+        %li
+          %i.icon-move
+          = name
   .span4
     %h3 I'm only draggable
     %ol.simple_with_no_drop.vertical
-      %li.highlight
-        %i.icon-move
-        First
-      %li.highlight
-        %i.icon-move
-        Second
-      %li.highlight
-        %i.icon-move
-        Third
+      = iterate(3,"Item") do |i,name|
+        %li.highlight
+          %i.icon-move
+          = name
     %h3 I'm only droppable
     %ol.simple_with_no_drag.vertical
-      %li
-        %i.icon-move
-        First
-      %li
-        %i.icon-move
-        Second
-      %li
-        %i.icon-move
-        Third
+      = iterate(3,"Item") do |i,name|
+        %li
+          %i.icon-move
+          = name

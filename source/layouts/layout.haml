@@ -4,7 +4,7 @@
     %title jQuery Sortable
     %link(rel="stylesheet" href="css/vendor.css")
     %link(rel="stylesheet" href="css/application.css")
-  %body(data-spy="scroll")
+  %body
     .navbar.navbar-fixed-top
       .navbar-inner
         .bootstrap-container
@@ -39,3 +39,5 @@
     .bootstrap-container
       = yield
     %script(src="js/application.js")
+    - if request["path"] =~ /test/
+      %script(src="js/test.js")

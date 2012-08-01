@@ -16,29 +16,9 @@
     %p= show_code_button
   .span4
     %ol.simple_with_animation.vertical
-      %li
-        First
-      %li
-        Second
-      %li
-        Third
-      %li
-        Fourth
-      %li
-        Fifth
-      %li
-        Sixth
+      = iterate(6,"Item") do |i,name|
+        %li= name
   .span4
     %ol.simple_with_animation.vertical
-      %li.highlight
-        First
-      %li.highlight
-        Second
-      %li.highlight
-        Third
-      %li.highlight
-        Fourth
-      %li.highlight
-        Fifth
-      %li.highlight
-        Sixth
+      = iterate(6,"Item") do |i,name|
+        %li.highlight= name

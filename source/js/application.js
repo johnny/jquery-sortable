@@ -8,7 +8,8 @@
 //= require_directory "./examples/"
 
 $(function  () {
-  $('.navbar').scrollspy()
+  if(!/test/.test(window.location.pathname))
+    $('body').scrollspy()
   $('.show-code').on('click', function  () {
     $(this).closest('.row').children('.example').slideToggle()
   })

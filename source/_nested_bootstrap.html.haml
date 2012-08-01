@@ -29,37 +29,22 @@
       .navbar-inner
         .container
           %ol.nav.pull-left
-            %li
-              %a(href="#") First
-            %li
-              %a(href="#") Second
-            %li
-              %a(href="#") Third
-            %li.divider-vertical
-            %li.dropdown.open
-              %a(href="#") Fourth
-              %ol.dropdown-menu
+            = iterate(6,"Item") do |i,name|
+              - if i == 3
+                %li.dropdown.open
+                  %a(href="#")= name
+                  %ol.dropdown-menu
+                    = iterate(4,"Item") do |j, name|
+                      %li
+                        %a(href="#")= name
+              - else
                 %li
-                  %a(href="#") First
-                %li
-                  %a(href="#") Second
-                %li
-                  %a(href="#") Third
-            %li
-              %a(href="#") Fifth
-            %li
-              %a(href="#") Sixth
+                  %a(href="#")= name
+              - if i == 2
+                %li.divider-vertical
           %ol.nav.pull-right
-            %li
-              %a(href="#") First
-            %li
-              %a(href="#") Second
-            %li
-              %a(href="#") Third
-            %li.divider-vertical
-            %li
-              %a(href="#") Fourth
-            %li
-              %a(href="#") Fifth
-            %li
-              %a(href="#") Sixth
+            = iterate(6,"Item") do |i,name|
+              %li
+                %a(href="#")=name
+              - if i == 2
+                %li.divider-vertical
