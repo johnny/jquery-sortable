@@ -99,6 +99,10 @@ configure :build do
     closure = Closure::Compiler.new
     file.puts closure.compile(updated_file)
   end
+
+  File.open('sortable.jquery.json', 'r+') do |file|
+    puts file.read.gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
+  end
   
   # For example, change the Compass output style for deployment
   # activate :minify_css

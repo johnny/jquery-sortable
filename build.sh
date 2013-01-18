@@ -1,8 +1,12 @@
 #!/bin/sh
 
+VERSION=`cat VERSION`
+
 cp README.mkd ..
 ./bin/middleman build
-git commit -am 'Update minified file'
+git commit -am "Release $VERSION"
+git tag $VERSION
+git push origin --tags
 git checkout gh-pages
 rm -R js css img
 mv build/* .
