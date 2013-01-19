@@ -6,8 +6,6 @@ cp README.mkd ..
 ./bin/middleman build
 git commit -am "Release $VERSION"
 git push origin
-git tag $VERSION
-git push origin --tags
 git checkout gh-pages
 rm -R js css img
 mv build/* .
