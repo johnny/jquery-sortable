@@ -101,7 +101,7 @@ configure :build do
   end
 
   File.open('sortable.jquery.json', 'r+') do |file|
-    puts file.read.gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
+    file.puts file.read.gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
   end
   
   # For example, change the Compass output style for deployment

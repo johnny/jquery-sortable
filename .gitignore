@@ -1,9 +1,11 @@
 # dirs
-/vendor/ruby/*
+/vendor
 /bin/
 /tmp/
 /.sass-cache
 /build
+/.bundle
+
 
 # tempfiles
 *[~#]
