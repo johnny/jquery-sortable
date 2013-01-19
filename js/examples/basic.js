@@ -1,4 +1,0 @@
-$(function  () {
-  $("ol.example").sortable()
-})
-;
