@@ -9,43 +9,14 @@
     "drag",
     "drop"
   ],
-  "version": "0.9.3",
+  "version": "1.8.7",
   "author": {
     "name": "Jonas von Andrian"
   },
   "licenses": [
     {
       "type": "BSD-3",
-      "url": "https://github.com/johnny/jquery-sortable/blob/0.9.3/LICENSE"
-    }
-  ],
-  "bugs": "https://github.com/johnny/jquery-sortable/issues",
-  "homepage": "http://johnny.github.com/jquery-sortable/",
-  "docs": "http://johnny.github.com/jquery-sortable/",
-  "download": "http://johnny.github.com/jquery-sortable/",
-  "dependencies": {
-    "jquery": ">=1.7"
-  }
-}
-{
-  "name": "sortable",
-  "title": "jQuery Sortable",
-  "description": "Enables items in a list (or table etc.) to be sorted horizontally and vertically using the mouse. Supports nested lists and pure drag/drop containers. Does not require jQuery UI.",
-  "keywords": [
-    "list",
-    "sort",
-    "sortable",
-    "drag",
-    "drop"
-  ],
-  "version": "0.9.4",
-  "author": {
-    "name": "Jonas von Andrian"
-  },
-  "licenses": [
-    {
-      "type": "BSD-3",
-      "url": "https://github.com/johnny/jquery-sortable/blob/0.9.4/LICENSE"
+      "url": "https://github.com/johnny/jquery-sortable/blob/1.8.7/LICENSE"
     }
   ],
   "bugs": "https://github.com/johnny/jquery-sortable/issues",

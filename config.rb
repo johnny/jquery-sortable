@@ -100,10 +100,12 @@ configure :build do
     file.puts closure.compile(updated_file)
   end
 
-  File.open('sortable.jquery.json', 'r+') do |file|
-    file.puts file.read.gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
+  manifest = 'sortable.jquery.json'
+  content = File.read(manifest).gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
+  File.open(manifest, 'w') do |file|
+    file.puts content
   end
-  
+
   # For example, change the Compass output style for deployment
   # activate :minify_css
   
