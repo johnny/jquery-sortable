@@ -1082,7 +1082,7 @@ colors = jQuery.Color.names = {
 
 }(window.jQuery);
 /* ===================================================
- *  jquery-sortable.js v0.9.2
+ *  jquery-sortable.js v0.9.4
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -1710,7 +1710,8 @@ $(function () {
 
 
 $(function  () {
-  $('.navbar').scrollspy()
+  if(!/test/.test(window.location.pathname))
+    $('body').scrollspy()
   $('.show-code').on('click', function  () {
     $(this).closest('.row').children('.example').slideToggle()
   })
