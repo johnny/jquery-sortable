@@ -53,8 +53,8 @@
         %a(href="#connected") yourself
         \.
       %p
-        Moreover this plugin assumes, that the placeholder has zero height/width.
-        This way we can cache the item dimensions.
+        Moreover this plugin assumes that the placeholder has zero height/width.
+        As a result, the item dimensions may be cached.
         %small This might change in the future, if need be.
       %h3 Compatibility
       %p
@@ -75,6 +75,10 @@
         Show it to me!
         %small
           With default options.
+      %p
+        %span.label.label-info Heads Up!
+        There is no on-the-fly creation of sublists.
+        Only list items that contain a sublist are drop targets.
       %ol.default.vertical
         %li First
         %li Second
