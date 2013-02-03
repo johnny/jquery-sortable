@@ -1646,6 +1646,7 @@ $(function() {
     group: 'no-drop',
     handle: 'i.icon-move',
     onDragStart: function (item, container, _super) {
+      // Duplicate items of the no drop area
       if(!container.options.drop)
         item.clone().insertAfter(item)
       _super(item)

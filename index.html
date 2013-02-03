@@ -123,8 +123,8 @@
         .
       </p>
       <p>
-        Moreover this plugin assumes, that the placeholder has zero height/width.
-        This way we can cache the item dimensions.
+        Moreover this plugin assumes that the placeholder has zero height/width.
+        As a result, the item dimensions may be cached.
         <small>This might change in the future, if need be.</small>
       </p>
       <h3>Compatibility</h3>
@@ -152,6 +152,11 @@
           With default options.
         </small>
       </h3>
+      <p>
+        <span class='label label-info'>Heads Up!</span>
+        There is no on-the-fly creation of sublists.
+        Only list items that contain a sublist are drop targets.
+      </p>
       <ol class='default vertical'>
         <li>First</li>
         <li>Second</li>
@@ -314,6 +319,7 @@
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">no-drop</span><span class="delimiter">'</span></span>,
   <span class="key">handle</span>: <span class="string"><span class="delimiter">'</span><span class="content">i.icon-move</span><span class="delimiter">'</span></span>,
   <span class="function">onDragStart</span>: <span class="keyword">function</span> (item, container, _super) {
+    <span class="comment">// Duplicate items of the no drop area</span>
     <span class="keyword">if</span>(!container.options.drop)
       item.clone().insertAfter(item)
     _super(item)
