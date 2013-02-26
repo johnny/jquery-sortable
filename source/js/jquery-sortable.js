@@ -28,7 +28,8 @@
  * ========================================================== */
 
 !function ( $, window, undefined){
-  var pluginName = 'sortable',
+  var eventNames,
+  pluginName = 'sortable',
   document = window.document,
   $document = $(document),
   containerDefaults = {
@@ -86,6 +87,20 @@
   }, // end group defaults
   containerGroups = {},
   groupCounter = 0
+
+  if('ontouchstart' in window){
+    eventNames = {
+      start: "touchstart",
+      end: "touchend",
+      move: "touchmove"
+    }
+  } else {
+    eventNames = {
+      start: "mousedown",
+      end: "mouseup",
+      move: "mousemove"
+    }
+  }
 
   /*
    * a is Array [left, right, top, bottom]
@@ -183,8 +198,8 @@
 
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
-      $document.on("mousemove.sortable touchmove.sortable", this.dragProxy)
-      $document.on("mouseup.sortable touchend.sortable", this.dropProxy)
+      $document.on(eventNames.move + ".sortable", this.dragProxy)
+      $document.on(eventNames.end + ".sortable", this.dropProxy)
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
@@ -219,8 +234,8 @@
     drop: function  (e) {
       e.preventDefault()
 
-      $document.off("mousemove.sortable touchmove.sortable")
-      $document.off("mouseup.sortable touchend.sortable")
+      $document.off(eventNames.move + ".sortable")
+      $document.off(eventNames.end + ".sortable")
 
       if(!this.dragging)
         return;
@@ -464,7 +479,7 @@
         this.group.addContainer(this)
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
-      this.el.on("mousedown.sortable touchstart.sortable", this.handle, this.dragInitProxy)
+      this.el.on(eventNames.start + ".sortable", this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
       if(this.options.drop)
@@ -472,7 +487,7 @@
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off("mousedown.sortable touchstart.sortable", this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start + ".sortable", this.handle, this.dragInitProxy)
     }
   }
 
