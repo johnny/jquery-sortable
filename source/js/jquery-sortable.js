@@ -183,8 +183,8 @@
 
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
-      $document.on("mousemove", this.dragProxy)
-      $document.on("mouseup", this.dropProxy)
+      $document.on("mousemove.sortable touchmove.sortable", this.dragProxy)
+      $document.on("mouseup.sortable touchend.sortable", this.dropProxy)
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
@@ -219,8 +219,8 @@
     drop: function  (e) {
       e.preventDefault()
 
-      $document.off("mousemove", this.dragProxy)
-      $document.off("mouseup", this.dropProxy)
+      $document.off("mousemove.sortable touchmove.sortable")
+      $document.off("mouseup.sortable touchend.sortable")
 
       if(!this.dragging)
         return;
@@ -464,7 +464,7 @@
         this.group.addContainer(this)
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
-      this.el.on("mousedown", this.handle, this.dragInitProxy)
+      this.el.on("mousedown.sortable touchstart.sortable", this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
       if(this.options.drop)
@@ -472,7 +472,7 @@
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off("mousedown", this.handle, this.dragInitProxy)
+      this.el.off("mousedown.sortable touchstart.sortable", this.handle, this.dragInitProxy)
     }
   }
 
