@@ -274,9 +274,11 @@
       return element.closest(this.options.containerSelector).data(pluginName)
     },
     getOffsetParent: function  () {
-      if(this.offsetParent === undefined){
+      if(this.offsetParent === undefined || this.offsetParentPositionValue !== this.offsetParent.css('position')){
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
+        
+        this.offsetParentPositionValue = offsetParent.css('position')
 
         while(i--){
           if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
@@ -431,7 +433,7 @@
       el = this.el
       // Since el might be empty we have to check el itself and
       // can not do something like el.children().first().offsetParent()
-      if(el.css("position") === "relative" || el.css("position") === "absolute")
+      if(el.css("position") === "relative" || el.css("position") === "absolute"  || el.css("position") === "fixed")
         offsetParent = el
       else
         offsetParent = el.offsetParent()
