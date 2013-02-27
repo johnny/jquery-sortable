@@ -200,6 +200,7 @@
     dragInit: function  (e, itemContainer) {
       $document.on(eventNames.move + "." + pluginName, this.dragProxy)
       $document.on(eventNames.end + "." + pluginName, this.dropProxy)
+      $document.on("scroll." + pluginName, this.scrolledProxy)
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
@@ -236,6 +237,7 @@
 
       $document.off(eventNames.move + "." + pluginName)
       $document.off(eventNames.end + "." + pluginName)
+      $document.off("scroll." + pluginName)
 
       if(!this.dragging)
         return;
@@ -301,7 +303,6 @@
               // use position() which is relative to this parent,
               // otherwise use offset()
               // compare #setDimensions
-              $document.on("scroll." + pluginName, this.scrolledProxy)
               offsetParent = false
               break;
             }
@@ -314,7 +315,6 @@
     },
     clearOffsetParent: function () {
       this.offsetParent = undefined
-      $document.off("scroll." + pluginName)
     },
     setPointer: function (e) {
       var pointer = {
@@ -340,7 +340,8 @@
       this.containers.remove(i);
     },
     scrolled: function  (e) {
-      this.containerDimensions = undefined
+      this.clearDimensions()
+      this.clearOffsetParent()
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
