@@ -178,7 +178,7 @@
     this.options = $.extend({}, groupDefaults, options)
     this.containers = []
     this.childGroups = []
-    this.scrollProxy = $.proxy(this.scrolled, this)
+    this.scrolledProxy = $.proxy(this.scrolled, this)
     this.dragProxy = $.proxy(this.drag, this)
     this.dropProxy = $.proxy(this.drop, this)
     if(this.options.parentGroup)
@@ -198,8 +198,8 @@
 
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
-      $document.on(eventNames.move + ".sortable", this.dragProxy)
-      $document.on(eventNames.end + ".sortable", this.dropProxy)
+      $document.on(eventNames.move + "." + pluginName, this.dragProxy)
+      $document.on(eventNames.end + "." + pluginName, this.dropProxy)
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
@@ -234,8 +234,8 @@
     drop: function  (e) {
       e.preventDefault()
 
-      $document.off(eventNames.move + ".sortable")
-      $document.off(eventNames.end + ".sortable")
+      $document.off(eventNames.move + "." + pluginName)
+      $document.off(eventNames.end + "." + pluginName)
 
       if(!this.dragging)
         return;
@@ -245,7 +245,8 @@
       processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
       // cleanup
-      this.deleteDimensions()
+      this.clearDimensions()
+      this.clearOffsetParent()
       this.lastAppendedItem = this.sameResultBox = undefined
       this.dragging = false
     },
@@ -289,25 +290,31 @@
       return element.closest(this.options.containerSelector).data(pluginName)
     },
     getOffsetParent: function  () {
-      if(this.offsetParent === undefined || this.offsetParentPositionValue !== this.offsetParent.css('position')){
+      if(this.offsetParent === undefined){
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
-        
-        this.offsetParentPositionValue = offsetParent.css('position')
 
-        while(i--){
-          if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
-            // If every container has the same offset parent,
-            // use position() which is relative to this parent,
-            // otherwise use offset()
-            $document.on("scroll", this.scrolledProxy)
-            offsetParent = false
-            break;
+        if(!this.options.parentGroup){
+          while(i--){
+            if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
+              // If every container has the same offset parent,
+              // use position() which is relative to this parent,
+              // otherwise use offset()
+              // compare #setDimensions
+              $document.on("scroll." + pluginName, this.scrolledProxy)
+              offsetParent = false
+              break;
+            }
           }
         }
+        
         this.offsetParent = offsetParent
       }
       return this.offsetParent
+    },
+    clearOffsetParent: function () {
+      this.offsetParent = undefined
+      $document.off("scroll." + pluginName)
     },
     setPointer: function (e) {
       var pointer = {
@@ -327,26 +334,24 @@
     },
     addContainer: function  (container) {
       this.containers.push(container);
-      delete this.containerDimensions
     },
     removeContainer: function (container) {
       var i = this.containers.indexOf(container)
       this.containers.remove(i);
-      delete this.containerDimensions
     },
     scrolled: function  (e) {
-      delete this.containerDimensions
+      this.containerDimensions = undefined
     },
-    deleteDimensions: function  () {
-      // delete centers in every container and containergroup
-      delete this.containerDimensions
+    // Recursively clear container and item dimensions
+    clearDimensions: function  () {
+      this.containerDimensions = undefined
       var i = this.containers.length
       while(i--){
-        delete this.containers[i].itemDimensions
+        this.containers[i].itemDimensions = undefined
       }
       i = this.childGroups.length
       while(i--){
-        this.childGroups[i].deleteDimensions()
+        this.childGroups[i].clearDimensions()
       }
     }
   }
@@ -479,7 +484,7 @@
         this.group.addContainer(this)
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
-      this.el.on(eventNames.start + ".sortable", this.handle, this.dragInitProxy)
+      this.el.on(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
       if(this.options.drop)
@@ -487,7 +492,7 @@
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off(eventNames.start + ".sortable", this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
     }
   }
 
