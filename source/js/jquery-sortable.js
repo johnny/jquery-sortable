@@ -30,8 +30,6 @@
 !function ( $, window, undefined){
   var eventNames,
   pluginName = 'sortable',
-  document = window.document,
-  $document = $(document),
   containerDefaults = {
     // If true, items can be dragged from this container
     drag: true,
@@ -198,9 +196,9 @@
 
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
-      $document.on(eventNames.move + "." + pluginName, this.dragProxy)
-      $document.on(eventNames.end + "." + pluginName, this.dropProxy)
-      $document.on("scroll." + pluginName, this.scrolledProxy)
+      this.$document = $(itemContainer.el[0].ownerDocument)
+
+      this.toggleListeners('on')
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
@@ -234,10 +232,7 @@
     },
     drop: function  (e) {
       e.preventDefault()
-
-      $document.off(eventNames.move + "." + pluginName)
-      $document.off(eventNames.end + "." + pluginName)
-      $document.off("scroll." + pluginName)
+      this.toggleListeners('off')
 
       if(!this.dragging)
         return;
@@ -345,6 +340,11 @@
     scrolled: function  (e) {
       this.clearDimensions()
       this.clearOffsetParent()
+    },
+    toggleListeners: function (method) {
+      this.$document[method](eventNames.move + "." + pluginName, this.dragProxy)
+      [method](eventNames.end + "." + pluginName, this.dropProxy)
+      [method]("scroll." + pluginName, this.scrolledProxy)
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
@@ -488,6 +488,7 @@
         this.group.addContainer(this)
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
+
       this.el.on(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
@@ -511,7 +512,7 @@
    */
   $.fn[pluginName] = function(methodOrOptions) {
     var args = Array.prototype.slice.call(arguments, 1)
-
+    
     return this.each(function(){
       var $t = $(this),
       object = $t.data(pluginName)
