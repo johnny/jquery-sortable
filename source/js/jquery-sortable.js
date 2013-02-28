@@ -285,8 +285,11 @@
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)
-        setDimensions(this.containers, this.containerDimensions = [], !this.getOffsetParent())
+        setDimensions(this.getContainers(), this.containerDimensions = [], !this.getOffsetParent())
       return this.containerDimensions
+    },
+    getContainers: function (element) { // TODO build on this to return containers valid for the currently dragged element
+      return this.containers
     },
     getContainer: function  (element) {
       return element.closest(this.options.containerSelector).data(pluginName)
