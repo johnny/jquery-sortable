@@ -1112,7 +1112,8 @@ colors = jQuery.Color.names = {
 
 
 !function ( $, window, undefined){
-  var pluginName = 'sortable',
+  var eventNames,
+  pluginName = 'sortable',
   document = window.document,
   $document = $(document),
   containerDefaults = {
@@ -1170,6 +1171,20 @@ colors = jQuery.Color.names = {
   }, // end group defaults
   containerGroups = {},
   groupCounter = 0
+
+  if('ontouchstart' in window){
+    eventNames = {
+      start: "touchstart",
+      end: "touchend",
+      move: "touchmove"
+    }
+  } else {
+    eventNames = {
+      start: "mousedown",
+      end: "mouseup",
+      move: "mousemove"
+    }
+  }
 
   /*
    * a is Array [left, right, top, bottom]
@@ -1247,7 +1262,7 @@ colors = jQuery.Color.names = {
     this.options = $.extend({}, groupDefaults, options)
     this.containers = []
     this.childGroups = []
-    this.scrollProxy = $.proxy(this.scrolled, this)
+    this.scrolledProxy = $.proxy(this.scrolled, this)
     this.dragProxy = $.proxy(this.drag, this)
     this.dropProxy = $.proxy(this.drop, this)
     if(this.options.parentGroup)
@@ -1267,8 +1282,9 @@ colors = jQuery.Color.names = {
 
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
-      $document.on("mousemove", this.dragProxy)
-      $document.on("mouseup", this.dropProxy)
+      $document.on(eventNames.move + "." + pluginName, this.dragProxy)
+      $document.on(eventNames.end + "." + pluginName, this.dropProxy)
+      $document.on("scroll." + pluginName, this.scrolledProxy)
 
       // get item to drag
       this.item = $(e.target).closest(this.options.itemSelector)
@@ -1303,8 +1319,9 @@ colors = jQuery.Color.names = {
     drop: function  (e) {
       e.preventDefault()
 
-      $document.off("mousemove", this.dragProxy)
-      $document.off("mouseup", this.dropProxy)
+      $document.off(eventNames.move + "." + pluginName)
+      $document.off(eventNames.end + "." + pluginName)
+      $document.off("scroll." + pluginName)
 
       if(!this.dragging)
         return;
@@ -1314,7 +1331,8 @@ colors = jQuery.Color.names = {
       processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
       // cleanup
-      this.deleteDimensions()
+      this.clearDimensions()
+      this.clearOffsetParent()
       this.lastAppendedItem = this.sameResultBox = undefined
       this.dragging = false
     },
@@ -1351,8 +1369,11 @@ colors = jQuery.Color.names = {
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)
-        setDimensions(this.containers, this.containerDimensions = [], !this.getOffsetParent())
+        setDimensions(this.getContainers(), this.containerDimensions = [], !this.getOffsetParent())
       return this.containerDimensions
+    },
+    getContainers: function (element) { // TODO build on this to return containers valid for the currently dragged element
+      return this.containers
     },
     getContainer: function  (element) {
       return element.closest(this.options.containerSelector).data(pluginName)
@@ -1362,19 +1383,25 @@ colors = jQuery.Color.names = {
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
 
-        while(i--){
-          if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
-            // If every container has the same offset parent,
-            // use position() which is relative to this parent,
-            // otherwise use offset()
-            $document.on("scroll", this.scrolledProxy)
-            offsetParent = false
-            break;
+        if(!this.options.parentGroup){
+          while(i--){
+            if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
+              // If every container has the same offset parent,
+              // use position() which is relative to this parent,
+              // otherwise use offset()
+              // compare #setDimensions
+              offsetParent = false
+              break;
+            }
           }
         }
+        
         this.offsetParent = offsetParent
       }
       return this.offsetParent
+    },
+    clearOffsetParent: function () {
+      this.offsetParent = undefined
     },
     setPointer: function (e) {
       var pointer = {
@@ -1394,26 +1421,25 @@ colors = jQuery.Color.names = {
     },
     addContainer: function  (container) {
       this.containers.push(container);
-      delete this.containerDimensions
     },
     removeContainer: function (container) {
       var i = this.containers.indexOf(container)
       this.containers.remove(i);
-      delete this.containerDimensions
     },
     scrolled: function  (e) {
-      delete this.containerDimensions
+      this.clearDimensions()
+      this.clearOffsetParent()
     },
-    deleteDimensions: function  () {
-      // delete centers in every container and containergroup
-      delete this.containerDimensions
+    // Recursively clear container and item dimensions
+    clearDimensions: function  () {
+      this.containerDimensions = undefined
       var i = this.containers.length
       while(i--){
-        delete this.containers[i].itemDimensions
+        this.containers[i].itemDimensions = undefined
       }
       i = this.childGroups.length
       while(i--){
-        this.childGroups[i].deleteDimensions()
+        this.childGroups[i].clearDimensions()
       }
     }
   }
@@ -1515,7 +1541,7 @@ colors = jQuery.Color.names = {
       el = this.el
       // Since el might be empty we have to check el itself and
       // can not do something like el.children().first().offsetParent()
-      if(el.css("position") === "relative" || el.css("position") === "absolute")
+      if(el.css("position") === "relative" || el.css("position") === "absolute"  || el.css("position") === "fixed")
         offsetParent = el
       else
         offsetParent = el.offsetParent()
@@ -1546,7 +1572,7 @@ colors = jQuery.Color.names = {
         this.group.addContainer(this)
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
-      this.el.on("mousedown", this.handle, this.dragInitProxy)
+      this.el.on(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
       if(this.options.drop)
@@ -1554,7 +1580,7 @@ colors = jQuery.Color.names = {
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off("mousedown", this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
     }
   }
 
