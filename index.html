@@ -35,6 +35,9 @@
                   <a href='#nested'>Toggable nested lists</a>
                 </li>
                 <li>
+                  <a href='#limited-target'>Limited drop targets</a>
+                </li>
+                <li>
                   <a href='#bootstrap'>Sorting a bootstrap menu</a>
                 </li>
                 <li>
@@ -68,7 +71,7 @@
       <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
         <i class='icon-hdd icon-white'></i>
         Download
-        (v0.9.6)
+        (v0.9.7)
       </a>
     </p>
     <p>
@@ -76,7 +79,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
-        (7.3 kb)
+        (7.7 kb)
       </small>
     </p>
   </div>
@@ -158,8 +161,14 @@
         Only list items that contain a sublist are drop targets.
       </p>
       <ol class='default vertical'>
-        <li>First</li>
-        <li>Second</li>
+        <li>
+          First
+          <ol></ol>
+        </li>
+        <li>
+          Second
+          <ol></ol>
+        </li>
         <li>
           Third
           <ol>
@@ -529,6 +538,55 @@
   </div>
 </div>
   </div>
+  <div id='limited-target'>
+    <h2>Connected lists with limited drop targets</h2>
+<div class='row'>
+  <div class="span12 example">
+    <div class="CodeRay">
+  <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.limited_drop_targets</span><span class="delimiter">&quot;</span></span>).sortable({
+  <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">limited_drop_targets</span><span class="delimiter">'</span></span>,
+  <span class="function">isValidTarget</span>: <span class="keyword">function</span>  (item, container) {
+    <span class="keyword">if</span>(item.is(<span class="string"><span class="delimiter">&quot;</span><span class="content">.highlight</span><span class="delimiter">&quot;</span></span>))
+      <span class="keyword">return</span> <span class="predefined-constant">true</span>
+    <span class="keyword">else</span> {
+      <span class="keyword">return</span> item.parent(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol</span><span class="delimiter">&quot;</span></span>)[<span class="integer">0</span>] == container.el[<span class="integer">0</span>]
+    }
+  }
+})</pre></div>
+</div>
+
+  </div>
+  <div class='span4'>
+    <ul>
+      <li>
+        <strong>Limit the drop targets</strong>
+        of the dragged item
+      </li>
+    </ul>
+    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+  </div>
+  <div class='span4'>
+    <ol class='limited_drop_targets vertical'>
+      <li class='highlight'>Item 1</li>
+        <li>Item 2</li>
+        <li class='highlight'>Item 3</li>
+        <li>Item 4</li>
+        <li class='highlight'>Item 5</li>
+        <li>Item 6</li>
+    </ol>
+  </div>
+  <div class='span4'>
+    <ol class='limited_drop_targets vertical'>
+      <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li class='highlight'>Item 4</li>
+        <li class='highlight'>Item 5</li>
+        <li class='highlight'>Item 6</li>
+    </ol>
+  </div>
+</div>
+  </div>
   <div id='bootstrap'>
     <h2>Sorting a bootstrap menu</h2>
 <div class='row'>
@@ -880,6 +938,18 @@
 
 </td>
 <td> The css selector of the items</td>
+</tr><tr><td>
+  <code>isValidTarget</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (item, container) {
+  <span class="keyword">return</span> <span class="predefined-constant">true</span>
+}</pre></div>
+</div>
+
+</td>
+<td> Check if the dragged item may be inside the container. Use with care, since the search for a valid container entails a depth first search and may be quite expensive.</td>
 </tr><tr><td>
   <code>onDrag</code>
 </td>
