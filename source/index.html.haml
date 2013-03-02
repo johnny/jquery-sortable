@@ -80,8 +80,12 @@
         There is no on-the-fly creation of sublists.
         Only list items that contain a sublist are drop targets.
       %ol.default.vertical
-        %li First
-        %li Second
+        %li
+          First
+          %ol
+        %li
+          Second
+          %ol
         %li
           Third
           %ol
@@ -127,6 +131,8 @@
     = partial "simple_with_no_drop"
   #nested
     = partial "nested_with_switch"
+  #limited-target
+    = partial "limited_drop_targets"
   #bootstrap
     = partial "nested_bootstrap"
   #table

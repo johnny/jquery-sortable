@@ -5,5 +5,4 @@
     - [ ] if containers, break if distance is 0
   - [ ] only calculate top/bottom if vertical and left/right if horizontal
   - [ ] support placeholder with height/width
-  - [ ] use own cache for childContainers (jQuery knows all the edge cases)
   - [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated

@@ -1,0 +1,24 @@
+%h2 Connected lists with limited drop targets
+.row
+  .span12.example
+    %pre(lang="js")= example("limited_drop_targets")
+  .span4
+    %ul
+      %li
+        %strong Limit the drop targets
+        of the dragged item
+    %p= show_code_button
+  .span4
+    %ol.limited_drop_targets.vertical
+      = iterate(6,"Item") do |i,name|
+        - if i % 2 == 0
+          %li.highlight= name
+        - else
+          %li= name
+  .span4
+    %ol.limited_drop_targets.vertical
+      = iterate(6,"Item") do |i,name|
+        - if i >= 3
+          %li.highlight= name
+        - else
+          %li= name
