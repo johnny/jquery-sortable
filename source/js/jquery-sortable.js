@@ -98,15 +98,15 @@
 
   if('ontouchstart' in window){
     eventNames = {
-      start: "touchstart",
-      end: "touchend",
-      move: "touchmove"
+      start: "touchstart.sortable",
+      end: "touchend.sortable touchcancel.sortable",
+      move: "touchmove.sortable"
     }
   } else {
     eventNames = {
-      start: "mousedown",
-      end: "mouseup",
-      move: "mousemove"
+      start: "mousedown.sortable",
+      end: "mouseup.sortable",
+      move: "mousemove.sortable"
     }
   }
 
@@ -371,9 +371,9 @@
       this.clearOffsetParent()
     },
     toggleListeners: function (method) {
-      this.$document[method](eventNames.move + "." + pluginName, this.dragProxy)
-      [method](eventNames.end + "." + pluginName, this.dropProxy)
-      [method]("scroll." + pluginName, this.scrolledProxy)
+      this.$document[method](eventNames.move, this.dragProxy)
+      [method](eventNames.end, this.dropProxy)
+      [method]("scroll.sortable", this.scrolledProxy)
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
@@ -520,7 +520,7 @@
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
 
-      this.el.on(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
+      this.el.on(eventNames.start, this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
       if(this.options.drop)
@@ -528,7 +528,7 @@
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start, this.handle, this.dragInitProxy)
     }
   }
 
