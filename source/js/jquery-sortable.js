@@ -59,6 +59,10 @@
     isValidTarget: function (item, container) {
       return true
     },
+    // Executed before onDrop if placeholder is detached.
+    // This happens if pullPlaceholder is set to false and the drop occurs outside a container.
+    onCancel: function (item, container, _super) {
+    },
     // Executed at the beginning of a mouse move event.
     // The Placeholder has not been moved yet
     onDrag: function (item, position, _super) {
@@ -240,7 +244,8 @@
       y = e.pageY,
       box = this.sameResultBox
       if(!box || box.top > y || box.bottom < y || box.left > x || box.right < x)
-        this.searchValidTarget()
+        if(!this.searchValidTarget())
+          this.placeholder.detach()
     },
     drop: function  (e) {
       e.preventDefault()
@@ -249,8 +254,13 @@
       if(!this.dragging)
         return;
 
-      // processing Drop
-      this.getContainer(this.placeholder).receiveDrop()
+      // processing Drop, check if placeholder is detached
+      if(this.placeholder.closest("html")[0])
+        this.placeholder.before(this.item).detach()
+      else
+        this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
+
+      this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
       processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
       // cleanup
@@ -405,14 +415,6 @@
       e.stopPropagation()
 
       this.rootGroup.dragInit(e, this)
-    },
-    receiveDrop: function  () {
-      var rootGroup = this.rootGroup,
-      item = rootGroup.item
-
-      // replace placeholder with current item
-      rootGroup.placeholder.before(item).detach()
-      rootGroup.options.onDrop(item, this, groupDefaults.onDrop)
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
