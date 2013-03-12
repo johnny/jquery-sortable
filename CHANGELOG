@@ -1,0 +1,5 @@
+[0.9.8]	Added Serialization
+	Added onCancel
+
+[0.9.7]	Support iFrame and Touch events
+	Better behavior if the CSS position changes
