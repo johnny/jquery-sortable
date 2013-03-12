@@ -7,7 +7,13 @@
       %li
         %strong Limit the drop targets
         of the dragged item
+      %li
+        Customize
+        %strong serialization
+        of the lists
     %p= show_code_button
+    %h3 Serialize result
+    %pre#serialize_output
   .span4
     %ol.limited_drop_targets.vertical
       = iterate(6,"Item") do |i,name|
