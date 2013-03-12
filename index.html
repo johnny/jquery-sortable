@@ -79,7 +79,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
-        (7.7 kb)
+        (8.3 kb)
       </small>
     </p>
   </div>
@@ -543,7 +543,7 @@
 <div class='row'>
   <div class="span12 example">
     <div class="CodeRay">
-  <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.limited_drop_targets</span><span class="delimiter">&quot;</span></span>).sortable({
+  <div class="code"><pre><span class="keyword">var</span> group = <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.limited_drop_targets</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">limited_drop_targets</span><span class="delimiter">'</span></span>,
   <span class="function">isValidTarget</span>: <span class="keyword">function</span>  (item, container) {
     <span class="keyword">if</span>(item.is(<span class="string"><span class="delimiter">&quot;</span><span class="content">.highlight</span><span class="delimiter">&quot;</span></span>))
@@ -551,6 +551,13 @@
     <span class="keyword">else</span> {
       <span class="keyword">return</span> item.parent(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol</span><span class="delimiter">&quot;</span></span>)[<span class="integer">0</span>] == container.el[<span class="integer">0</span>]
     }
+  },
+  <span class="function">onDrop</span>: <span class="keyword">function</span> (item, container, _super) {
+    <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">#serialize_output</span><span class="delimiter">'</span></span>).text(group.sortable(<span class="string"><span class="delimiter">&quot;</span><span class="content">serialize</span><span class="delimiter">&quot;</span></span>).get().join(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>))
+    _super(item, container)
+  },
+  <span class="function">serialize</span>: <span class="keyword">function</span> (parent, children, isContainer) {
+    <span class="keyword">return</span> isContainer ? children.join() : parent.text()
   }
 })</pre></div>
 </div>
@@ -562,8 +569,15 @@
         <strong>Limit the drop targets</strong>
         of the dragged item
       </li>
+      <li>
+        Customize
+        <strong>serialization</strong>
+        of the lists
+      </li>
     </ul>
     <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <h3>Serialize result</h3>
+    <pre id='serialize_output'></pre>
   </div>
   <div class='span4'>
     <ol class='limited_drop_targets vertical'>
@@ -885,6 +899,16 @@
         <code>.sortable("disable")</code>
       </h3>
       <p>Disable all instantiated sortables in the set of matched elements</p>
+      <h3>
+        <code>.sortable("serialize")</code>
+      </h3>
+      <p>
+        Serialize all selected containers. Returns a
+        <code>jQuery</code>
+        object . Use
+        <code>.get()</code>
+        to retrieve the array, if needed.
+      </p>
     </div>
   </div>
   <h2 id='group-options'>Group options</h2>
@@ -902,7 +926,7 @@
 </td>
 <td>
   <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (placeholder, container) {
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$placeholder</span>, container) {
 }</pre></div>
 </div>
 
@@ -943,7 +967,7 @@
 </td>
 <td>
   <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (item, container) {
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container) {
   <span class="keyword">return</span> <span class="predefined-constant">true</span>
 }</pre></div>
 </div>
@@ -951,12 +975,23 @@
 </td>
 <td> Check if the dragged item may be inside the container. Use with care, since the search for a valid container entails a depth first search and may be quite expensive.</td>
 </tr><tr><td>
+  <code>onCancel</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+}</pre></div>
+</div>
+
+</td>
+<td> Executed before onDrop if placeholder is detached. This happens if pullPlaceholder is set to false and the drop occurs outside a container.</td>
+</tr><tr><td>
   <code>onDrag</code>
 </td>
 <td>
   <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (item, position, _super) {
-  item.css(position)
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, position, _super) {
+  <span class="predefined">$item</span>.css(position)
 }</pre></div>
 </div>
 
@@ -967,12 +1002,12 @@
 </td>
 <td>
   <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (item, container, _super) {
-  item.css({
-    <span class="key">height</span>: item.height(),
-    <span class="key">width</span>: item.width()
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+  <span class="predefined">$item</span>.css({
+    <span class="key">height</span>: <span class="predefined">$item</span>.height(),
+    <span class="key">width</span>: <span class="predefined">$item</span>.width()
   })
-  item.addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>)
+  <span class="predefined">$item</span>.addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>)
   <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span>).addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
 }</pre></div>
 </div>
@@ -984,8 +1019,8 @@
 </td>
 <td>
   <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span>  (item, container, _super) {
-  item.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>).attr(<span class="string"><span class="delimiter">&quot;</span><span class="content">style</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+  <span class="predefined">$item</span>.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>).attr(<span class="string"><span class="delimiter">&quot;</span><span class="content">style</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
   <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span>).removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
 }</pre></div>
 </div>
@@ -1012,6 +1047,22 @@
 
 </td>
 <td> If true, the position of the placeholder is calculated on every mousemove. If false, it is only calculated when the mouse is above a container.</td>
+</tr><tr><td>
+  <code>serialize</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$parent</span>, <span class="predefined">$children</span>, parentIsContainer) {
+  <span class="keyword">var</span> result = <span class="predefined">$</span>.extend({}, <span class="predefined">$parent</span>.data())
+   <span class="keyword">if</span>(<span class="predefined">$children</span>[<span class="integer">0</span>])
+    result.children = <span class="predefined">$children</span>
+  <span class="keyword">delete</span> result.sortable
+   <span class="keyword">return</span> result
+}</pre></div>
+</div>
+
+</td>
+<td> Specifies serialization of the container group. The pair $parent/$children is either container/items or item/subcontainers</td>
 </tr>
     </tbody>
   </table>
@@ -1091,6 +1142,9 @@
     </li>
     <li>
       <a href='http://jqueryui.com/demos/sortable/'>jQuery UI sortable</a>
+    </li>
+    <li>
+      <a href='http://dbushell.github.com/Nestable/'>Nestable (requires no jQuery UI)</a>
     </li>
     <li>
       <a href='http://mjsarfatti.com/sandbox/nestedSortable/'>nestedSortable</a>

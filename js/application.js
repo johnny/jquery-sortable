@@ -1129,7 +1129,7 @@ colors = jQuery.Color.names = {
   }, // end container defaults
   groupDefaults = {
     // This is executed after the placeholder has been moved.
-    afterMove: function (placeholder, container) {
+    afterMove: function ($placeholder, container) {
     },
     // The css selector of the containers
     containerSelector: "ol, ul",
@@ -1140,30 +1140,34 @@ colors = jQuery.Color.names = {
     // Check if the dragged item may be inside the container.
     // Use with care, since the search for a valid container entails a depth first search
     // and may be quite expensive.
-    isValidTarget: function (item, container) {
+    isValidTarget: function ($item, container) {
       return true
+    },
+    // Executed before onDrop if placeholder is detached.
+    // This happens if pullPlaceholder is set to false and the drop occurs outside a container.
+    onCancel: function ($item, container, _super) {
     },
     // Executed at the beginning of a mouse move event.
     // The Placeholder has not been moved yet
-    onDrag: function (item, position, _super) {
-      item.css(position)
+    onDrag: function ($item, position, _super) {
+      $item.css(position)
     },
     // Called after the drag has been started,
     // that is the mouse button is beeing held down and
     // the mouse is moving.
     // The container is the closest initialized container.
     // Therefore it might not be the container, that actually contains the item.
-    onDragStart: function (item, container, _super) {
-      item.css({
-        height: item.height(),
-        width: item.width()
+    onDragStart: function ($item, container, _super) {
+      $item.css({
+        height: $item.height(),
+        width: $item.width()
       })
-      item.addClass("dragged")
+      $item.addClass("dragged")
       $("body").addClass("dragging")
     },
     // Called when the mouse button is beeing released
-    onDrop: function  (item, container, _super) {
-      item.removeClass("dragged").attr("style","")
+    onDrop: function ($item, container, _super) {
+      $item.removeClass("dragged").attr("style","")
       $("body").removeClass("dragging")
     },
     // Template for the placeholder. Can be any valid jQuery input
@@ -1171,22 +1175,33 @@ colors = jQuery.Color.names = {
     placeholder: '<li class="placeholder"/>',
     // If true, the position of the placeholder is calculated on every mousemove.
     // If false, it is only calculated when the mouse is above a container.
-    pullPlaceholder: true
+    pullPlaceholder: true,
+    // Specifies serialization of the container group.
+    // The pair $parent/$children is either container/items or item/subcontainers
+    serialize: function ($parent, $children, parentIsContainer) {
+      var result = $.extend({}, $parent.data())
+
+      if($children[0])
+        result.children = $children
+      delete result.sortable
+
+      return result
+    }
   }, // end group defaults
   containerGroups = {},
   groupCounter = 0
 
   if('ontouchstart' in window){
     eventNames = {
-      start: "touchstart",
-      end: "touchend",
-      move: "touchmove"
+      start: "touchstart.sortable",
+      end: "touchend.sortable touchcancel.sortable",
+      move: "touchmove.sortable"
     }
   } else {
     eventNames = {
-      start: "mousedown",
-      end: "mouseup",
-      move: "mousemove"
+      start: "mousedown.sortable",
+      end: "mouseup.sortable",
+      move: "mousemove.sortable"
     }
   }
 
@@ -1324,7 +1339,8 @@ colors = jQuery.Color.names = {
       y = e.pageY,
       box = this.sameResultBox
       if(!box || box.top > y || box.bottom < y || box.left > x || box.right < x)
-        this.searchValidTarget()
+        if(!this.searchValidTarget())
+          this.placeholder.detach()
     },
     drop: function  (e) {
       e.preventDefault()
@@ -1333,8 +1349,13 @@ colors = jQuery.Color.names = {
       if(!this.dragging)
         return;
 
-      // processing Drop
-      this.getContainer(this.placeholder).receiveDrop()
+      // processing Drop, check if placeholder is detached
+      if(this.placeholder.closest("html")[0])
+        this.placeholder.before(this.item).detach()
+      else
+        this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
+
+      this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
       processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
       // cleanup
@@ -1360,7 +1381,7 @@ colors = jQuery.Color.names = {
 
         if(!distance || this.options.pullPlaceholder){
           var container = this.containers[index]
-          if(!this.getOffsetParent()){
+          if(!this.$getOffsetParent()){
             var offsetParent = container.getItemOffsetParent()
             pointer = getRelativePosition(pointer, offsetParent)
             lastPointer = getRelativePosition(lastPointer, offsetParent)
@@ -1383,16 +1404,13 @@ colors = jQuery.Color.names = {
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)
-        setDimensions(this.getContainers(), this.containerDimensions = [], !this.getOffsetParent())
+        setDimensions(this.containers, this.containerDimensions = [], !this.$getOffsetParent())
       return this.containerDimensions
-    },
-    getContainers: function (element) { // TODO build on this to return containers valid for the currently dragged element
-      return this.containers
     },
     getContainer: function  (element) {
       return element.closest(this.options.containerSelector).data(pluginName)
     },
-    getOffsetParent: function  () {
+    $getOffsetParent: function  () {
       if(this.offsetParent === undefined){
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
@@ -1423,8 +1441,8 @@ colors = jQuery.Color.names = {
         top: e.pageY
       }
 
-      if(this.getOffsetParent()){
-        var relativePointer = getRelativePosition(pointer, this.getOffsetParent())
+      if(this.$getOffsetParent()){
+        var relativePointer = getRelativePosition(pointer, this.$getOffsetParent())
         this.lastRelativePointer = this.relativePointer
         this.relativePointer = relativePointer
       }
@@ -1445,9 +1463,9 @@ colors = jQuery.Color.names = {
       this.clearOffsetParent()
     },
     toggleListeners: function (method) {
-      this.$document[method](eventNames.move + "." + pluginName, this.dragProxy)
-      [method](eventNames.end + "." + pluginName, this.dropProxy)
-      [method]("scroll." + pluginName, this.scrolledProxy)
+      this.$document[method](eventNames.move, this.dragProxy)
+      [method](eventNames.end, this.dropProxy)
+      [method]("scroll.sortable", this.scrolledProxy)
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
@@ -1489,14 +1507,6 @@ colors = jQuery.Color.names = {
       e.stopPropagation()
 
       this.rootGroup.dragInit(e, this)
-    },
-    receiveDrop: function  () {
-      var rootGroup = this.rootGroup,
-      item = rootGroup.item
-
-      // replace placeholder with current item
-      rootGroup.placeholder.before(item).detach()
-      rootGroup.options.onDrop(item, this, groupDefaults.onDrop)
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
@@ -1559,8 +1569,7 @@ colors = jQuery.Color.names = {
     },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.el.children(this.rootGroup.options.itemSelector)
-          .filter(":not(.dragged)").toArray()
+        this.items = this.$getChildren(this.el, "item").filter(":not(.dragged)").get()
         setDimensions(this.items, this.itemDimensions = [])
       }
       return this.itemDimensions
@@ -1579,7 +1588,7 @@ colors = jQuery.Color.names = {
     getContainerGroup: function  (index) {
       var childGroup = $.data(this.items[index], "subContainer")
       if( childGroup === undefined){
-        var childContainers = $(this.items[index]).children(this.rootGroup.options.containerSelector)
+        var childContainers = this.$getChildren(this.items[index], "container")
         childGroup = false
 
         if(childContainers[0]){
@@ -1592,6 +1601,19 @@ colors = jQuery.Color.names = {
         $.data(this.items[index], "subContainer", childGroup)
       }
       return childGroup
+    },
+    $getChildren: function (parent, type) {
+      return $(parent).children(this.rootGroup.options[type + "Selector"])
+    },
+    _serialize: function (parent, isContainer) {
+      var that = this,
+      childType = isContainer ? "item" : "container",
+      
+      children = this.$getChildren(parent, childType).map(function () {
+        return that._serialize($(this), !isContainer)
+      }).get()
+      
+      return this.rootGroup.options.serialize(parent, children, isContainer)
     }
   }
 
@@ -1602,7 +1624,7 @@ colors = jQuery.Color.names = {
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "enable", true)
 
-      this.el.on(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
+      this.el.on(eventNames.start, this.handle, this.dragInitProxy)
     },
     disable: function  (ignoreChildren) {
       if(this.options.drop)
@@ -1610,7 +1632,10 @@ colors = jQuery.Color.names = {
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off(eventNames.start + "." + pluginName, this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start, this.handle, this.dragInitProxy)
+    },
+    serialize: function () {
+      return this._serialize(this.el, true)
     }
   }
 
@@ -1625,15 +1650,18 @@ colors = jQuery.Color.names = {
    */
   $.fn[pluginName] = function(methodOrOptions) {
     var args = Array.prototype.slice.call(arguments, 1)
-    
-    return this.each(function(){
+
+    return this.map(function(){
       var $t = $(this),
       object = $t.data(pluginName)
+
       if(object && API[methodOrOptions])
-        API[methodOrOptions].apply(object, args)
+        return API[methodOrOptions].apply(object, args) || this
       else if(!object && (methodOrOptions === undefined ||
                           typeof methodOrOptions === "object"))
         $t.data(pluginName, new Container($t, methodOrOptions))
+
+      return this
     });
   };
 
@@ -1644,7 +1672,7 @@ $(function  () {
 })
 ;
 $(function  () {
-  $("ol.limited_drop_targets").sortable({
+  var group = $("ol.limited_drop_targets").sortable({
     group: 'limited_drop_targets',
     isValidTarget: function  (item, container) {
       if(item.is(".highlight"))
@@ -1652,6 +1680,13 @@ $(function  () {
       else {
         return item.parent("ol")[0] == container.el[0]
       }
+    },
+    onDrop: function (item, container, _super) {
+      $('#serialize_output').text(group.sortable("serialize").get().join("\n"))
+      _super(item, container)
+    },
+    serialize: function (parent, children, isContainer) {
+      return isContainer ? children.join() : parent.text()
     }
   })
 })
