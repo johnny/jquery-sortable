@@ -172,6 +172,14 @@
       %h3
         %code .sortable("disable")
       %p Disable all instantiated sortables in the set of matched elements
+      %h3
+        %code .sortable("serialize")
+      %p
+        Serialize all selected containers. Returns a
+        %code jQuery
+        object . Use
+        %code .get()
+        to retrieve the array, if needed.
   %h2#group-options Group options
   %table.table.table-striped.table-bordered.docs
     %thead
