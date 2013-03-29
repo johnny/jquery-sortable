@@ -100,6 +100,8 @@ configure :build do
     file.puts closure.compile(updated_file)
   end
 
+  `gzip -c source/js/jquery-sortable-min.js > source/js/jquery-sortable-min.js.gz`
+  
   manifest = 'sortable.jquery.json'
   content = File.read(manifest).gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
   File.open(manifest, 'w') do |file|
