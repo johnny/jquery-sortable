@@ -1734,6 +1734,7 @@ $(function  () {
   $("ol.simple_with_animation").sortable({
     group: 'simple_with_animation',
     pullPlaceholder: false,
+    // animation on drop
     onDrop: function  (item, targetContainer, _super) {
       var clonedItem = $('<li/>').css({height: 0})
       item.before(clonedItem)
@@ -1744,6 +1745,8 @@ $(function  () {
         _super(item)
       })
     },
+
+    // set item relative to cursor position
     onDragStart: function ($item, container, _super) {
       var offset = $item.offset(),
       pointer = container.rootGroup.pointer

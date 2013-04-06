@@ -268,6 +268,7 @@
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_animation</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">simple_with_animation</span><span class="delimiter">'</span></span>,
   <span class="key">pullPlaceholder</span>: <span class="predefined-constant">false</span>,
+  <span class="comment">// animation on drop</span>
   <span class="function">onDrop</span>: <span class="keyword">function</span>  (item, targetContainer, _super) {
     <span class="keyword">var</span> clonedItem = <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">&lt;li/&gt;</span><span class="delimiter">'</span></span>).css({<span class="key">height</span>: <span class="integer">0</span>})
     item.before(clonedItem)
@@ -278,6 +279,8 @@
       _super(item)
     })
   },
+
+  <span class="comment">// set item relative to cursor position</span>
   <span class="function">onDragStart</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
     <span class="keyword">var</span> offset = <span class="predefined">$item</span>.offset(),
     pointer = container.rootGroup.pointer
@@ -314,7 +317,7 @@
         <strong>above a container</strong>
       </li>
     </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <ol class='simple_with_animation vertical'>
@@ -380,7 +383,7 @@
         items on drag
       </li>
     </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <h3>I'm draggable and droppable</h3>
@@ -487,7 +490,7 @@
         lists
       </li>
     </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <div class='switch-container'>
@@ -594,7 +597,7 @@
         of the lists
       </li>
     </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
     <h3>Serialize result</h3>
     <pre id='serialize_output'></pre>
   </div>
@@ -795,7 +798,7 @@
         to change the sorting behaviour
       </li>
     </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <h3>Sortable Rows</h3>
