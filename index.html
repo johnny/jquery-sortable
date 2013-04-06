@@ -79,7 +79,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
-        (8.3 kb)
+        (8.2 kb, gzipped ~2.7 kb)
       </small>
     </p>
   </div>
@@ -263,7 +263,9 @@
 <div class='row'>
   <div class="span12 example">
     <div class="CodeRay">
-  <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_animation</span><span class="delimiter">&quot;</span></span>).sortable({
+  <div class="code"><pre><span class="keyword">var</span> adjustment
+
+<span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_animation</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">simple_with_animation</span><span class="delimiter">'</span></span>,
   <span class="key">pullPlaceholder</span>: <span class="predefined-constant">false</span>,
   <span class="function">onDrop</span>: <span class="keyword">function</span>  (item, targetContainer, _super) {
@@ -274,6 +276,23 @@
     item.animate(clonedItem.position(), <span class="keyword">function</span>  () {
       clonedItem.detach()
       _super(item)
+    })
+  },
+  <span class="function">onDragStart</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+    <span class="keyword">var</span> offset = <span class="predefined">$item</span>.offset(),
+    pointer = container.rootGroup.pointer
+
+    adjustment = {
+      <span class="key">left</span>: pointer.left - offset.left,
+      <span class="key">top</span>: pointer.top - offset.top
+    }
+
+    _super(<span class="predefined">$item</span>, container)
+  },
+  <span class="function">onDrag</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, position) {
+    <span class="predefined">$item</span>.css({
+      <span class="key">left</span>: position.left - adjustment.left,
+      <span class="key">top</span>: position.top - adjustment.top
     })
   }
 })</pre></div>
@@ -295,7 +314,7 @@
         <strong>above a container</strong>
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <ol class='simple_with_animation vertical'>
@@ -361,7 +380,7 @@
         items on drag
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <h3>I'm draggable and droppable</h3>
@@ -468,7 +487,7 @@
         lists
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <div class='switch-container'>
@@ -575,7 +594,7 @@
         of the lists
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
     <h3>Serialize result</h3>
     <pre id='serialize_output'></pre>
   </div>
@@ -776,7 +795,7 @@
         to change the sorting behaviour
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <h3>Sortable Rows</h3>

@@ -1215,10 +1215,10 @@ colors = jQuery.Color.names = {
     return x+y;
   }
 
-  Array.prototype.remove = function(from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
+  function remove(array, from, to) {
+    var rest = array.slice((to || from) + 1 || array.length);
+    array.length = from < 0 ? array.length + from : from;
+    return array.push.apply(array, rest);
   }
 
   function setDimensions(array, dimensions, useOffset) {
@@ -1456,7 +1456,7 @@ colors = jQuery.Color.names = {
     },
     removeContainer: function (container) {
       var i = this.containers.indexOf(container)
-      this.containers.remove(i);
+      remove(this.containers, i);
     },
     scrolled: function  (e) {
       this.clearDimensions()
@@ -1609,7 +1609,7 @@ colors = jQuery.Color.names = {
       var that = this,
       childType = isContainer ? "item" : "container",
       
-      children = this.$getChildren(parent, childType).map(function () {
+      children = this.$getChildren(parent, childType).not(this.options.exclude).map(function () {
         return that._serialize($(this), !isContainer)
       }).get()
       
@@ -1729,6 +1729,8 @@ $(function () {
 })
 ;
 $(function  () {
+  var adjustment
+
   $("ol.simple_with_animation").sortable({
     group: 'simple_with_animation',
     pullPlaceholder: false,
@@ -1740,6 +1742,23 @@ $(function  () {
       item.animate(clonedItem.position(), function  () {
         clonedItem.detach()
         _super(item)
+      })
+    },
+    onDragStart: function ($item, container, _super) {
+      var offset = $item.offset(),
+      pointer = container.rootGroup.pointer
+
+      adjustment = {
+        left: pointer.left - offset.left,
+        top: pointer.top - offset.top
+      }
+
+      _super($item, container)
+    },
+    onDrag: function ($item, position) {
+      $item.css({
+        left: position.left - adjustment.left,
+        top: position.top - adjustment.top
       })
     }
   })
