@@ -131,10 +131,10 @@
     return x+y;
   }
 
-  Array.prototype.remove = function(from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
+  function remove(array, from, to) {
+    var rest = array.slice((to || from) + 1 || array.length);
+    array.length = from < 0 ? array.length + from : from;
+    return array.push.apply(array, rest);
   }
 
   function setDimensions(array, dimensions, useOffset) {
@@ -372,7 +372,7 @@
     },
     removeContainer: function (container) {
       var i = this.containers.indexOf(container)
-      this.containers.remove(i);
+      remove(this.containers, i);
     },
     scrolled: function  (e) {
       this.clearDimensions()
