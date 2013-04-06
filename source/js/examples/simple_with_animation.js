@@ -1,4 +1,6 @@
 $(function  () {
+  var adjustment
+
   $("ol.simple_with_animation").sortable({
     group: 'simple_with_animation',
     pullPlaceholder: false,
@@ -10,6 +12,23 @@ $(function  () {
       item.animate(clonedItem.position(), function  () {
         clonedItem.detach()
         _super(item)
+      })
+    },
+    onDragStart: function ($item, container, _super) {
+      var offset = $item.offset(),
+      pointer = container.rootGroup.pointer
+
+      adjustment = {
+        left: pointer.left - offset.left,
+        top: pointer.top - offset.top
+      }
+
+      _super($item, container)
+    },
+    onDrag: function ($item, position) {
+      $item.css({
+        left: position.left - adjustment.left,
+        top: position.top - adjustment.top
       })
     }
   })
