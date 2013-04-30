@@ -15,7 +15,7 @@
         Download
         %a(href="js/jquery-sortable-min.js") minified
         version
-        (#{(File.size("source/js/jquery-sortable-min.js")/100.0).round / 10.0} kb, gzipped ~#{(File.size("source/js/jquery-sortable-min.js.gz")/100.0).round / 10.0} kb)
+        (#{file_kb("source/js/jquery-sortable-min.js")} kb, gzipped ~#{file_kb("source/js/jquery-sortable-min.js.gz")} kb)
 #features
   .page-header
     %h1 Features

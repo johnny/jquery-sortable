@@ -76,6 +76,10 @@ helpers do
       out
     end.join
   end
+
+  def file_kb(name)
+    (File.size(name)/100.0).round / 10.0 if File.exists?(name)
+  end
 end
 
 set :css_dir, 'css'

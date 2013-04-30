@@ -83,7 +83,7 @@
     },
     // Called when the mouse button is beeing released
     onDrop: function ($item, container, _super) {
-      $item.removeClass("dragged").attr("style","")
+      $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
     },
     // Template for the placeholder. Can be any valid jQuery input
