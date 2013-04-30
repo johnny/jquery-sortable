@@ -14,6 +14,7 @@ $(function  () {
     },
     serialize: function (parent, children, isContainer) {
       return isContainer ? children.join() : parent.text()
-    }
+    },
+    tolerance: 6
   })
 })

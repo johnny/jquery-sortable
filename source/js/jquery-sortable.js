@@ -102,7 +102,9 @@
       delete result.sortable
 
       return result
-    }
+    },
+    // Set tolerance while dragging. Positive values will decrease sensitivity.
+    tolerance: 0
   }, // end group defaults
   containerGroups = {},
   groupCounter = 0
@@ -253,8 +255,10 @@
 
       var x = e.pageX,
       y = e.pageY,
-      box = this.sameResultBox
-      if(!box || box.top > y || box.bottom < y || box.left > x || box.right < x)
+      box = this.sameResultBox,
+      t = this.options.tolerance
+
+      if(!box || box.top - t > y || box.bottom + t < y || box.left - t > x || box.right + t < x)
         if(!this.searchValidTarget())
           this.placeholder.detach()
     },
