@@ -1,5 +1,5 @@
 /* ===================================================
- *  jquery-sortable.js v0.9.8
+ *  jquery-sortable.js v0.9.9
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -50,6 +50,8 @@
     },
     // The css selector of the containers
     containerSelector: "ol, ul",
+    // Distance the mouse has to travel to start dragging
+    distance: 0,
     // The css selector of the drag handle
     handle: "",
     // The css selector of the items
@@ -84,7 +86,7 @@
     },
     // Called when the mouse button is beeing released
     onDrop: function ($item, container, _super) {
-      $item.removeClass("dragged").attr("style","")
+      $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
     },
     // Template for the placeholder. Can be any valid jQuery input
@@ -103,7 +105,9 @@
       delete result.sortable
 
       return result
-    }
+    },
+    // Set tolerance while dragging. Positive values will decrease sensitivity.
+    tolerance: 0
   }, // end group defaults
   containerGroups = {},
   groupCounter = 0
@@ -237,6 +241,9 @@
       e.preventDefault()
 
       if(!this.dragging){
+        if(!this.distanceMet(e))
+          return
+
         processChildContainers(this.item, this.options.containerSelector, "disable", true)
 
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart)
@@ -244,9 +251,7 @@
         this.dragging = true
       }
 
-      if(!this.setPointer(e))
-        return;
-
+      this.setPointer(e)
       // place item under the cursor
       this.options.onDrag(this.item,
                           getRelativePosition(this.pointer, this.item.offsetParent()),
@@ -254,8 +259,10 @@
 
       var x = e.pageX,
       y = e.pageY,
-      box = this.sameResultBox
-      if(!box || box.top > y || box.bottom < y || box.left > x || box.right < x)
+      box = this.sameResultBox,
+      t = this.options.tolerance
+
+      if(!box || box.top - t > y || box.bottom + t < y || box.left - t > x || box.right + t < x)
         if(!this.searchValidTarget())
           this.placeholder.detach()
     },
@@ -366,7 +373,12 @@
 
       this.lastPointer = this.pointer
       this.pointer = pointer
-      return true
+    },
+    distanceMet: function (e) {
+      return (Math.max(
+ 				Math.abs(this.pointer.left - e.pageX),
+				Math.abs(this.pointer.top - e.pageY)
+			) >= this.options.distance)
     },
     addContainer: function  (container) {
       this.containers.push(container);

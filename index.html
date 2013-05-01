@@ -71,7 +71,7 @@
       <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
         <i class='icon-hdd icon-white'></i>
         Download
-        (v0.9.8)
+        (v0.9.9)
       </a>
     </p>
     <p>
@@ -79,7 +79,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
-        (8.2 kb, gzipped ~2.7 kb)
+        (8.4 kb, gzipped ~2.8 kb)
       </small>
     </p>
   </div>
@@ -580,7 +580,9 @@
   },
   <span class="function">serialize</span>: <span class="keyword">function</span> (parent, children, isContainer) {
     <span class="keyword">return</span> isContainer ? children.join() : parent.text()
-  }
+  },
+  <span class="key">tolerance</span>: <span class="integer">6</span>,
+  <span class="key">distance</span>: <span class="integer">10</span>
 })</pre></div>
 </div>
 
@@ -595,6 +597,15 @@
         Customize
         <strong>serialization</strong>
         of the lists
+      </li>
+      <li>
+        Decrease sort
+        <strong>sensitivity</strong>
+      </li>
+      <li>
+        Start dragging after a
+        <strong>distance</strong>
+        has been met
       </li>
     </ul>
     <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
@@ -965,6 +976,16 @@
 </td>
 <td> The css selector of the containers</td>
 </tr><tr><td>
+  <code>distance</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="integer">0</span></pre></div>
+</div>
+
+</td>
+<td> Distance the mouse has to travel to start dragging</td>
+</tr><tr><td>
   <code>handle</code>
 </td>
 <td>
@@ -1042,7 +1063,7 @@
 <td>
   <div class="CodeRay">
   <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
-  <span class="predefined">$item</span>.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>).attr(<span class="string"><span class="delimiter">&quot;</span><span class="content">style</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
+  <span class="predefined">$item</span>.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>).removeAttr(<span class="string"><span class="delimiter">&quot;</span><span class="content">style</span><span class="delimiter">&quot;</span></span>)
   <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span>).removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
 }</pre></div>
 </div>
@@ -1085,6 +1106,16 @@
 
 </td>
 <td> Specifies serialization of the container group. The pair $parent/$children is either container/items or item/subcontainers</td>
+</tr><tr><td>
+  <code>tolerance</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="integer">0</span></pre></div>
+</div>
+
+</td>
+<td> Set tolerance while dragging. Positive values will decrease sensitivity.</td>
 </tr>
     </tbody>
   </table>
