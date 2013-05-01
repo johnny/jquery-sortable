@@ -245,9 +245,7 @@
         this.dragging = true
       }
 
-      if(!this.setPointer(e))
-        return;
-
+      this.setPointer(e)
       // place item under the cursor
       this.options.onDrag(this.item,
                           getRelativePosition(this.pointer, this.item.offsetParent()),
@@ -369,7 +367,6 @@
 
       this.lastPointer = this.pointer
       this.pointer = pointer
-      return true
     },
     addContainer: function  (container) {
       this.containers.push(container);
