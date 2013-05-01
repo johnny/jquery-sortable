@@ -49,6 +49,7 @@
     },
     // The css selector of the containers
     containerSelector: "ol, ul",
+    distance: 0,
     // The css selector of the drag handle
     handle: "",
     // The css selector of the items
@@ -238,6 +239,9 @@
       e.preventDefault()
 
       if(!this.dragging){
+        if(!this.distanceMet(e))
+          return
+
         processChildContainers(this.item, this.options.containerSelector, "disable", true)
 
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart)
@@ -367,6 +371,12 @@
 
       this.lastPointer = this.pointer
       this.pointer = pointer
+    },
+    distanceMet: function (e) {
+      return (Math.max(
+ 				Math.abs(this.pointer.left - e.pageX),
+				Math.abs(this.pointer.top - e.pageY)
+			) >= this.options.distance)
     },
     addContainer: function  (container) {
       this.containers.push(container);
