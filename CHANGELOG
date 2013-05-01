@@ -1,3 +1,7 @@
+[0.9.8]	Added options tolerance and distance
+	Do not modify Array.prototype (by Joakin)
+	serialize respects exclude option
+
 [0.9.8]	Added Serialization
 	Added onCancel
 

@@ -49,6 +49,7 @@
     },
     // The css selector of the containers
     containerSelector: "ol, ul",
+    // Distance the mouse has to travel to start dragging
     distance: 0,
     // The css selector of the drag handle
     handle: "",
