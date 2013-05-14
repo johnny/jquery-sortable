@@ -95,12 +95,18 @@
     // If false, it is only calculated when the mouse is above a container.
     pullPlaceholder: true,
     // Specifies serialization of the container group.
-    // The pair $parent/$children is either container/items or item/subcontainers
+    // The pair $parent/$children is either container/items or item/subcontainers.
+    // Note that this default method only works, if every item only has one subcontainer
     serialize: function ($parent, $children, parentIsContainer) {
       var result = $.extend({}, $parent.data())
-
-      if($children[0])
+      
+      if(parentIsContainer)
+        return $children
+      else if ($children[0]){
         result.children = $children
+        delete result.subContainer
+      }
+
       delete result.sortable
 
       return result
