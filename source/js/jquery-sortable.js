@@ -237,8 +237,6 @@
       this.setPointer(e)
     },
     drag: function  (e) {
-      e.preventDefault()
-
       if(!this.dragging){
         if(!this.distanceMet(e))
           return
@@ -266,7 +264,6 @@
           this.placeholder.detach()
     },
     drop: function  (e) {
-      e.preventDefault()
       this.toggleListeners('off')
 
       if(!this.dragging)
@@ -286,6 +283,7 @@
       this.clearOffsetParent()
       this.lastAppendedItem = this.sameResultBox = undefined
       this.dragging = false
+      this.item = undefined
     },
     searchValidTarget: function  (pointer, lastPointer) {
       if(!pointer){
@@ -426,15 +424,16 @@
 
   Container.prototype = {
     dragInit: function  (e) {
-      if(e.which !== 1 ||
+      var rootGroup = this.rootGroup
+      if(rootGroup.item ||
+         e.which !== 1 ||
          !this.options.drag ||
          $(e.target).is(this.options.exclude))
         return;
-      
-      e.preventDefault()
-      e.stopPropagation()
 
-      this.rootGroup.dragInit(e, this)
+      e.preventDefault()
+
+      rootGroup.dragInit(e, this)
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
