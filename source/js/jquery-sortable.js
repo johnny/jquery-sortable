@@ -146,32 +146,6 @@
     array.length = from < 0 ? array.length + from : from;
     return array.push.apply(array, rest);
   }
-	function indexOf(array, elem) {
-        var t = Object(array);
-        var len = t.length >>> 0;
-        if (len === 0) {
-            return -1;
-        }
-        var n = 0;
-        if (arguments.length > 1) {
-            n = Number(arguments[1]);
-            if (n != n) { // shortcut for verifying if it's NaN
-                n = 0;
-            } else if (n != 0 && n != Infinity && n != -Infinity) {
-                n = (n > 0 || -1) * Math.floor(Math.abs(n));
-            }
-        }
-        if (n >= len) {
-            return -1;
-        }
-        var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
-        for (; k < len; k++) {
-            if (k in t && t[k] === elem) {
-                return k;
-            }
-        }
-        return -1;
-	}
 
   function setDimensions(array, dimensions, useOffset) {
     var i = array.length,
@@ -413,9 +387,8 @@
       this.containers.push(container);
     },
     removeContainer: function (container) {
-      //var i = this.containers.indexOf(container)
-      var i = indexOf(container,this);
-      remove(this.containers, i);
+      var i = $.inArray(container,this);
+      i!==-1 && remove(this.containers, i);
     },
     scrolled: function  (e) {
       this.clearDimensions()
