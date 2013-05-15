@@ -387,7 +387,7 @@
       this.containers.push(container);
     },
     removeContainer: function (container) {
-      var i = $.inArray(container,this);
+      var i = $.inArray(container,this.containers);
       i!==-1 && remove(this.containers, i);
     },
     scrolled: function  (e) {
