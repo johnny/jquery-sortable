@@ -272,23 +272,23 @@
     drop: function  (e) {
       this.toggleListeners('off')
 
-      if(!this.dragging)
-        return;
+      if(this.dragging){
+        // processing Drop, check if placeholder is detached
+        if(this.placeholder.closest("html")[0])
+          this.placeholder.before(this.item).detach()
+        else
+          this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
 
-      // processing Drop, check if placeholder is detached
-      if(this.placeholder.closest("html")[0])
-        this.placeholder.before(this.item).detach()
-      else
-        this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
+        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
+        processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
-      this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
-      processChildContainers(this.item, this.options.containerSelector, "enable", true)
-
-      // cleanup
-      this.clearDimensions()
-      this.clearOffsetParent()
-      this.lastAppendedItem = this.sameResultBox = undefined
-      this.dragging = false
+        // cleanup
+        this.clearDimensions()
+        this.clearOffsetParent()
+        this.lastAppendedItem = this.sameResultBox = undefined
+        this.dragging = false
+      }
+      
       this.item = undefined
     },
     searchValidTarget: function  (pointer, lastPointer) {
@@ -565,7 +565,7 @@
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off(eventNames.start, this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start)
     },
     serialize: function () {
       return this._serialize(this.el, true)
