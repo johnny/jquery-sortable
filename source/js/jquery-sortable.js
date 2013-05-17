@@ -387,8 +387,8 @@
       this.containers.push(container);
     },
     removeContainer: function (container) {
-      var i = this.containers.indexOf(container)
-      remove(this.containers, i);
+      var i = $.inArray(container,this.containers);
+      i!==-1 && remove(this.containers, i);
     },
     scrolled: function  (e) {
       this.clearDimensions()
