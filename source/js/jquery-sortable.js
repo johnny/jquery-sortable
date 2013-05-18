@@ -66,7 +66,7 @@
     onCancel: function ($item, container, _super) {
     },
     // Executed at the beginning of a mouse move event.
-    // The Placeholder has not been moved yet
+    // The Placeholder has not been moved yet.
     onDrag: function ($item, position, _super) {
       $item.css(position)
     },
@@ -87,6 +87,10 @@
     onDrop: function ($item, container, _super) {
       $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
+    },
+    // Called on mousedown.
+    onMousedown: function($item, event, _super) {
+      event.preventDefault()
     },
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element
@@ -241,6 +245,8 @@
       this.itemContainer = itemContainer
 
       this.setPointer(e)
+      
+      this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
     },
     drag: function  (e) {
       if(!this.dragging){
@@ -431,15 +437,12 @@
   Container.prototype = {
     dragInit: function  (e) {
       var rootGroup = this.rootGroup
-      if(rootGroup.item ||
-         e.which !== 1 ||
-         !this.options.drag ||
-         $(e.target).is(this.options.exclude))
-        return;
 
-      e.preventDefault()
-
-      rootGroup.dragInit(e, this)
+      if( !rootGroup.item &&
+          e.which === 1 &&
+          this.options.drag &&
+          !$(e.target).is(this.options.exclude))
+        rootGroup.dragInit(e, this)
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
