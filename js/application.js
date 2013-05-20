@@ -1082,7 +1082,7 @@ colors = jQuery.Color.names = {
 
 }(window.jQuery);
 /* ===================================================
- *  jquery-sortable.js v0.9.9
+ *  jquery-sortable.js v0.9.10
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -1150,7 +1150,7 @@ colors = jQuery.Color.names = {
     onCancel: function ($item, container, _super) {
     },
     // Executed at the beginning of a mouse move event.
-    // The Placeholder has not been moved yet
+    // The Placeholder has not been moved yet.
     onDrag: function ($item, position, _super) {
       $item.css(position)
     },
@@ -1172,6 +1172,10 @@ colors = jQuery.Color.names = {
       $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
     },
+    // Called on mousedown.
+    onMousedown: function($item, event, _super) {
+      event.preventDefault()
+    },
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element
     placeholder: '<li class="placeholder"/>',
@@ -1179,12 +1183,18 @@ colors = jQuery.Color.names = {
     // If false, it is only calculated when the mouse is above a container.
     pullPlaceholder: true,
     // Specifies serialization of the container group.
-    // The pair $parent/$children is either container/items or item/subcontainers
+    // The pair $parent/$children is either container/items or item/subcontainers.
+    // Note that this default method only works, if every item only has one subcontainer
     serialize: function ($parent, $children, parentIsContainer) {
       var result = $.extend({}, $parent.data())
-
-      if($children[0])
+      
+      if(parentIsContainer)
+        return $children
+      else if ($children[0]){
         result.children = $children
+        delete result.subContainer
+      }
+
       delete result.sortable
 
       return result
@@ -1319,10 +1329,10 @@ colors = jQuery.Color.names = {
       this.itemContainer = itemContainer
 
       this.setPointer(e)
+      
+      this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
     },
     drag: function  (e) {
-      e.preventDefault()
-
       if(!this.dragging){
         if(!this.distanceMet(e))
           return
@@ -1350,26 +1360,26 @@ colors = jQuery.Color.names = {
           this.placeholder.detach()
     },
     drop: function  (e) {
-      e.preventDefault()
       this.toggleListeners('off')
 
-      if(!this.dragging)
-        return;
+      if(this.dragging){
+        // processing Drop, check if placeholder is detached
+        if(this.placeholder.closest("html")[0])
+          this.placeholder.before(this.item).detach()
+        else
+          this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
 
-      // processing Drop, check if placeholder is detached
-      if(this.placeholder.closest("html")[0])
-        this.placeholder.before(this.item).detach()
-      else
-        this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
+        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
+        processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
-      this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
-      processChildContainers(this.item, this.options.containerSelector, "enable", true)
-
-      // cleanup
-      this.clearDimensions()
-      this.clearOffsetParent()
-      this.lastAppendedItem = this.sameResultBox = undefined
-      this.dragging = false
+        // cleanup
+        this.clearDimensions()
+        this.clearOffsetParent()
+        this.lastAppendedItem = this.sameResultBox = undefined
+        this.dragging = false
+      }
+      
+      this.item = undefined
     },
     searchValidTarget: function  (pointer, lastPointer) {
       if(!pointer){
@@ -1467,8 +1477,8 @@ colors = jQuery.Color.names = {
       this.containers.push(container);
     },
     removeContainer: function (container) {
-      var i = this.containers.indexOf(container)
-      remove(this.containers, i);
+      var i = $.inArray(container,this.containers);
+      i!==-1 && remove(this.containers, i);
     },
     scrolled: function  (e) {
       this.clearDimensions()
@@ -1510,15 +1520,13 @@ colors = jQuery.Color.names = {
 
   Container.prototype = {
     dragInit: function  (e) {
-      if(e.which !== 1 ||
-         !this.options.drag ||
-         $(e.target).is(this.options.exclude))
-        return;
-      
-      e.preventDefault()
-      e.stopPropagation()
+      var rootGroup = this.rootGroup
 
-      this.rootGroup.dragInit(e, this)
+      if( !rootGroup.item &&
+          e.which === 1 &&
+          this.options.drag &&
+          !$(e.target).is(this.options.exclude))
+        rootGroup.dragInit(e, this)
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
@@ -1644,7 +1652,7 @@ colors = jQuery.Color.names = {
       if(!ignoreChildren)
         processChildContainers(this.el, this.options.containerSelector, "disable", true)
 
-      this.el.off(eventNames.start, this.handle, this.dragInitProxy)
+      this.el.off(eventNames.start)
     },
     serialize: function () {
       return this._serialize(this.el, true)

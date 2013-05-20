@@ -71,7 +71,7 @@
       <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
         <i class='icon-hdd icon-white'></i>
         Download
-        (v0.9.9)
+        (v0.9.10)
       </a>
     </p>
     <p>
@@ -79,7 +79,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
-        (8.4 kb, gzipped ~2.8 kb)
+        (8.5 kb, gzipped ~2.8 kb)
       </small>
     </p>
   </div>
@@ -138,9 +138,10 @@
       <ul>
         <li>Firefox >= 3.5</li>
         <li>Chrome</li>
+        <li>IE > 7</li>
+        <li>Safari >= 6</li>
         <li>Opera</li>
         <li>Konqueror</li>
-        <li>IE > 7</li>
       </ul>
       <p>
         If you confirmed, that it works on other browsers please
@@ -1039,7 +1040,7 @@
 </div>
 
 </td>
-<td> Executed at the beginning of a mouse move event. The Placeholder has not been moved yet</td>
+<td> Executed at the beginning of a mouse move event. The Placeholder has not been moved yet.</td>
 </tr><tr><td>
   <code>onDragStart</code>
 </td>
@@ -1071,6 +1072,18 @@
 </td>
 <td> Called when the mouse button is beeing released</td>
 </tr><tr><td>
+  <code>onMousedown</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span>(<span class="predefined">$item</span>, event, _super) {
+  event.preventDefault()
+}</pre></div>
+</div>
+
+</td>
+<td> Called on mousedown.</td>
+</tr><tr><td>
   <code>placeholder</code>
 </td>
 <td>
@@ -1097,15 +1110,17 @@
   <div class="CodeRay">
   <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$parent</span>, <span class="predefined">$children</span>, parentIsContainer) {
   <span class="keyword">var</span> result = <span class="predefined">$</span>.extend({}, <span class="predefined">$parent</span>.data())
-   <span class="keyword">if</span>(<span class="predefined">$children</span>[<span class="integer">0</span>])
+  
+  <span class="keyword">if</span>(parentIsContainer)
+    <span class="keyword">return</span> <span class="predefined">$children</span>
+  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="predefined">$children</span>[<span class="integer">0</span>]){
     result.children = <span class="predefined">$children</span>
-  <span class="keyword">delete</span> result.sortable
-   <span class="keyword">return</span> result
-}</pre></div>
+    <span class="keyword">delete</span> result.subContainer
+  }</pre></div>
 </div>
 
 </td>
-<td> Specifies serialization of the container group. The pair $parent/$children is either container/items or item/subcontainers</td>
+<td> Specifies serialization of the container group. The pair $parent/$children is either container/items or item/subcontainers. Note that this default method only works, if every item only has one subcontainer</td>
 </tr><tr><td>
   <code>tolerance</code>
 </td>
