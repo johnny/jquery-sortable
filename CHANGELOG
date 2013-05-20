@@ -1,4 +1,9 @@
-[0.9.8]	Added options tolerance and distance
+[0.9.10]Fix Array.indexOf() error in IE < 9 (Dev-Speranza)
+	serialize() assumes one subcontainer per item
+	remove call to stopPropagation()
+	Added onMousedown()
+
+[0.9.9]	Added options tolerance and distance
 	Do not modify Array.prototype (by Joakin)
 	serialize respects exclude option
 
