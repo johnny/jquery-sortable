@@ -119,20 +119,11 @@
     tolerance: 0
   }, // end group defaults
   containerGroups = {},
-  groupCounter = 0
-
-  if('ontouchstart' in window){
-    eventNames = {
-      start: "touchstart.sortable",
-      end: "touchend.sortable touchcancel.sortable",
-      move: "touchmove.sortable"
-    }
-  } else {
-    eventNames = {
-      start: "mousedown.sortable",
-      end: "mouseup.sortable",
-      move: "mousemove.sortable"
-    }
+  groupCounter = 0,
+  eventNames = {
+    start: "touchstart.sortable mousedown.sortable",
+    end: "touchend.sortable touchcancel.sortable mouseup.sortable",
+    move: "touchmove.sortable mousemove.sortable"
   }
 
   /*
