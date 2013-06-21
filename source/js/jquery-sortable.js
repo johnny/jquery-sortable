@@ -93,7 +93,8 @@
       event.preventDefault()
     },
     // Template for the placeholder. Can be any valid jQuery input
-    // e.g. a string, a DOM element
+    // e.g. a string, a DOM element.
+    // The placeholder must have the class "placeholder"
     placeholder: '<li class="placeholder"/>',
     // If true, the position of the placeholder is calculated on every mousemove.
     // If false, it is only calculated when the mouse is above a container.
@@ -115,11 +116,18 @@
 
       return result
     },
-    // Set tolerance while dragging. Positive values will decrease sensitivity.
+    // Set tolerance while dragging. Positive values decrease sensitivity,
+    // negative values increase it.
     tolerance: 0
   }, // end group defaults
   containerGroups = {},
   groupCounter = 0,
+  emptyBox = {
+    left: 0,
+    top: 0,
+    bottom: 0,
+    right:0
+  }
   eventNames = {
     start: "touchstart.sortable mousedown.sortable",
     end: "touchend.sortable touchcancel.sortable mouseup.sortable",
@@ -142,20 +150,22 @@
     return array.push.apply(array, rest);
   }
 
-  function setDimensions(array, dimensions, useOffset) {
+  function setDimensions(array, dimensions, tolerance, useOffset) {
     var i = array.length,
     offsetMethod = useOffset ? "offset" : "position"
+    tolerance = tolerance || 0
+
     while(i--){
       var el = array[i].el ? array[i].el : $(array[i]),
       // use fitting method
       pos = el[offsetMethod]()
       pos.left += parseInt(el.css('margin-left'), 10)
-      pos.right += parseInt(el.css('margin-right'),10)
+      pos.top += parseInt(el.css('margin-top'),10)
       dimensions[i] = [
-        pos.left,
-        pos.left + el.outerWidth(),
-        pos.top,
-        pos.top + el.outerHeight()
+        pos.left - tolerance,
+        pos.left + el.outerWidth() + tolerance,
+        pos.top - tolerance,
+        pos.top + el.outerHeight() + tolerance
       ]
     }
   }
@@ -330,7 +340,7 @@
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)
-        setDimensions(this.containers, this.containerDimensions = [], !this.$getOffsetParent())
+        setDimensions(this.containers, this.containerDimensions = [], this.options.tolerance, !this.$getOffsetParent())
       return this.containerDimensions
     },
     getContainer: function  (element) {
@@ -453,7 +463,7 @@
         while(i--){
           var index = distances[i][0],
           distance = distances[i][1]
-          if(!distance && this.options.nested && this.getContainerGroup(index)){
+          if(!distance && this.hasChildGroup(index)){
             var found = this.getContainerGroup(index).searchValidTarget(pointer, lastPointer)
             if(found)
               return true
@@ -494,12 +504,14 @@
         } else
           sameResultBox.left += width / 2
       }
+      if(this.hasChildGroup(index))
+        sameResultBox = emptyBox
       this.rootGroup.movePlaceholder(this, item, method, sameResultBox)
     },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.$getChildren(this.el, "item").filter(":not(.dragged)").get()
-        setDimensions(this.items, this.itemDimensions = [])
+        this.items = this.$getChildren(this.el, "item").filter(":not(.placeholder)").get()
+        setDimensions(this.items, this.itemDimensions = [], this.options.tolerance)
       }
       return this.itemDimensions
     },
@@ -513,6 +525,9 @@
       else
         offsetParent = el.offsetParent()
       return offsetParent
+    },
+    hasChildGroup: function (index) {
+      return this.options.nested && this.getContainerGroup(index)
     },
     getContainerGroup: function  (index) {
       var childGroup = $.data(this.items[index], "subContainer")
