@@ -149,11 +149,13 @@
       var el = array[i].el ? array[i].el : $(array[i]),
       // use fitting method
       pos = el[offsetMethod]()
+      pos.left += parseInt(el.css('margin-left'), 10)
+      pos.right += parseInt(el.css('margin-right'),10)
       dimensions[i] = [
         pos.left,
-        pos.left + el.outerWidth(true),
+        pos.left + el.outerWidth(),
         pos.top,
-        pos.top + el.outerHeight(true)
+        pos.top + el.outerHeight()
       ]
     }
   }
