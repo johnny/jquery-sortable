@@ -400,11 +400,10 @@
 
   function Container(element, options) {
     this.el = element
-    this.floatRight = false
     this.options = $.extend( {}, containerDefaults, options)
 
     this.group = ContainerGroup.get(this.options)
-    this.rootGroup = this.options.rootGroup = this.options.rootGroup || this.group
+    this.rootGroup = this.options.rootGroup || this.group
     this.parentContainer = this.options.parentContainer
     this.handle = this.rootGroup.options.handle || this.rootGroup.options.itemSelector
 
@@ -475,7 +474,7 @@
       } else {
         var xCenter = (dim[0] + dim[1]) / 2,
         inLeftHalf = pointer.left <= xCenter
-        if(inLeftHalf != this.floatRight){
+        if(inLeftHalf){
           method = "before"
           sameResultBox.right -= width / 2
         } else
