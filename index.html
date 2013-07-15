@@ -71,7 +71,7 @@
       <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
         <i class='icon-hdd icon-white'></i>
         Download
-        (v0.9.10)
+        (v0.9.11)
       </a>
     </p>
     <p>
@@ -79,7 +79,7 @@
         Download
         <a href='js/jquery-sortable-min.js'>minified</a>
         version
-        (8.5 kb, gzipped ~2.8 kb)
+        (8.4 kb, gzipped ~2.8 kb)
       </small>
     </p>
   </div>
@@ -318,7 +318,7 @@
         <strong>above a container</strong>
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <ol class='simple_with_animation vertical'>
@@ -384,7 +384,7 @@
         items on drag
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <h3>I'm draggable and droppable</h3>
@@ -491,7 +491,7 @@
         lists
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <div class='switch-container'>
@@ -609,7 +609,7 @@
         has been met
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
     <h3>Serialize result</h3>
     <pre id='serialize_output'></pre>
   </div>
@@ -671,7 +671,15 @@
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nav</span><span class="delimiter">'</span></span>,
   <span class="key">nested</span>: <span class="predefined-constant">false</span>,
   <span class="key">vertical</span>: <span class="predefined-constant">false</span>,
-  <span class="key">exclude</span>: <span class="string"><span class="delimiter">'</span><span class="content">.divider-vertical</span><span class="delimiter">'</span></span>
+  <span class="key">exclude</span>: <span class="string"><span class="delimiter">'</span><span class="content">.divider-vertical</span><span class="delimiter">'</span></span>,
+  <span class="function">onDragStart</span>: <span class="keyword">function</span>(<span class="predefined">$item</span>, container, _super) {
+    <span class="predefined">$item</span>.find(<span class="string"><span class="delimiter">'</span><span class="content">ol.dropdown-menu</span><span class="delimiter">'</span></span>).sortable(<span class="string"><span class="delimiter">'</span><span class="content">disable</span><span class="delimiter">'</span></span>)
+    _super(<span class="predefined">$item</span>, container)
+  },
+  <span class="function">onDrop</span>: <span class="keyword">function</span>(<span class="predefined">$item</span>, container, _super) {
+    <span class="predefined">$item</span>.find(<span class="string"><span class="delimiter">'</span><span class="content">ol.dropdown-menu</span><span class="delimiter">'</span></span>).sortable(<span class="string"><span class="delimiter">'</span><span class="content">enable</span><span class="delimiter">'</span></span>)
+    _super(<span class="predefined">$item</span>, container)
+  }
 })
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.dropdown-menu</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nav</span><span class="delimiter">'</span></span>
@@ -757,7 +765,8 @@
     <div class="CodeRay">
   <div class="code"><pre><span class="comment">// Sortable rows</span>
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.sorted_table</span><span class="delimiter">'</span></span>).sortable({
-  <span class="key">containerSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">tbody</span><span class="delimiter">'</span></span>,
+  <span class="key">containerSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">table</span><span class="delimiter">'</span></span>,
+  <span class="key">itemPath</span>: <span class="string"><span class="delimiter">'</span><span class="content">&gt; tbody</span><span class="delimiter">'</span></span>,
   <span class="key">itemSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">tr</span><span class="delimiter">'</span></span>,
   <span class="key">placeholder</span>: <span class="string"><span class="delimiter">'</span><span class="content">&lt;tr class=&quot;placeholder&quot;/&gt;</span><span class="delimiter">'</span></span>
 })
@@ -810,18 +819,18 @@
         to change the sorting behaviour
       </li>
     </ul>
-    <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
   </div>
   <div class='span4'>
     <h3>Sortable Rows</h3>
-    <table class='table table-striped table-bordered'>
+    <table class='table table-striped table-bordered sorted_table'>
       <thead>
         <tr>
           <th>A Column</th>
           <th>B Column</th>
         </tr>
       </thead>
-      <tbody class='sorted_table'>
+      <tbody>
         <tr>
             <td>A Item 1</td>
             <td>B Item 1</td>
@@ -967,6 +976,16 @@
 </td>
 <td> This is executed after the placeholder has been moved.</td>
 </tr><tr><td>
+  <code>containerPath</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span></pre></div>
+</div>
+
+</td>
+<td> The exact css path between the container and its items, e.g. "> tbody"</td>
+</tr><tr><td>
   <code>containerSelector</code>
 </td>
 <td>
@@ -996,6 +1015,16 @@
 
 </td>
 <td> The css selector of the drag handle</td>
+</tr><tr><td>
+  <code>itemPath</code>
+</td>
+<td>
+  <div class="CodeRay">
+  <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span></pre></div>
+</div>
+
+</td>
+<td> The exact css path between the item and its subcontainers</td>
 </tr><tr><td>
   <code>itemSelector</code>
 </td>
@@ -1092,7 +1121,7 @@
 </div>
 
 </td>
-<td> Template for the placeholder. Can be any valid jQuery input e.g. a string, a DOM element</td>
+<td> Template for the placeholder. Can be any valid jQuery input e.g. a string, a DOM element. The placeholder must have the class "placeholder"</td>
 </tr><tr><td>
   <code>pullPlaceholder</code>
 </td>
@@ -1130,7 +1159,7 @@
 </div>
 
 </td>
-<td> Set tolerance while dragging. Positive values will decrease sensitivity.</td>
+<td> Set tolerance while dragging. Positive values decrease sensitivity, negative values increase it.</td>
 </tr>
     </tbody>
   </table>
