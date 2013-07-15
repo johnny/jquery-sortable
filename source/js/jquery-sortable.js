@@ -130,8 +130,9 @@
   }
   eventNames = {
     start: "touchstart.sortable mousedown.sortable",
-    end: "touchend.sortable touchcancel.sortable mouseup.sortable",
-    move: "touchmove.sortable mousemove.sortable"
+    drop: "touchend.sortable touchcancel.sortable mouseup.sortable",
+    drag: "touchmove.sortable mousemove.sortable",
+    scroll: "scroll.sortable"
   }
 
   /*
@@ -142,12 +143,6 @@
     var x = Math.max(0, a[0] - b[0], b[0] - a[1]),
     y = Math.max(0, a[2] - b[1], b[1] - a[3])
     return x+y;
-  }
-
-  function remove(array, from, to) {
-    var rest = array.slice((to || from) + 1 || array.length);
-    array.length = from < 0 ? array.length + from : from;
-    return array.push.apply(array, rest);
   }
 
   function setDimensions(array, dimensions, tolerance, useOffset) {
@@ -198,30 +193,14 @@
     return distances
   }
 
-  function processChildContainers(item, containerSelector, method, ignoreChildren) {
-    var childContainers = item.find(containerSelector),
-    i = childContainers.length
-
-    while(i--){
-      var container = childContainers.eq(i).data(pluginName)
-      if(container)
-        container[method](ignoreChildren)
-    }
-
-  }
-
-
   function ContainerGroup(options) {
     this.options = $.extend({}, groupDefaults, options)
     this.containers = []
-    this.childGroups = []
-    this.scrolledProxy = $.proxy(this.scrolled, this)
+    this.scrollProxy = $.proxy(this.scroll, this)
     this.dragProxy = $.proxy(this.drag, this)
     this.dropProxy = $.proxy(this.drop, this)
 
-    if(this.options.parentGroup)
-      this.options.parentGroup.childGroups.push(this)
-    else {
+    if(!this.options.parentContainer){
       this.placeholder = $(this.options.placeholder)
       if(!options.isValidTarget)
         this.options.isValidTarget = undefined
@@ -240,23 +219,26 @@
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
       this.$document = $(itemContainer.el[0].ownerDocument)
+      this.isHandled = true
 
-      this.toggleListeners('on')
+      if(itemContainer.enabled()){
+        this.toggleListeners('on')
 
-      // get item to drag
-      this.item = $(e.target).closest(this.options.itemSelector)
-      this.itemContainer = itemContainer
+        // get item to drag
+        this.item = $(e.target).closest(this.options.itemSelector)
+        this.itemContainer = itemContainer
 
-      this.setPointer(e)
-      
-      this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
+        this.setPointer(e)
+        
+        this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
+      } else {
+        this.toggleListeners('on', ['drop'])
+      }
     },
     drag: function  (e) {
       if(!this.dragging){
         if(!this.distanceMet(e))
           return
-
-        processChildContainers(this.item, this.options.containerSelector, "disable", true)
 
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart)
         this.item.before(this.placeholder)
@@ -281,6 +263,8 @@
     drop: function  (e) {
       this.toggleListeners('off')
 
+      this.isHandled = false
+
       if(this.dragging){
         // processing Drop, check if placeholder is detached
         if(this.placeholder.closest("html")[0])
@@ -289,7 +273,6 @@
           this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
 
         this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
-        processChildContainers(this.item, this.options.containerSelector, "enable", true)
 
         // cleanup
         this.clearDimensions()
@@ -297,8 +280,6 @@
         this.lastAppendedItem = this.sameResultBox = undefined
         this.dragging = false
       }
-      
-      this.item = undefined
     },
     searchValidTarget: function  (pointer, lastPointer) {
       if(!pointer){
@@ -317,16 +298,19 @@
 
         if(!distance || this.options.pullPlaceholder){
           var container = this.containers[index]
-          if(!this.$getOffsetParent()){
-            var offsetParent = container.getItemOffsetParent()
-            pointer = getRelativePosition(pointer, offsetParent)
-            lastPointer = getRelativePosition(lastPointer, offsetParent)
+          if(!container.disabled){
+            if(!this.$getOffsetParent()){
+              var offsetParent = container.getItemOffsetParent()
+              pointer = getRelativePosition(pointer, offsetParent)
+              lastPointer = getRelativePosition(lastPointer, offsetParent)
+            }
+            if(container.searchValidTarget(pointer, lastPointer))
+              return true
           }
-          if(container.searchValidTarget(pointer, lastPointer))
-            return true
         }
       }
-
+      if(this.sameResultBox)
+        this.sameResultBox = undefined
     },
     movePlaceholder: function  (container, item, method, sameResultBox) {
       var lastAppendedItem = this.lastAppendedItem
@@ -351,7 +335,7 @@
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
 
-        if(!this.options.parentGroup){
+        if(!this.options.parentContainer){
           while(i--){
             if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
               // If every container has the same offset parent,
@@ -392,56 +376,49 @@
 				Math.abs(this.pointer.top - e.pageY)
 			) >= this.options.distance)
     },
-    addContainer: function  (container) {
-      this.containers.push(container);
-    },
-    removeContainer: function (container) {
-      var i = $.inArray(container,this.containers);
-      i!==-1 && remove(this.containers, i);
-    },
-    scrolled: function  (e) {
+    scroll: function  (e) {
       this.clearDimensions()
       this.clearOffsetParent()
     },
-    toggleListeners: function (method) {
-      this.$document[method](eventNames.move, this.dragProxy)
-      [method](eventNames.end, this.dropProxy)
-      [method]("scroll.sortable", this.scrolledProxy)
+    toggleListeners: function (method, events) {
+      var that = this
+      events = events || ['drag','drop','scroll']
+
+      $.each(events,function  (i,event) {
+        that.$document[method](eventNames[event], that[event + 'Proxy'])
+      })
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
       this.containerDimensions = undefined
       var i = this.containers.length
       while(i--){
-        this.containers[i].itemDimensions = undefined
-      }
-      i = this.childGroups.length
-      while(i--){
-        this.childGroups[i].clearDimensions()
+        this.containers[i].clearDimensions()
       }
     }
   }
 
   function Container(element, options) {
     this.el = element
-    this.childGroups = []
     this.floatRight = false
-    this.dragInitProxy = $.proxy(this.dragInit, this)
     this.options = $.extend( {}, containerDefaults, options)
 
     this.group = ContainerGroup.get(this.options)
     this.rootGroup = this.options.rootGroup = this.options.rootGroup || this.group
-    this.parentGroup = this.options.parentGroup = this.options.parentGroup || this.group
+    this.parentContainer = this.options.parentContainer
     this.handle = this.rootGroup.options.handle || this.rootGroup.options.itemSelector
 
-    this.enable(true)
+    this.el.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
+
+    if(this.options.drop)
+      this.group.containers.push(this)
   }
 
   Container.prototype = {
     dragInit: function  (e) {
       var rootGroup = this.rootGroup
 
-      if( !rootGroup.item &&
+      if( !rootGroup.isHandled &&
           e.which === 1 &&
           this.options.drag &&
           !$(e.target).is(this.options.exclude))
@@ -510,7 +487,7 @@
     },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.$getChildren(this.el, "item").filter(":not(.placeholder)").get()
+        this.items = this.$getChildren(this.el, "item").filter(":not(.placeholder, .dragged)").get()
         setDimensions(this.items, this.itemDimensions = [], this.options.tolerance)
       }
       return this.itemDimensions
@@ -537,7 +514,7 @@
 
         if(childContainers[0]){
           var options = $.extend({}, this.options, {
-            parentGroup: this.group,
+            parentContainer: this,
             group: groupCounter ++
           })
           childGroup = childContainers[pluginName](options).data(pluginName).group
@@ -545,6 +522,9 @@
         $.data(this.items[index], "subContainer", childGroup)
       }
       return childGroup
+    },
+    enabled: function () {
+      return !this.disabled && (!this.parentContainer || this.parentContainer.enabled())
     },
     $getChildren: function (parent, type) {
       return $(parent).children(this.rootGroup.options[type + "Selector"])
@@ -558,25 +538,26 @@
       }).get()
       
       return this.rootGroup.options.serialize(parent, children, isContainer)
+    },
+    clearDimensions: function  () {
+      this.itemDimensions = undefined
+      if(this.items && this.items[0]){
+        var i = this.items.length
+        while(i--){
+          var group = $.data(this.items[i], "subContainer")
+          if(group)
+            group.clearDimensions()
+        }
+      }
     }
   }
 
   var API = {
     enable: function  (ignoreChildren) {
-      if(this.options.drop)
-        this.group.addContainer(this)
-      if(!ignoreChildren)
-        processChildContainers(this.el, this.options.containerSelector, "enable", true)
-
-      this.el.on(eventNames.start, this.handle, this.dragInitProxy)
+      this.disabled = false
     },
     disable: function  (ignoreChildren) {
-      if(this.options.drop)
-        this.group.removeContainer(this)
-      if(!ignoreChildren)
-        processChildContainers(this.el, this.options.containerSelector, "disable", true)
-
-      this.el.off(eventNames.start)
+      this.disabled = true
     },
     serialize: function () {
       return this._serialize(this.el, true)
