@@ -408,7 +408,7 @@
     this.options = $.extend( {}, containerDefaults, options)
 
     this.group = ContainerGroup.get(this.options)
-    this.rootGroup = this.options.rootGroup || this.group
+    this.rootGroup = this.options.rootGroup = this.options.rootGroup || this.group
     this.parentContainer = this.options.parentContainer
     this.handle = this.rootGroup.options.handle || this.rootGroup.options.itemSelector
 
