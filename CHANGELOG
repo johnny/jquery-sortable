@@ -1,3 +1,7 @@
+[0.9.11] option tolerance accepts negative values
+	rewrote enable/disable logic
+	added (item|container)Path
+
 [0.9.10]Fix Array.indexOf() error in IE < 9 (Dev-Speranza)
 	serialize() assumes one subcontainer per item
 	remove call to stopPropagation()
