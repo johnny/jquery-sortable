@@ -19,12 +19,12 @@
     %p= show_code_button
   .span4
     %h3 Sortable Rows
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.sorted_table
       %thead
         %tr
           %th A Column
           %th B Column
-      %tbody.sorted_table
+      %tbody
         = iterate(6) do |i, name|
           %tr
             %td A #{name}

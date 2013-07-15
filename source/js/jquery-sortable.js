@@ -47,12 +47,16 @@
     // This is executed after the placeholder has been moved.
     afterMove: function ($placeholder, container) {
     },
+    // The exact css path between the container and its items, e.g. "> tbody"
+    containerPath: "",
     // The css selector of the containers
     containerSelector: "ol, ul",
     // Distance the mouse has to travel to start dragging
     distance: 0,
     // The css selector of the drag handle
     handle: "",
+    // The exact css path between the item and its subcontainers
+    itemPath: "",
     // The css selector of the items
     itemSelector: "li",
     // Check if the dragged item may be inside the container.
@@ -527,7 +531,15 @@
       return !this.disabled && (!this.parentContainer || this.parentContainer.enabled())
     },
     $getChildren: function (parent, type) {
-      return $(parent).find(this.rootGroup.options[type + "Selector"])
+      var options = this.rootGroup.options,
+      path = options[type + "Path"],
+      selector = options[type + "Selector"]
+
+      parent = $(parent)
+      if(path)
+        parent = parent.find(path)
+
+      return parent.children(selector)
     },
     _serialize: function (parent, isContainer) {
       var that = this,

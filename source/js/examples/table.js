@@ -1,7 +1,8 @@
 $(function () {
   // Sortable rows
   $('.sorted_table').sortable({
-    containerSelector: 'tbody',
+    containerSelector: 'table',
+    itemPath: '> tbody',
     itemSelector: 'tr',
     placeholder: '<tr class="placeholder"/>'
   })
