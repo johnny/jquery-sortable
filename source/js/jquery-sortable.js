@@ -219,7 +219,6 @@
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
       this.$document = $(itemContainer.el[0].ownerDocument)
-      this.isHandled = true
 
       if(itemContainer.enabled()){
         this.toggleListeners('on')
@@ -229,11 +228,13 @@
         this.itemContainer = itemContainer
 
         this.setPointer(e)
-        
+
         this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
       } else {
         this.toggleListeners('on', ['drop'])
       }
+
+      this.dragInitDone = true
     },
     drag: function  (e) {
       if(!this.dragging){
@@ -263,7 +264,7 @@
     drop: function  (e) {
       this.toggleListeners('off')
 
-      this.isHandled = false
+      this.dragInitDone = false
 
       if(this.dragging){
         // processing Drop, check if placeholder is detached
@@ -352,9 +353,6 @@
       }
       return this.offsetParent
     },
-    clearOffsetParent: function () {
-      this.offsetParent = undefined
-    },
     setPointer: function (e) {
       var pointer = {
         left: e.pageX,
@@ -388,6 +386,9 @@
         that.$document[method](eventNames[event], that[event + 'Proxy'])
       })
     },
+    clearOffsetParent: function () {
+      this.offsetParent = undefined
+    },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
       this.containerDimensions = undefined
@@ -417,7 +418,7 @@
     dragInit: function  (e) {
       var rootGroup = this.rootGroup
 
-      if( !rootGroup.isHandled &&
+      if( !rootGroup.dragInitDone &&
           e.which === 1 &&
           this.options.drag &&
           !$(e.target).is(this.options.exclude))
@@ -526,7 +527,7 @@
       return !this.disabled && (!this.parentContainer || this.parentContainer.enabled())
     },
     $getChildren: function (parent, type) {
-      return $(parent).children(this.rootGroup.options[type + "Selector"])
+      return $(parent).find(this.rootGroup.options[type + "Selector"])
     },
     _serialize: function (parent, isContainer) {
       var that = this,
