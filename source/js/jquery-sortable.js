@@ -200,12 +200,13 @@
   function ContainerGroup(options) {
     this.options = $.extend({}, groupDefaults, options)
     this.containers = []
-    this.scrollProxy = $.proxy(this.scroll, this)
-    this.dragProxy = $.proxy(this.drag, this)
-    this.dropProxy = $.proxy(this.drop, this)
 
     if(!this.options.parentContainer){
+      this.scrollProxy = $.proxy(this.scroll, this)
+      this.dragProxy = $.proxy(this.drag, this)
+      this.dropProxy = $.proxy(this.drop, this)
       this.placeholder = $(this.options.placeholder)
+      
       if(!options.isValidTarget)
         this.options.isValidTarget = undefined
     }
@@ -400,6 +401,11 @@
       while(i--){
         this.containers[i].clearDimensions()
       }
+    },
+    destroy: function () {
+      // TODO iterate over subgroups and destroy them
+      // TODO remove all events
+      containerGroups[this.options.group] = undefined
     }
   }
 
@@ -519,6 +525,7 @@
         if(childContainers[0]){
           var options = $.extend({}, this.options, {
             parentContainer: this,
+            rootGroup: this.rootGroup,
             group: groupCounter ++
           })
           childGroup = childContainers[pluginName](options).data(pluginName).group
@@ -573,6 +580,9 @@
     },
     serialize: function () {
       return this._serialize(this.el, true)
+    },
+    destroy: function () {
+      this.rootGroup.destroy()
     }
   }
 
