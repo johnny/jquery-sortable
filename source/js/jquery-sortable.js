@@ -414,11 +414,14 @@
     this.options = $.extend( {}, containerDefaults, options)
 
     this.group = ContainerGroup.get(this.options)
-    this.rootGroup = this.options.rootGroup = this.options.rootGroup || this.group
+    this.rootGroup = this.options.rootGroup || this.group
     this.parentContainer = this.options.parentContainer
     this.handle = this.rootGroup.options.handle || this.rootGroup.options.itemSelector
 
-    this.el.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
+    var itemPath = this.rootGroup.options.itemPath,
+    target = itemPath ? this.el.find(itemPath) : this.el
+
+    target.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
 
     if(this.options.drop)
       this.group.containers.push(this)
