@@ -67,11 +67,11 @@
     },
     // Executed before onDrop if placeholder is detached.
     // This happens if pullPlaceholder is set to false and the drop occurs outside a container.
-    onCancel: function ($item, container, _super) {
+    onCancel: function ($item, container, _super, event) {
     },
     // Executed at the beginning of a mouse move event.
     // The Placeholder has not been moved yet.
-    onDrag: function ($item, position, _super) {
+    onDrag: function ($item, position, _super, event) {
       $item.css(position)
     },
     // Called after the drag has been started,
@@ -79,7 +79,7 @@
     // the mouse is moving.
     // The container is the closest initialized container.
     // Therefore it might not be the container, that actually contains the item.
-    onDragStart: function ($item, container, _super) {
+    onDragStart: function ($item, container, _super, event) {
       $item.css({
         height: $item.height(),
         width: $item.width()
@@ -88,12 +88,12 @@
       $("body").addClass("dragging")
     },
     // Called when the mouse button is beeing released
-    onDrop: function ($item, container, _super) {
+    onDrop: function ($item, container, _super, event) {
       $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
     },
     // Called on mousedown.
-    onMousedown: function($item, event, _super) {
+    onMousedown: function($item, _super, event) {
       event.preventDefault()
     },
     // Template for the placeholder. Can be any valid jQuery input
@@ -234,7 +234,7 @@
 
         this.setPointer(e)
 
-        this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
+        this.options.onMousedown(this.item, groupDefaults.onMousedown, e)
       } else {
         this.toggleListeners('on', ['drop'])
       }
@@ -246,7 +246,7 @@
         if(!this.distanceMet(e))
           return
 
-        this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart)
+        this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart, e)
         this.item.before(this.placeholder)
         this.dragging = true
       }
@@ -255,7 +255,8 @@
       // place item under the cursor
       this.options.onDrag(this.item,
                           getRelativePosition(this.pointer, this.item.offsetParent()),
-                          groupDefaults.onDrag)
+                          groupDefaults.onDrag,
+                          e)
 
       var x = e.pageX,
       y = e.pageY,
@@ -276,9 +277,9 @@
         if(this.placeholder.closest("html")[0])
           this.placeholder.before(this.item).detach()
         else
-          this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
+          this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel, e)
 
-        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
+        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e)
 
         // cleanup
         this.clearDimensions()
