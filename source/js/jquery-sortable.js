@@ -92,9 +92,10 @@
       $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
     },
-    // Called on mousedown.
+    // Called on mousedown. If falsy value is returned, the dragging will not start.
     onMousedown: function($item, _super, event) {
       event.preventDefault()
+      return true
     },
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element.
@@ -226,15 +227,15 @@
       this.$document = $(itemContainer.el[0].ownerDocument)
 
       if(itemContainer.enabled()){
-        this.toggleListeners('on')
-
         // get item to drag
         this.item = $(e.target).closest(this.options.itemSelector)
         this.itemContainer = itemContainer
 
-        this.setPointer(e)
+        if(!this.options.onMousedown(this.item, groupDefaults.onMousedown, e))
+          return
 
-        this.options.onMousedown(this.item, groupDefaults.onMousedown, e)
+        this.setPointer(e)
+        this.toggleListeners('on')
       } else {
         this.toggleListeners('on', ['drop'])
       }
