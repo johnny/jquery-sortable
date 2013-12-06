@@ -21,7 +21,7 @@
 # page "/path/to/file.html", :layout => false
 # 
 # With alternative layout
-# page "/path/to/file.html", :layout => :otherlayout
+page "/debug.html", :layout => 'debug.haml'
 # 
 # A path which all have the same layout
 # with_layout :admin do

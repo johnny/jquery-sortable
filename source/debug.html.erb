@@ -1,0 +1,52 @@
+<style media="screen" type="text/css">
+.placeholder {
+	background: #ccff00;
+	padding: 30px 5px;
+	clear: both;
+}
+
+.layout {
+	overflow: auto;
+}
+
+.layout > .region:nth-child(1) {
+	float: left;
+	width: 50%;
+}
+
+.layout > .region:nth-child(2) {
+	float: right;
+	width: 47%;
+}
+
+.part {
+	clear: both;
+	background: #ccc;
+	padding: 30px 5px;
+	margin: 5px;
+}
+</style>
+
+	<div data-type="region" class="region" id="root">
+		<div data-type="part" class="part">
+			Part 1
+		</div>
+		<div data-type="layout" class="layout">
+			<div data-type="region" class="region">
+				<div data-type="part" class="part">
+					Part 2
+				</div>
+			</div>
+			<div data-type="region" class="region">
+				<div data-type="part" class="part">
+					Part 3
+				</div>
+				<div data-type="part" class="part">
+					Part 4
+				</div>
+			</div>
+		</div>
+		<div data-type="part" class="part">
+			Part 5
+		</div>
+	</div>
