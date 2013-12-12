@@ -620,4 +620,4 @@
     });
   };
 
-}(jQuery, window)
+}(jQuery, window);
