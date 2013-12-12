@@ -93,9 +93,12 @@
       $("body").removeClass("dragging")
     },
     // Called on mousedown. If falsy value is returned, the dragging will not start.
-    onMousedown: function($item, _super, event) {
-      event.preventDefault()
-      return true
+    // If clicked on input element, ignore
+    onMousedown: function ($item, _super, event) {
+      if (event.target.nodeName != 'INPUT') {
+        event.preventDefault()
+        return true
+      }
     },
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element.
