@@ -1,4 +1,6 @@
-- [0/0] bugs
+- [0/2] bugs
+  - [ ] last Pointer is NaN in search valid target
+  - [ ] prevent infinite recursion
 - [0/5] consider
   - [ ] better name for searchValidTarget
   - [ ] shortcut on getNearest()

@@ -215,7 +215,7 @@
 
   ContainerGroup.get = function  (options) {
     if( !containerGroups[options.group]) {
-      if(!options.group)
+      if(options.group === undefined)
         options.group = groupCounter ++
       containerGroups[options.group] = new ContainerGroup(options)
     }
