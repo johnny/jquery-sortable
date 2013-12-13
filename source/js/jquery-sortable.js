@@ -452,7 +452,10 @@
         rootGroup.options.isValidTarget(rootGroup.item, this)
 
       if(!i && validTarget){
-        rootGroup.movePlaceholder(this, this.el, "append")
+        var itemPath = this.rootGroup.options.itemPath,
+        target = itemPath ? this.el.find(itemPath) : this.el
+
+        rootGroup.movePlaceholder(this, target, "append")
         return true
       } else
         while(i--){
