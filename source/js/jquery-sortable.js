@@ -623,4 +623,4 @@
     });
   };
 
-}(jQuery, window)
+}(jQuery, window);
