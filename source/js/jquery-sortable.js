@@ -45,7 +45,10 @@
   }, // end container defaults
   groupDefaults = {
     // This is executed after the placeholder has been moved.
-    afterMove: function ($placeholder, container) {
+    // $closestItemOrContainer contains the closest item, the placeholder
+    // has been put at or the closest empty Container, the placeholder has
+    // been appended to.
+    afterMove: function ($placeholder, container, $closestItemOrContainer) {
     },
     // The exact css path between the container and its items, e.g. "> tbody"
     containerPath: "",
@@ -112,7 +115,7 @@
     // Note that this default method only works, if every item only has one subcontainer
     serialize: function ($parent, $children, parentIsContainer) {
       var result = $.extend({}, $parent.data())
-      
+
       if(parentIsContainer)
         return $children
       else if ($children[0]){
@@ -210,7 +213,7 @@
       this.dragProxy = $.proxy(this.drag, this)
       this.dropProxy = $.proxy(this.drop, this)
       this.placeholder = $(this.options.placeholder)
-      
+
       if(!options.isValidTarget)
         this.options.isValidTarget = undefined
     }
@@ -331,7 +334,7 @@
       item[method](this.placeholder)
       this.lastAppendedItem = item
       this.sameResultBox = sameResultBox
-      this.options.afterMove(this.placeholder, container)
+      this.options.afterMove(this.placeholder, container, item)
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)
@@ -358,7 +361,7 @@
             }
           }
         }
-        
+
         this.offsetParent = offsetParent
       }
       return this.offsetParent
@@ -562,11 +565,11 @@
     _serialize: function (parent, isContainer) {
       var that = this,
       childType = isContainer ? "item" : "container",
-      
+
       children = this.$getChildren(parent, childType).not(this.options.exclude).map(function () {
         return that._serialize($(this), !isContainer)
       }).get()
-      
+
       return this.rootGroup.options.serialize(parent, children, isContainer)
     },
     clearDimensions: function  () {
@@ -598,7 +601,7 @@
   }
 
   $.extend(Container.prototype, API)
-  
+
   /**
    * jQuery API
    *

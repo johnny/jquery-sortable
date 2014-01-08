@@ -2,8 +2,9 @@ source "http://rubygems.org"
 
 gem 'thin'
 
-gem 'sass', :git => 'https://github.com/nex3/sass.git'
+gem 'sass', '~> 3.1.0'
 
+gem 'compass'
 gem 'middleman', '>= 3'
 
 gem 'guard-livereload'
