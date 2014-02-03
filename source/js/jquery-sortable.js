@@ -56,6 +56,9 @@
     containerSelector: "ol, ul",
     // Distance the mouse has to travel to start dragging
     distance: 0,
+    // Time in milliseconds after mousedown until dragging should start.
+    // This option can be used to prevent unwanted drags when clicking on an element.
+    delay: 0,
     // The css selector of the drag handle
     handle: "",
     // The exact css path between the item and its subcontainers
@@ -247,10 +250,24 @@
       }
 
       this.dragInitDone = true
+
+      // init delay timer if needed
+      var that = this
+      this.isDelayMet = !this.options.delay
+      if (!this.isDelayMet) {
+          clearTimeout(this._mouseDelayTimer);
+          this._mouseDelayTimer = setTimeout(function() {
+              that.isDelayMet = true
+          }, this.options.delay)
+      }
+
     },
     drag: function  (e) {
       if(!this.dragging){
         if(!this.distanceMet(e))
+          return
+
+        if (!this.delayMet())
           return
 
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart, e)
@@ -386,6 +403,9 @@
  				Math.abs(this.pointer.left - e.pageX),
 				Math.abs(this.pointer.top - e.pageY)
 			) >= this.options.distance)
+    },
+    delayMet: function () {
+      return this.isDelayMet;
     },
     scroll: function  (e) {
       this.clearDimensions()
