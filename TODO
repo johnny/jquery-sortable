@@ -1,6 +1,9 @@
+- [0/1] exampels
+  - [ ] delay
 - [0/2] bugs
   - [ ] last Pointer is NaN in search valid target
   - [ ] prevent infinite recursion
+  - [ ] bootstrap example jumps up on drop
 - [0/5] consider
   - [ ] better name for searchValidTarget
   - [ ] shortcut on getNearest()

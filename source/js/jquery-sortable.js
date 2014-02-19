@@ -249,25 +249,12 @@
         this.toggleListeners('on', ['drop'])
       }
 
+      this.setupDelayTimer()
       this.dragInitDone = true
-
-      // init delay timer if needed
-      var that = this
-      this.isDelayMet = !this.options.delay
-      if (!this.isDelayMet) {
-          clearTimeout(this._mouseDelayTimer);
-          this._mouseDelayTimer = setTimeout(function() {
-              that.isDelayMet = true
-          }, this.options.delay)
-      }
-
     },
     drag: function  (e) {
       if(!this.dragging){
-        if(!this.distanceMet(e))
-          return
-
-        if (!this.delayMet())
+        if(!this.distanceMet(e) || !this.delayMet)
           return
 
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart, e)
@@ -404,8 +391,17 @@
 				Math.abs(this.pointer.top - e.pageY)
 			) >= this.options.distance)
     },
-    delayMet: function () {
-      return this.isDelayMet;
+    setupDelayTimer: function () {
+      var that = this
+      this.delayMet = !this.options.delay
+
+      // init delay timer if needed
+      if (!this.delayMet) {
+        clearTimeout(this._mouseDelayTimer);
+        this._mouseDelayTimer = setTimeout(function() {
+          that.delayMet = true
+        }, this.options.delay)
+      }
     },
     scroll: function  (e) {
       this.clearDimensions()
