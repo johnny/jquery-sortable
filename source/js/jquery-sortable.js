@@ -240,8 +240,10 @@
         this.item = $(e.target).closest(this.options.itemSelector)
         this.itemContainer = itemContainer
 
-        if(!this.options.onMousedown(this.item, groupDefaults.onMousedown, e))
+        if(this.item.is(this.options.exclude) ||
+           !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
           return
+        }
 
         this.setPointer(e)
         this.toggleListeners('on')
@@ -457,9 +459,9 @@
 
       if( !rootGroup.dragInitDone &&
           e.which === 1 &&
-          this.options.drag &&
-          !$(e.target).is(this.options.exclude))
+          this.options.drag) {
         rootGroup.dragInit(e, this)
+      }
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
