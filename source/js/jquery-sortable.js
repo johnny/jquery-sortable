@@ -92,11 +92,19 @@
       })
       $item.addClass("dragged")
       $("body").addClass("dragging")
+      //if start event function is defined, call it
+      if (this.start !== undefined) {
+          this.start.call($item, container);
+      }
     },
     // Called when the mouse button is beeing released
     onDrop: function ($item, container, _super, event) {
       $item.removeClass("dragged").removeAttr("style")
       $("body").removeClass("dragging")
+      //if stop event function is defined, call it
+      if (this.stop !== undefined) {
+          this.stop.call($item, container);
+      }
     },
     // Called on mousedown. If falsy value is returned, the dragging will not start.
     // If clicked on input element, ignore
