@@ -101,7 +101,7 @@
     // Called on mousedown. If falsy value is returned, the dragging will not start.
     // If clicked on input element, ignore
     onMousedown: function ($item, _super, event) {
-      if (event.target.nodeName != 'INPUT') {
+      if (event.target.nodeName != 'INPUT' && event.target.nodeName != 'SELECT') {
         event.preventDefault()
         return true
       }
