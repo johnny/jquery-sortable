@@ -65,6 +65,8 @@
     itemPath: "",
     // The css selector of the items
     itemSelector: "li",
+    // Forces the placeholder height to that of the dragged item
+    forcePlaceholderSize: false,
     // Check if the dragged item may be inside the container.
     // Use with care, since the search for a valid container entails a depth first search
     // and may be quite expensive.
@@ -262,6 +264,10 @@
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart, e)
         this.item.before(this.placeholder)
         this.dragging = true
+
+        if (this.options.forcePlaceholderSize && !this.placeholder.height()) {
+          this.placeholder.height(this.item.innerHeight() - parseInt(this.item.css('paddingTop') || 0, 10) - parseInt(this.item.css('paddingBottom') || 0, 10));
+        }
       }
 
       this.setPointer(e)
@@ -389,9 +395,9 @@
     },
     distanceMet: function (e) {
       return (Math.max(
- 				Math.abs(this.pointer.left - e.pageX),
-				Math.abs(this.pointer.top - e.pageY)
-			) >= this.options.distance)
+        Math.abs(this.pointer.left - e.pageX),
+        Math.abs(this.pointer.top - e.pageY)
+      ) >= this.options.distance)
     },
     setupDelayTimer: function () {
       var that = this
