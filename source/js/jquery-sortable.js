@@ -271,8 +271,8 @@
                           groupDefaults.onDrag,
                           e)
 
-      var x = e.pageX,
-      y = e.pageY,
+      var x = e.pageX || e.originalEvent.pageX,
+      y = e.pageY || e.originalEvent.pageY,
       box = this.sameResultBox,
       t = this.options.tolerance
 
@@ -374,8 +374,8 @@
     },
     setPointer: function (e) {
       var pointer = {
-        left: e.pageX,
-        top: e.pageY
+        left: e.pageX || e.originalEvent.pageX,
+        top: e.pageY || e.originalEvent.pageX
       }
 
       if(this.$getOffsetParent()){
@@ -388,10 +388,18 @@
       this.pointer = pointer
     },
     distanceMet: function (e) {
-      return (Math.max(
- 				Math.abs(this.pointer.left - e.pageX),
-				Math.abs(this.pointer.top - e.pageY)
-			) >= this.options.distance)
+      if(e.pageX == undefined || e.pageY == undefined) {
+        return (Math.max(
+          Math.abs(this.pointer.left - e.originalEvent.pageX),
+          Math.abs(this.pointer.top - e.originalEvent.pageY)
+        ) >= this.options.distance)
+      }
+      else {
+        return (Math.max(
+          Math.abs(this.pointer.left - e.pageX),
+          Math.abs(this.pointer.top - e.pageY)
+        ) >= this.options.distance)
+      }
     },
     setupDelayTimer: function () {
       var that = this
