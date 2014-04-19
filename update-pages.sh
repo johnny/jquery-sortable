@@ -1,9 +1,11 @@
 #!/bin/sh
+set -o nounset
+set -o errexit
 
 VERSION=`cat VERSION`
 
 cp README.mkd ..
-./bin/middleman build
+bundle exec middleman build
 git stash
 git checkout gh-pages
 rm -R js css img
