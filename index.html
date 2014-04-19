@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
   <head>
     <title>jQuery Sortable</title>
-    <link href='css/vendor.css' rel='stylesheet' />
-    <link href='css/application.css' rel='stylesheet' />
+    <link href='css/vendor.css' rel='stylesheet'>
+    <link href='css/application.css' rel='stylesheet'>
   </head>
   <body>
     <div class='navbar navbar-fixed-top'>
@@ -60,150 +60,150 @@
     </div>
     <div class='bootstrap-container'>
       <div id='home'>
-  <div class='hero-unit'>
-    <h1>jQuery Sortable</h1>
-    <p>A flexible, opinionated sorting plugin for jQuery</p>
-    <p>
-      <a class='btn btn-large btn-primary' href='https://github.com/johnny/jquery-sortable'>
-        <i class='icon-eye-open icon-white'></i>
-        View on GitHub
-      </a>
-      <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
-        <i class='icon-hdd icon-white'></i>
-        Download
-        (v0.9.11)
-      </a>
-    </p>
-    <p>
-      <small>
-        Download
-        <a href='js/jquery-sortable-min.js'>minified</a>
-        version
-        (8.4 kb, gzipped ~2.8 kb)
-      </small>
-    </p>
-  </div>
-</div>
-<div id='features'>
-  <div class='page-header'>
-    <h1>Features</h1>
-  </div>
-  <div class='row'>
-    <div class='span6'>
-      <h3>So what does it do?</h3>
-      <ul>
-        <li>Sorts any items in any container</li>
-        <li>Fully supports nested containers</li>
-        <li>Connect lists</li>
-        <li>Callbacks and events (see docs)</li>
-        <li>Pure drag/drop lists</li>
-        <li>Vertical and horizontal sorting</li>
-      </ul>
-      <h3>Why another sortable plugin?</h3>
-      <p>
-        you might ask.
-        Aren't there
-        <a href='#alternatives'>many</a>
-        others?
-      </p>
-      <p>
-        <strong>The answer is: nested lists.</strong>
-        None of the other solutions had a decent support for nested lists.
-        <a href='http://mjsarfatti.com/sandbox/nestedSortable/'>nestedSortable</a>
-        relies on a fixed width hierarchy.
-        Others mimic the way jQuery UI does
-        <a href='http://jqueryui.com/demos/sortable/'>sortables</a>
-        and therefore require ugly
-        <a href='https://github.com/jquery/jquery-ui/pull/555'>hacks</a>
-        that suffer from sudden jumps.
-      </p>
-      <h3>The opinionated part</h3>
-      <p>
-        This plugin does one and only one thing:
-        <strong>sorting</strong>
-        . If you need animations or autoscrolling, do them
-        <a href='#connected'>yourself</a>
-        .
-      </p>
-      <p>
-        Moreover this plugin assumes that the placeholder has zero height/width.
-        As a result, the item dimensions may be cached.
-        <small>This might change in the future, if need be.</small>
-      </p>
-      <h3>Compatibility</h3>
-      <p>
-        <code>jquery-sortable.js</code>
-        has been tested with the following browsers
-      </p>
-      <ul>
-        <li>Firefox >= 3.5</li>
-        <li>Chrome</li>
-        <li>IE > 7</li>
-        <li>Safari >= 6</li>
-        <li>Opera</li>
-        <li>Konqueror</li>
-      </ul>
-      <p>
-        If you confirmed, that it works on other browsers please
-        <a href='mailto:jvadev@gmail.com'>tell me</a>
-        .
-      </p>
-    </div>
-    <div class='span6'>
-      <h3>
-        Show it to me!
-        <small>
-          With default options.
-        </small>
-      </h3>
-      <p>
-        <span class='label label-info'>Heads Up!</span>
-        There is no on-the-fly creation of sublists.
-        Only list items that contain a sublist are drop targets.
-      </p>
-      <ol class='default vertical'>
-        <li>
-          First
-          <ol></ol>
-        </li>
-        <li>
-          Second
-          <ol></ol>
-        </li>
-        <li>
-          Third
-          <ol>
-            <li>First</li>
-            <li>Second</li>
-            <li>
-              Third
-              <ol>
-                <li>First</li>
-                <li>Second</li>
-              </ol>
-              <ol>
-                <li>First</li>
-                <li>Second</li>
-              </ol>
-            </li>
-          </ol>
-        </li>
-        <li>Fourth</li>
-        <li>Fifth</li>
-        <li>Sixth</li>
-      </ol>
-    </div>
-  </div>
-</div>
-<div id='getting-started'>
-  <div class='page-header'>
-    <h1>Getting started</h1>
-  </div>
-  <p>Making a list sortable consists of 3 easy steps</p>
-  <div class='row'>
-    <div class="span4">
-      <h3>Add styles</h3>
-      <div class="CodeRay">
+        <div class='hero-unit'>
+          <h1>jQuery Sortable</h1>
+          <p>A flexible, opinionated sorting plugin for jQuery</p>
+          <p>
+            <a class='btn btn-large btn-primary' href='https://github.com/johnny/jquery-sortable'>
+              <i class='icon-eye-open icon-white'></i>
+              View on GitHub
+            </a>
+            <a class='btn btn-large btn-success' href='js/jquery-sortable.js'>
+              <i class='icon-hdd icon-white'></i>
+              Download
+              (v0.9.12)
+            </a>
+          </p>
+          <p>
+            <small>
+              Download
+              <a href='js/jquery-sortable-min.js'>minified</a>
+              version
+              (9.4 kb, gzipped ~3.1 kb)
+            </small>
+          </p>
+        </div>
+      </div>
+      <div id='features'>
+        <div class='page-header'>
+          <h1>Features</h1>
+        </div>
+        <div class='row'>
+          <div class='span6'>
+            <h3>So what does it do?</h3>
+            <ul>
+              <li>Sorts any items in any container</li>
+              <li>Fully supports nested containers</li>
+              <li>Connect lists</li>
+              <li>Callbacks and events (see docs)</li>
+              <li>Pure drag/drop lists</li>
+              <li>Vertical and horizontal sorting</li>
+            </ul>
+            <h3>Why another sortable plugin?</h3>
+            <p>
+              you might ask.
+              Aren't there
+              <a href='#alternatives'>many</a>
+              others?
+            </p>
+            <p>
+              <strong>The answer is: nested lists.</strong>
+              None of the other solutions had a decent support for nested lists.
+              <a href='http://mjsarfatti.com/sandbox/nestedSortable/'>nestedSortable</a>
+              relies on a fixed width hierarchy.
+              Others mimic the way jQuery UI does
+              <a href='http://jqueryui.com/demos/sortable/'>sortables</a>
+              and therefore require ugly
+              <a href='https://github.com/jquery/jquery-ui/pull/555'>hacks</a>
+              that suffer from sudden jumps.
+            </p>
+            <h3>The opinionated part</h3>
+            <p>
+              This plugin does one and only one thing:
+              <strong>sorting</strong>
+              . If you need animations or autoscrolling, do them
+              <a href='#connected'>yourself</a>
+              .
+            </p>
+            <p>
+              Moreover this plugin assumes that the placeholder has zero height/width.
+              As a result, the item dimensions may be cached.
+              <small>This might change in the future, if need be.</small>
+            </p>
+            <h3>Compatibility</h3>
+            <p>
+              <code>jquery-sortable.js</code>
+              has been tested with the following browsers
+            </p>
+            <ul>
+              <li>Firefox >= 3.5</li>
+              <li>Chrome</li>
+              <li>IE > 7</li>
+              <li>Safari >= 6</li>
+              <li>Opera</li>
+              <li>Konqueror</li>
+            </ul>
+            <p>
+              If you confirmed, that it works on other browsers please
+              <a href='mailto:jvadev@gmail.com'>tell me</a>
+              .
+            </p>
+          </div>
+          <div class='span6'>
+            <h3>
+              Show it to me!
+              <small>
+                With default options.
+              </small>
+            </h3>
+            <p>
+              <span class='label label-info'>Heads Up!</span>
+              There is no on-the-fly creation of sublists.
+              Only list items that contain a sublist are drop targets.
+            </p>
+            <ol class='default vertical'>
+              <li>
+                First
+                <ol></ol>
+              </li>
+              <li>
+                Second
+                <ol></ol>
+              </li>
+              <li>
+                Third
+                <ol>
+                  <li>First</li>
+                  <li>Second</li>
+                  <li>
+                    Third
+                    <ol>
+                      <li>First</li>
+                      <li>Second</li>
+                    </ol>
+                    <ol>
+                      <li>First</li>
+                      <li>Second</li>
+                    </ol>
+                  </li>
+                </ol>
+              </li>
+              <li>Fourth</li>
+              <li>Fifth</li>
+              <li>Sixth</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div id='getting-started'>
+        <div class='page-header'>
+          <h1>Getting started</h1>
+        </div>
+        <p>Making a list sortable consists of 3 easy steps</p>
+        <div class='row'>
+          <div class="span4">
+            <h3>Add styles</h3>
+            <div class="CodeRay">
   <div class="code"><pre><span class="type">body</span><span class="class">.dragging</span>, <span class="type">body</span><span class="class">.dragging</span> <span class="type">*</span> {
   <span class="key">cursor</span>: <span class="value">move</span> <span class="important">!important</span>;
 }
@@ -224,17 +224,17 @@
 }</pre></div>
 </div>
 
-      <p>
-        <small>
-          Look
-          <a href='https://github.com/johnny/jquery-sortable/blob/master/source/css/jquery-sortable.css.sass'>here</a>
-          for a complete example
-        </small>
-      </p>
-    </div>
-    <div class="span4">
-      <h3>Define your HTML</h3>
-      <div class="CodeRay">
+            <p>
+              <small>
+                Look
+                <a href='https://github.com/johnny/jquery-sortable/blob/master/source/css/jquery-sortable.css.sass'>here</a>
+                for a complete example
+              </small>
+            </p>
+          </div>
+          <div class="span4">
+            <h3>Define your HTML</h3>
+            <div class="CodeRay">
   <div class="code"><pre><span class="tag">&lt;ol</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">'</span><span class="content">example</span><span class="delimiter">'</span></span><span class="tag">&gt;</span>
   <span class="tag">&lt;li&gt;</span>First<span class="tag">&lt;/li&gt;</span>
   <span class="tag">&lt;li&gt;</span>Second<span class="tag">&lt;/li&gt;</span>
@@ -243,27 +243,27 @@
 <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">'</span><span class="content">js/jquery-sortable.js</span><span class="delimiter">'</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span></pre></div>
 </div>
 
-    </div>
-    <div class="span4">
-      <h3>Call the initializer</h3>
-      <div class="CodeRay">
+          </div>
+          <div class="span4">
+            <h3>Call the initializer</h3>
+            <div class="CodeRay">
   <div class="code"><pre><span class="predefined">$</span>(<span class="keyword">function</span>  () {
   <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.example</span><span class="delimiter">&quot;</span></span>).sortable()
 })</pre></div>
 </div>
 
-    </div>
-  </div>
-</div>
-<div id='examples'>
-  <div class='page-header'>
-    <h1>Examples</h1>
-  </div>
-  <div id='connected'>
-    <h2>Connected lists with drop animation</h2>
-<div class='row'>
-  <div class="span12 example">
-    <div class="CodeRay">
+          </div>
+        </div>
+      </div>
+      <div id='examples'>
+        <div class='page-header'>
+          <h1>Examples</h1>
+        </div>
+        <div id='connected'>
+          <h2>Connected lists with drop animation</h2>
+          <div class='row'>
+            <div class="span12 example">
+              <div class="CodeRay">
   <div class="code"><pre><span class="keyword">var</span> adjustment
 
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_animation</span><span class="delimiter">&quot;</span></span>).sortable({
@@ -302,51 +302,51 @@
 })</pre></div>
 </div>
 
-  </div>
-  <div class='span4'>
-    <ul>
-      <li>
-        Define your own
-        <strong>drop animation</strong>
-      </li>
-      <li>
-        Connect lists by placing them in the same
-        <code>group</code>
-      </li>
-      <li>
-        Only sort if the cursor is
-        <strong>above a container</strong>
-      </li>
-    </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
-  </div>
-  <div class='span4'>
-    <ol class='simple_with_animation vertical'>
-      <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-        <li>Item 5</li>
-        <li>Item 6</li>
-    </ol>
-  </div>
-  <div class='span4'>
-    <ol class='simple_with_animation vertical'>
-      <li class='highlight'>Item 1</li>
-        <li class='highlight'>Item 2</li>
-        <li class='highlight'>Item 3</li>
-        <li class='highlight'>Item 4</li>
-        <li class='highlight'>Item 5</li>
-        <li class='highlight'>Item 6</li>
-    </ol>
-  </div>
-</div>
-  </div>
-  <div id='handle'>
-    <h2>Sort handle and limited drag/drop</h2>
-<div class='row'>
-  <div class="span12 example">
-    <div class="CodeRay">
+            </div>
+            <div class='span4'>
+              <ul>
+                <li>
+                  Define your own
+                  <strong>drop animation</strong>
+                </li>
+                <li>
+                  Connect lists by placing them in the same
+                  <code>group</code>
+                </li>
+                <li>
+                  Only sort if the cursor is
+                  <strong>above a container</strong>
+                </li>
+              </ul>
+              <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+            </div>
+            <div class='span4'>
+              <ol class='simple_with_animation vertical'>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+                <li>Item 5</li>
+                <li>Item 6</li>
+              </ol>
+            </div>
+            <div class='span4'>
+              <ol class='simple_with_animation vertical'>
+                <li class='highlight'>Item 1</li>
+                <li class='highlight'>Item 2</li>
+                <li class='highlight'>Item 3</li>
+                <li class='highlight'>Item 4</li>
+                <li class='highlight'>Item 5</li>
+                <li class='highlight'>Item 6</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div id='handle'>
+          <h2>Sort handle and limited drag/drop</h2>
+          <div class='row'>
+            <div class="span12 example">
+              <div class="CodeRay">
   <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_drop</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">no-drop</span><span class="delimiter">'</span></span>,
   <span class="key">handle</span>: <span class="string"><span class="delimiter">'</span><span class="content">i.icon-move</span><span class="delimiter">'</span></span>,
@@ -367,93 +367,93 @@
 })</pre></div>
 </div>
 
-  </div>
-  <div class='span4'>
-    <ul>
-      <li>
-        Drag the items by a
-        <strong>handle</strong>
-      </li>
-      <li>
-        Pure
-        <strong>drag/drop</strong>
-        container
-      </li>
-      <li>
-        <strong>Clone</strong>
-        items on drag
-      </li>
-    </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
-  </div>
-  <div class='span4'>
-    <h3>I'm draggable and droppable</h3>
-    <ol class='simple_with_drop vertical'>
-      <li>
-          <i class='icon-move'></i>
-          Item 1
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 2
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 3
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 4
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 5
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 6
-        </li>
-    </ol>
-  </div>
-  <div class='span4'>
-    <h3>I'm only draggable</h3>
-    <ol class='simple_with_no_drop vertical'>
-      <li class='highlight'>
-          <i class='icon-move'></i>
-          Item 1
-        </li>
-        <li class='highlight'>
-          <i class='icon-move'></i>
-          Item 2
-        </li>
-        <li class='highlight'>
-          <i class='icon-move'></i>
-          Item 3
-        </li>
-    </ol>
-    <h3>I'm only droppable</h3>
-    <ol class='simple_with_no_drag vertical'>
-      <li>
-          <i class='icon-move'></i>
-          Item 1
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 2
-        </li>
-        <li>
-          <i class='icon-move'></i>
-          Item 3
-        </li>
-    </ol>
-  </div>
-</div>
-  </div>
-  <div id='nested'>
-    <h2>Toggable nested lists</h2>
-<div class='row'>
-  <div class="span12 example">
-    <div class="CodeRay">
+            </div>
+            <div class='span4'>
+              <ul>
+                <li>
+                  Drag the items by a
+                  <strong>handle</strong>
+                </li>
+                <li>
+                  Pure
+                  <strong>drag/drop</strong>
+                  container
+                </li>
+                <li>
+                  <strong>Clone</strong>
+                  items on drag
+                </li>
+              </ul>
+              <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+            </div>
+            <div class='span4'>
+              <h3>I'm draggable and droppable</h3>
+              <ol class='simple_with_drop vertical'>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 1
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 2
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 3
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 4
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 5
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 6
+                </li>
+              </ol>
+            </div>
+            <div class='span4'>
+              <h3>I'm only draggable</h3>
+              <ol class='simple_with_no_drop vertical'>
+                <li class='highlight'>
+                  <i class='icon-move'></i>
+                  Item 1
+                </li>
+                <li class='highlight'>
+                  <i class='icon-move'></i>
+                  Item 2
+                </li>
+                <li class='highlight'>
+                  <i class='icon-move'></i>
+                  Item 3
+                </li>
+              </ol>
+              <h3>I'm only droppable</h3>
+              <ol class='simple_with_no_drag vertical'>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 1
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 2
+                </li>
+                <li>
+                  <i class='icon-move'></i>
+                  Item 3
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div id='nested'>
+          <h2>Toggable nested lists</h2>
+          <div class='row'>
+            <div class="span12 example">
+              <div class="CodeRay">
   <div class="code"><pre><span class="keyword">var</span> oldContainer
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.nested_with_switch</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nested</span><span class="delimiter">'</span></span>,
@@ -478,94 +478,94 @@
 })</pre></div>
 </div>
 
-  </div>
-  <div class='span4'>
-    <ul>
-      <li>
-        <strong>Nest lists</strong>
-        of arbitrary depth
-      </li>
-      <li>Highlight the current container</li>
-      <li>
-        <strong>Enable/disable</strong>
-        lists
-      </li>
-    </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
-  </div>
-  <div class='span4'>
-    <div class='switch-container'>
-      <div class='switch active' data-off='OFF' data-on='ON' data-toggle='switch'></div>
-    </div>
-    <ol class='nested_with_switch vertical'>
-      <li>
-          Item 1
-        </li>
-        <li>
-          Item 2
-        </li>
-        <li>
-          Item 3
-        </li>
-        <li>
-          Item 4
-          <ol>
-            <li>Item 3.1</li>
-              <li>Item 3.2</li>
-              <li>Item 3.3</li>
-              <li>Item 3.4</li>
-              <li>Item 3.5</li>
-              <li>Item 3.6</li>
-          </ol>
-        </li>
-        <li>
-          Item 5
-        </li>
-        <li>
-          Item 6
-        </li>
-    </ol>
-  </div>
-  <div class='span4'>
-    <div class='switch-container'>
-      <div class='switch active' data-off='OFF' data-on='ON' data-toggle='switch'></div>
-    </div>
-    <ol class='nested_with_switch vertical'>
-      <li>
-          Item 1
-        </li>
-        <li>
-          Item 2
-        </li>
-        <li>
-          Item 3
-        </li>
-        <li>
-          Item 4
-          <ol>
-            <li>Item 3.1</li>
-              <li>Item 3.2</li>
-              <li>Item 3.3</li>
-              <li>Item 3.4</li>
-              <li>Item 3.5</li>
-              <li>Item 3.6</li>
-          </ol>
-        </li>
-        <li>
-          Item 5
-        </li>
-        <li>
-          Item 6
-        </li>
-    </ol>
-  </div>
-</div>
-  </div>
-  <div id='limited-target'>
-    <h2>Connected lists with limited drop targets</h2>
-<div class='row'>
-  <div class="span12 example">
-    <div class="CodeRay">
+            </div>
+            <div class='span4'>
+              <ul>
+                <li>
+                  <strong>Nest lists</strong>
+                  of arbitrary depth
+                </li>
+                <li>Highlight the current container</li>
+                <li>
+                  <strong>Enable/disable</strong>
+                  lists
+                </li>
+              </ul>
+              <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+            </div>
+            <div class='span4'>
+              <div class='switch-container'>
+                <div class='switch active' data-off='OFF' data-on='ON' data-toggle='switch'></div>
+              </div>
+              <ol class='nested_with_switch vertical'>
+                <li>
+                  Item 1
+                </li>
+                <li>
+                  Item 2
+                </li>
+                <li>
+                  Item 3
+                </li>
+                <li>
+                  Item 4
+                  <ol>
+                    <li>Item 3.1</li>
+                    <li>Item 3.2</li>
+                    <li>Item 3.3</li>
+                    <li>Item 3.4</li>
+                    <li>Item 3.5</li>
+                    <li>Item 3.6</li>
+                  </ol>
+                </li>
+                <li>
+                  Item 5
+                </li>
+                <li>
+                  Item 6
+                </li>
+              </ol>
+            </div>
+            <div class='span4'>
+              <div class='switch-container'>
+                <div class='switch active' data-off='OFF' data-on='ON' data-toggle='switch'></div>
+              </div>
+              <ol class='nested_with_switch vertical'>
+                <li>
+                  Item 1
+                </li>
+                <li>
+                  Item 2
+                </li>
+                <li>
+                  Item 3
+                </li>
+                <li>
+                  Item 4
+                  <ol>
+                    <li>Item 3.1</li>
+                    <li>Item 3.2</li>
+                    <li>Item 3.3</li>
+                    <li>Item 3.4</li>
+                    <li>Item 3.5</li>
+                    <li>Item 3.6</li>
+                  </ol>
+                </li>
+                <li>
+                  Item 5
+                </li>
+                <li>
+                  Item 6
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div id='limited-target'>
+          <h2>Connected lists with limited drop targets</h2>
+          <div class='row'>
+            <div class="span12 example">
+              <div class="CodeRay">
   <div class="code"><pre><span class="keyword">var</span> group = <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.limited_drop_targets</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">limited_drop_targets</span><span class="delimiter">'</span></span>,
   <span class="function">isValidTarget</span>: <span class="keyword">function</span>  (item, container) {
@@ -587,86 +587,86 @@
 })</pre></div>
 </div>
 
-  </div>
-  <div class='span4'>
-    <ul>
-      <li>
-        <strong>Limit the drop targets</strong>
-        of the dragged item
-      </li>
-      <li>
-        Customize
-        <strong>serialization</strong>
-        of the lists
-      </li>
-      <li>
-        Decrease sort
-        <strong>sensitivity</strong>
-      </li>
-      <li>
-        Start dragging after a
-        <strong>distance</strong>
-        has been met
-      </li>
-    </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
-    <h3>Serialize result</h3>
-    <pre id='serialize_output'></pre>
-  </div>
-  <div class='span4'>
-    <ol class='limited_drop_targets vertical'>
-      <li class='highlight'>Item 1</li>
-        <li>Item 2</li>
-        <li class='highlight'>Item 3</li>
-        <li>Item 4</li>
-        <li class='highlight'>Item 5</li>
-        <li>Item 6</li>
-    </ol>
-  </div>
-  <div class='span4'>
-    <ol class='limited_drop_targets vertical'>
-      <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li class='highlight'>Item 4</li>
-        <li class='highlight'>Item 5</li>
-        <li class='highlight'>Item 6</li>
-    </ol>
-  </div>
-</div>
-  </div>
-  <div id='bootstrap'>
-    <h2>Sorting a bootstrap menu</h2>
-<div class='row'>
-  <div class='span4'>
-    <ul>
-      <li>
-        Sort
-        <strong>vertically</strong>
-      </li>
-      <li>Define the nested containers differently</li>
-      <li>
-        <strong>Exclude</strong>
-        some items from being sortable
-      </li>
-    </ul>
-    <p>
-      <span class='label label-info'>Heads Up!</span>
-      The
-      <code>itemSelector</code>
-      should always match every sibling of any item.
-      If you want to exclude some items, use the
-      <code>exclude</code>
-      option.
-      <small>
-        See the first example
-        <a href='http://jqueryui.com/demos/sortable/#items'>here</a>
-        why this is a good idea.
-      </small>
-    </p>
-  </div>
-  <div class="span8">
-    <div class="CodeRay">
+            </div>
+            <div class='span4'>
+              <ul>
+                <li>
+                  <strong>Limit the drop targets</strong>
+                  of the dragged item
+                </li>
+                <li>
+                  Customize
+                  <strong>serialization</strong>
+                  of the lists
+                </li>
+                <li>
+                  Decrease sort
+                  <strong>sensitivity</strong>
+                </li>
+                <li>
+                  Start dragging after a
+                  <strong>distance</strong>
+                  has been met
+                </li>
+              </ul>
+              <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+              <h3>Serialize result</h3>
+              <pre id='serialize_output'></pre>
+            </div>
+            <div class='span4'>
+              <ol class='limited_drop_targets vertical'>
+                <li class='highlight'>Item 1</li>
+                <li>Item 2</li>
+                <li class='highlight'>Item 3</li>
+                <li>Item 4</li>
+                <li class='highlight'>Item 5</li>
+                <li>Item 6</li>
+              </ol>
+            </div>
+            <div class='span4'>
+              <ol class='limited_drop_targets vertical'>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li class='highlight'>Item 4</li>
+                <li class='highlight'>Item 5</li>
+                <li class='highlight'>Item 6</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div id='bootstrap'>
+          <h2>Sorting a bootstrap menu</h2>
+          <div class='row'>
+            <div class='span4'>
+              <ul>
+                <li>
+                  Sort
+                  <strong>vertically</strong>
+                </li>
+                <li>Define the nested containers differently</li>
+                <li>
+                  <strong>Exclude</strong>
+                  some items from being sortable
+                </li>
+              </ul>
+              <p>
+                <span class='label label-info'>Heads Up!</span>
+                The
+                <code>itemSelector</code>
+                should always match every sibling of any item.
+                If you want to exclude some items, use the
+                <code>exclude</code>
+                option.
+                <small>
+                  See the first example
+                  <a href='http://jqueryui.com/demos/sortable/#items'>here</a>
+                  why this is a good idea.
+                </small>
+              </p>
+            </div>
+            <div class="span8">
+              <div class="CodeRay">
   <div class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.nav</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nav</span><span class="delimiter">'</span></span>,
   <span class="key">nested</span>: <span class="predefined-constant">false</span>,
@@ -686,83 +686,158 @@
 })</pre></div>
 </div>
 
-  </div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='navbar-sort-container'>
+              <div class='navbar'>
+                <div class='navbar-inner'>
+                  <div class='container'>
+                    <ol class='nav pull-left'>
+                      <li>
+                        <a href='#'>Item 1</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 2</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 3</a>
+                      </li>
+                      <li class='divider-vertical'></li>
+                      <li class='dropdown open'>
+                        <a href='#'>Item 4</a>
+                        <ol class='dropdown-menu'>
+                          <li>
+                            <a href='#'>Item 3.1</a>
+                          </li>
+                          <li>
+                            <a href='#'>Item 3.2</a>
+                          </li>
+                          <li>
+                            <a href='#'>Item 3.3</a>
+                          </li>
+                          <li>
+                            <a href='#'>Item 3.4</a>
+                          </li>
+                        </ol>
+                      </li>
+                      <li>
+                        <a href='#'>Item 5</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 6</a>
+                      </li>
+                    </ol>
+                    <ol class='nav pull-right'>
+                      <li>
+                        <a href='#'>Item 1</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 2</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 3</a>
+                      </li>
+                      <li class='divider-vertical'></li>
+                      <li>
+                        <a href='#'>Item 4</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 5</a>
+                      </li>
+                      <li>
+                        <a href='#'>Item 6</a>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id='serialization'>
+          <h2>Serialization and delay</h2>
+          <div class='row'>
+            <div class="span12 example">
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> group = <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.serialization</span><span class="delimiter">&quot;</span></span>).sortable({
+  <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">serialization</span><span class="delimiter">'</span></span>,
+  <span class="key">delay</span>: <span class="integer">500</span>,
+  <span class="function">onDrop</span>: <span class="keyword">function</span> (item, container, _super) {
+    <span class="keyword">var</span> data = group.sortable(<span class="string"><span class="delimiter">&quot;</span><span class="content">serialize</span><span class="delimiter">&quot;</span></span>).get();
+
+    <span class="keyword">var</span> jsonString = JSON.stringify(data, <span class="predefined-constant">null</span>, <span class="string"><span class="delimiter">'</span><span class="content"> </span><span class="delimiter">'</span></span>);
+
+    <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">#serialize_output2</span><span class="delimiter">'</span></span>).text(jsonString);
+    _super(item, container)
+  }
+})</pre></div>
 </div>
-<div class='row'>
-  <div class='navbar-sort-container'>
-    <div class='navbar'>
-      <div class='navbar-inner'>
-        <div class='container'>
-          <ol class='nav pull-left'>
-            <li>
-              <a href='#'>Item 1</a>
-            </li>
-            <li>
-              <a href='#'>Item 2</a>
-            </li>
-            <li>
-              <a href='#'>Item 3</a>
-            </li>
-            <li class='divider-vertical'></li>
-            <li class='dropdown open'>
-              <a href='#'>Item 4</a>
-              <ol class='dropdown-menu'>
+
+            </div>
+            <div class='span4'>
+              <ul>
                 <li>
-                  <a href='#'>Item 3.1</a>
+                  Uses the default
+                  <strong>serialize</strong>
+                  implementation, that reads out the
+                  <strong>data attributes</strong>
                 </li>
-                <li>
-                  <a href='#'>Item 3.2</a>
+              </ul>
+              <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+              <h3>Serialize result</h3>
+              <pre id='serialize_output2'></pre>
+            </div>
+            <div class='span4'>
+              <ol class='serialization vertical'>
+                <li data-id='0' data-name='Item 1'>
+                  Item 1
                 </li>
-                <li>
-                  <a href='#'>Item 3.3</a>
+                <li data-id='1' data-name='Item 2'>
+                  Item 2
                 </li>
-                <li>
-                  <a href='#'>Item 3.4</a>
+                <li data-id='2' data-name='Item 3'>
+                  Item 3
+                </li>
+                <li data-id='3' data-name='Item 4'>
+                  Item 4
+                  <ol>
+                    <li data-id='3-0' data-name='Item 3.1'>Item 3.1</li>
+                    <li data-id='3-1' data-name='Item 3.2'>Item 3.2</li>
+                    <li data-id='3-2' data-name='Item 3.3'>Item 3.3</li>
+                    <li data-id='3-3' data-name='Item 3.4'>Item 3.4</li>
+                    <li data-id='3-4' data-name='Item 3.5'>Item 3.5</li>
+                    <li data-id='3-5' data-name='Item 3.6'>Item 3.6</li>
+                  </ol>
+                </li>
+                <li data-id='4' data-name='Item 5'>
+                  Item 5
+                </li>
+                <li data-id='5' data-name='Item 6'>
+                  Item 6
                 </li>
               </ol>
-            </li>
-            <li>
-              <a href='#'>Item 5</a>
-            </li>
-            <li>
-              <a href='#'>Item 6</a>
-            </li>
-          </ol>
-          <ol class='nav pull-right'>
-            <li>
-              <a href='#'>Item 1</a>
-            </li>
-            <li>
-              <a href='#'>Item 2</a>
-            </li>
-            <li>
-              <a href='#'>Item 3</a>
-            </li>
-            <li class='divider-vertical'></li>
-            <li>
-              <a href='#'>Item 4</a>
-            </li>
-            <li>
-              <a href='#'>Item 5</a>
-            </li>
-            <li>
-              <a href='#'>Item 6</a>
-            </li>
-          </ol>
+            </div>
+            <div class='span4'>
+              <ol class='serialization vertical'>
+                <li data-id='0' data-name='Item 1'>Item 1</li>
+                <li data-id='1' data-name='Item 2'>Item 2</li>
+                <li data-id='2' data-name='Item 3'>Item 3</li>
+                <li data-id='3' data-name='Item 4'>Item 4</li>
+                <li data-id='4' data-name='Item 5'>Item 5</li>
+                <li data-id='5' data-name='Item 6'>Item 6</li>
+              </ol>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-  <div id='table'>
-    <h2>
-  Sort tables
-  <small>(doesn't work well in Konqueror and IE)</small>
-</h2>
-<div class='row'>
-  <div class="span12 example">
-    <div class="CodeRay">
+        <div id='table'>
+          <h2>
+            Sort tables
+            <small>(doesn't work well in Konqueror and IE)</small>
+          </h2>
+          <div class='row'>
+            <div class="span12 example">
+              <div class="CodeRay">
   <div class="code"><pre><span class="comment">// Sortable rows</span>
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.sorted_table</span><span class="delimiter">'</span></span>).sortable({
   <span class="key">containerSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">table</span><span class="delimiter">'</span></span>,
@@ -802,280 +877,298 @@
 })</pre></div>
 </div>
 
-  </div>
-  <div class='span4'>
-    <ul>
-      <li>
-        Sort
-        <strong>tables</strong>
-      </li>
-      <li>
-        Specify custom
-        <code>placeholder</code>
-      </li>
-      <li>
-        Provide custom
-        <strong>callbacks,</strong>
-        to change the sorting behaviour
-      </li>
-    </ul>
-    <p><div data-toggle="button" class="btn btn-primary show-code"><i class="icon-chevron-down"></i> show me the code</div></p>
-  </div>
-  <div class='span4'>
-    <h3>Sortable Rows</h3>
-    <table class='table table-striped table-bordered sorted_table'>
-      <thead>
-        <tr>
-          <th>A Column</th>
-          <th>B Column</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            <td>A Item 1</td>
-            <td>B Item 1</td>
-          </tr>
-          <tr>
-            <td>A Item 2</td>
-            <td>B Item 2</td>
-          </tr>
-          <tr>
-            <td>A Item 3</td>
-            <td>B Item 3</td>
-          </tr>
-          <tr>
-            <td>A Item 4</td>
-            <td>B Item 4</td>
-          </tr>
-          <tr>
-            <td>A Item 5</td>
-            <td>B Item 5</td>
-          </tr>
-          <tr>
-            <td>A Item 6</td>
-            <td>B Item 6</td>
-          </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class='span4'>
-    <h3>Sortable column heads</h3>
-    <table class='table table-striped table-bordered'>
-      <thead class='sorted_head'>
-        <tr>
-          <th>A Column</th>
-          <th>B Column</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            <td>A Item 1</td>
-            <td>B Item 1</td>
-          </tr>
-          <tr>
-            <td>A Item 2</td>
-            <td>B Item 2</td>
-          </tr>
-          <tr>
-            <td>A Item 3</td>
-            <td>B Item 3</td>
-          </tr>
-          <tr>
-            <td>A Item 4</td>
-            <td>B Item 4</td>
-          </tr>
-          <tr>
-            <td>A Item 5</td>
-            <td>B Item 5</td>
-          </tr>
-          <tr>
-            <td>A Item 6</td>
-            <td>B Item 6</td>
-          </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-  </div>
-</div>
-<div id='docs'>
-  <div class='page-header'>
-    <h1>Documentation</h1>
-  </div>
-  <h2>jQuery API</h2>
-  <p>
-    The
-    <code>sortable()</code>
-    method must be invoked on valid containers,
-    meaning they must match the
-    <code>containerSelector</code>
-    option.
-  </p>
-  <div class='row'>
-    <div class='span6'>
-      <h3>
-        <code>.sortable([options])</code>
-      </h3>
-      <p>
-        Instantiate sortable on each matched element.
-        The available options are divided into
-        <a href='#group-options'>group options</a>
-        and
-        <a href='#container-options'>container options</a>
-        .
-      </p>
-      <p>
-        Group options are shared between all member containers and
-        are set on the first instantiation of a member container.
-        Subsequent instantiations of further containers in the same group do not change the group options.
-      </p>
-      <p>
-        Container options can be set seperately for each member of a group.
-      </p>
-    </div>
-    <div class='span6'>
-      <h3>
-        <code>.sortable("enable")</code>
-      </h3>
-      <p>Enable all instantiated sortables in the set of matched elements</p>
-      <h3>
-        <code>.sortable("disable")</code>
-      </h3>
-      <p>Disable all instantiated sortables in the set of matched elements</p>
-      <h3>
-        <code>.sortable("serialize")</code>
-      </h3>
-      <p>
-        Serialize all selected containers. Returns a
-        <code>jQuery</code>
-        object . Use
-        <code>.get()</code>
-        to retrieve the array, if needed.
-      </p>
-    </div>
-  </div>
-  <h2 id='group-options'>Group options</h2>
-  <table class='table table-striped table-bordered docs'>
-    <thead>
-      <tr>
-        <th>Option</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>
-  <code>afterMove</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$placeholder</span>, container) {
+            </div>
+            <div class='span4'>
+              <ul>
+                <li>
+                  Sort
+                  <strong>tables</strong>
+                </li>
+                <li>
+                  Specify custom
+                  <code>placeholder</code>
+                </li>
+                <li>
+                  Provide custom
+                  <strong>callbacks,</strong>
+                  to change the sorting behaviour
+                </li>
+              </ul>
+              <p><div class="btn btn-primary show-code" data-toggle="button"><i class="icon-chevron-down"></i> show me the code</div></p>
+            </div>
+            <div class='span4'>
+              <h3>Sortable Rows</h3>
+              <table class='table table-striped table-bordered sorted_table'>
+                <thead>
+                  <tr>
+                    <th>A Column</th>
+                    <th>B Column</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>A Item 1</td>
+                    <td>B Item 1</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 2</td>
+                    <td>B Item 2</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 3</td>
+                    <td>B Item 3</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 4</td>
+                    <td>B Item 4</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 5</td>
+                    <td>B Item 5</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 6</td>
+                    <td>B Item 6</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class='span4'>
+              <h3>Sortable column heads</h3>
+              <table class='table table-striped table-bordered'>
+                <thead class='sorted_head'>
+                  <tr>
+                    <th>A Column</th>
+                    <th>B Column</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>A Item 1</td>
+                    <td>B Item 1</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 2</td>
+                    <td>B Item 2</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 3</td>
+                    <td>B Item 3</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 4</td>
+                    <td>B Item 4</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 5</td>
+                    <td>B Item 5</td>
+                  </tr>
+                  <tr>
+                    <td>A Item 6</td>
+                    <td>B Item 6</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='docs'>
+        <div class='page-header'>
+          <h1>Documentation</h1>
+        </div>
+        <h2>jQuery API</h2>
+        <p>
+          The
+          <code>sortable()</code>
+          method must be invoked on valid containers,
+          meaning they must match the
+          <code>containerSelector</code>
+          option.
+        </p>
+        <div class='row'>
+          <div class='span6'>
+            <h3>
+              <code>.sortable([options])</code>
+            </h3>
+            <p>
+              Instantiate sortable on each matched element.
+              The available options are divided into
+              <a href='#group-options'>group options</a>
+              and
+              <a href='#container-options'>container options</a>
+              .
+            </p>
+            <p>
+              Group options are shared between all member containers and
+              are set on the first instantiation of a member container.
+              Subsequent instantiations of further containers in the same group do not change the group options.
+            </p>
+            <p>
+              Container options can be set seperately for each member of a group.
+            </p>
+          </div>
+          <div class='span6'>
+            <h3>
+              <code>.sortable("enable")</code>
+            </h3>
+            <p>Enable all instantiated sortables in the set of matched elements</p>
+            <h3>
+              <code>.sortable("disable")</code>
+            </h3>
+            <p>Disable all instantiated sortables in the set of matched elements</p>
+            <h3>
+              <code>.sortable("refresh")</code>
+            </h3>
+            <p>Reset all cached element dimensions</p>
+            <h3>
+              <code>.sortable("destroy")</code>
+            </h3>
+            <p>Remove the sortable plugin from the set of matched elements</p>
+            <h3>
+              <code>.sortable("serialize")</code>
+            </h3>
+            <p>
+              Serialize all selected containers. Returns a
+              <code>jQuery</code>
+              object . Use
+              <code>.get()</code>
+              to retrieve the array, if needed.
+            </p>
+          </div>
+        </div>
+        <h2 id='group-options'>Group options</h2>
+        <table class='table table-striped table-bordered docs'>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>
+              <code>afterMove</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$placeholder</span>, container, <span class="predefined">$closestItemOrContainer</span>) {
 }</pre></div>
 </div>
 
-</td>
-<td> This is executed after the placeholder has been moved.</td>
-</tr><tr><td>
-  <code>containerPath</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> This is executed after the placeholder has been moved. $closestItemOrContainer contains the closest item, the placeholder has been put at or the closest empty Container, the placeholder has been appended to.</td>
+            </tr><tr><td>
+              <code>containerPath</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span></pre></div>
 </div>
 
-</td>
-<td> The exact css path between the container and its items, e.g. "> tbody"</td>
-</tr><tr><td>
-  <code>containerSelector</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> The exact css path between the container and its items, e.g. "> tbody"</td>
+            </tr><tr><td>
+              <code>containerSelector</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="content">ol, ul</span><span class="delimiter">&quot;</span></span></pre></div>
 </div>
 
-</td>
-<td> The css selector of the containers</td>
-</tr><tr><td>
-  <code>distance</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> The css selector of the containers</td>
+            </tr><tr><td>
+              <code>distance</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="integer">0</span></pre></div>
 </div>
 
-</td>
-<td> Distance the mouse has to travel to start dragging</td>
-</tr><tr><td>
-  <code>handle</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> Distance the mouse has to travel to start dragging</td>
+            </tr><tr><td>
+              <code>delay</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="integer">0</span></pre></div>
+</div>
+
+            </td>
+            <td> Time in milliseconds after mousedown until dragging should start. This option can be used to prevent unwanted drags when clicking on an element.</td>
+            </tr><tr><td>
+              <code>handle</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span></pre></div>
 </div>
 
-</td>
-<td> The css selector of the drag handle</td>
-</tr><tr><td>
-  <code>itemPath</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> The css selector of the drag handle</td>
+            </tr><tr><td>
+              <code>itemPath</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span></pre></div>
 </div>
 
-</td>
-<td> The exact css path between the item and its subcontainers</td>
-</tr><tr><td>
-  <code>itemSelector</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> The exact css path between the item and its subcontainers</td>
+            </tr><tr><td>
+              <code>itemSelector</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="content">li</span><span class="delimiter">&quot;</span></span></pre></div>
 </div>
 
-</td>
-<td> The css selector of the items</td>
-</tr><tr><td>
-  <code>isValidTarget</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> The css selector of the items</td>
+            </tr><tr><td>
+              <code>isValidTarget</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container) {
   <span class="keyword">return</span> <span class="predefined-constant">true</span>
 }</pre></div>
 </div>
 
-</td>
-<td> Check if the dragged item may be inside the container. Use with care, since the search for a valid container entails a depth first search and may be quite expensive.</td>
-</tr><tr><td>
-  <code>onCancel</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+            </td>
+            <td> Check if the dragged item may be inside the container. Use with care, since the search for a valid container entails a depth first search and may be quite expensive.</td>
+            </tr><tr><td>
+              <code>onCancel</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super, event) {
 }</pre></div>
 </div>
 
-</td>
-<td> Executed before onDrop if placeholder is detached. This happens if pullPlaceholder is set to false and the drop occurs outside a container.</td>
-</tr><tr><td>
-  <code>onDrag</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, position, _super) {
+            </td>
+            <td> Executed before onDrop if placeholder is detached. This happens if pullPlaceholder is set to false and the drop occurs outside a container.</td>
+            </tr><tr><td>
+              <code>onDrag</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, position, _super, event) {
   <span class="predefined">$item</span>.css(position)
 }</pre></div>
 </div>
 
-</td>
-<td> Executed at the beginning of a mouse move event. The Placeholder has not been moved yet.</td>
-</tr><tr><td>
-  <code>onDragStart</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+            </td>
+            <td> Executed at the beginning of a mouse move event. The Placeholder has not been moved yet.</td>
+            </tr><tr><td>
+              <code>onDragStart</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super, event) {
   <span class="predefined">$item</span>.css({
     <span class="key">height</span>: <span class="predefined">$item</span>.height(),
     <span class="key">width</span>: <span class="predefined">$item</span>.width()
@@ -1085,183 +1178,184 @@
 }</pre></div>
 </div>
 
-</td>
-<td> Called after the drag has been started, that is the mouse button is beeing held down and the mouse is moving. The container is the closest initialized container. Therefore it might not be the container, that actually contains the item.</td>
-</tr><tr><td>
-  <code>onDrop</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
+            </td>
+            <td> Called after the drag has been started, that is the mouse button is beeing held down and the mouse is moving. The container is the closest initialized container. Therefore it might not be the container, that actually contains the item.</td>
+            </tr><tr><td>
+              <code>onDrop</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super, event) {
   <span class="predefined">$item</span>.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragged</span><span class="delimiter">&quot;</span></span>).removeAttr(<span class="string"><span class="delimiter">&quot;</span><span class="content">style</span><span class="delimiter">&quot;</span></span>)
   <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span>).removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">dragging</span><span class="delimiter">&quot;</span></span>)
 }</pre></div>
 </div>
 
-</td>
-<td> Called when the mouse button is beeing released</td>
-</tr><tr><td>
-  <code>onMousedown</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span>(<span class="predefined">$item</span>, event, _super) {
-  event.preventDefault()
-}</pre></div>
-</div>
-
-</td>
-<td> Called on mousedown.</td>
-</tr><tr><td>
-  <code>placeholder</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="string"><span class="delimiter">'</span><span class="content">&lt;li class=&quot;placeholder&quot;/&gt;</span><span class="delimiter">'</span></span></pre></div>
-</div>
-
-</td>
-<td> Template for the placeholder. Can be any valid jQuery input e.g. a string, a DOM element. The placeholder must have the class "placeholder"</td>
-</tr><tr><td>
-  <code>pullPlaceholder</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="predefined-constant">true</span></pre></div>
-</div>
-
-</td>
-<td> If true, the position of the placeholder is calculated on every mousemove. If false, it is only calculated when the mouse is above a container.</td>
-</tr><tr><td>
-  <code>serialize</code>
-</td>
-<td>
-  <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$parent</span>, <span class="predefined">$children</span>, parentIsContainer) {
-  <span class="keyword">var</span> result = <span class="predefined">$</span>.extend({}, <span class="predefined">$parent</span>.data())
-  
-  <span class="keyword">if</span>(parentIsContainer)
-    <span class="keyword">return</span> <span class="predefined">$children</span>
-  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="predefined">$children</span>[<span class="integer">0</span>]){
-    result.children = <span class="predefined">$children</span>
-    <span class="keyword">delete</span> result.subContainer
+            </td>
+            <td> Called when the mouse button is beeing released</td>
+            </tr><tr><td>
+              <code>onMousedown</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$item</span>, _super, event) {
+  <span class="keyword">if</span> (!event.target.nodeName.match(<span class="regexp"><span class="delimiter">/</span><span class="content">^(input|select)$</span><span class="delimiter">/</span><span class="modifier">i</span></span>)) {
+    event.preventDefault()
+    <span class="keyword">return</span> <span class="predefined-constant">true</span>
   }</pre></div>
 </div>
 
-</td>
-<td> Specifies serialization of the container group. The pair $parent/$children is either container/items or item/subcontainers. Note that this default method only works, if every item only has one subcontainer</td>
-</tr><tr><td>
-  <code>tolerance</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> Called on mousedown. If falsy value is returned, the dragging will not start. If clicked on input element, ignore</td>
+            </tr><tr><td>
+              <code>placeholder</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="string"><span class="delimiter">'</span><span class="content">&lt;li class=&quot;placeholder&quot;/&gt;</span><span class="delimiter">'</span></span></pre></div>
+</div>
+
+            </td>
+            <td> Template for the placeholder. Can be any valid jQuery input e.g. a string, a DOM element. The placeholder must have the class "placeholder"</td>
+            </tr><tr><td>
+              <code>pullPlaceholder</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="predefined-constant">true</span></pre></div>
+</div>
+
+            </td>
+            <td> If true, the position of the placeholder is calculated on every mousemove. If false, it is only calculated when the mouse is above a container.</td>
+            </tr><tr><td>
+              <code>serialize</code>
+            </td>
+            <td>
+              <div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> (<span class="predefined">$parent</span>, <span class="predefined">$children</span>, parentIsContainer) {
+  <span class="keyword">var</span> result = <span class="predefined">$</span>.extend({}, <span class="predefined">$parent</span>.data())
+   <span class="keyword">if</span>(parentIsContainer)
+    <span class="keyword">return</span> [<span class="predefined">$children</span>]
+  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="predefined">$children</span>[<span class="integer">0</span>]){
+    result.children = <span class="predefined">$children</span>
+  }</pre></div>
+</div>
+
+            </td>
+            <td> Specifies serialization of the container group. The pair $parent/$children is either container/items or item/subcontainers.</td>
+            </tr><tr><td>
+              <code>tolerance</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="integer">0</span></pre></div>
 </div>
 
-</td>
-<td> Set tolerance while dragging. Positive values decrease sensitivity, negative values increase it.</td>
-</tr>
-    </tbody>
-  </table>
-  <h2 id='container-options'>Container options</h2>
-  <table class='table table-striped table-bordered docs'>
-    <thead>
-      <tr>
-        <th>Option</th>
-        <th>Default</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>
-  <code>drag</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> Set tolerance while dragging. Positive values decrease sensitivity, negative values increase it.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id='container-options'>Container options</h2>
+        <table class='table table-striped table-bordered docs'>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>
+              <code>drag</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="predefined-constant">true</span></pre></div>
 </div>
 
-</td>
-<td> If true, items can be dragged from this container</td>
-</tr><tr><td>
-  <code>drop</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> If true, items can be dragged from this container</td>
+            </tr><tr><td>
+              <code>drop</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="predefined-constant">true</span></pre></div>
 </div>
 
-</td>
-<td> If true, items can be droped onto this container</td>
-</tr><tr><td>
-  <code>exclude</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> If true, items can be droped onto this container</td>
+            </tr><tr><td>
+              <code>exclude</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span></pre></div>
 </div>
 
-</td>
-<td> Exclude items from being draggable, if the selector matches the item</td>
-</tr><tr><td>
-  <code>nested</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> Exclude items from being draggable, if the selector matches the item</td>
+            </tr><tr><td>
+              <code>nested</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="predefined-constant">true</span></pre></div>
 </div>
 
-</td>
-<td> If true, search for nested containers within an item</td>
-</tr><tr><td>
-  <code>vertical</code>
-</td>
-<td>
-  <div class="CodeRay">
+            </td>
+            <td> If true, search for nested containers within an item</td>
+            </tr><tr><td>
+              <code>vertical</code>
+            </td>
+            <td>
+              <div class="CodeRay">
   <div class="code"><pre><span class="predefined-constant">true</span></pre></div>
 </div>
 
-</td>
-<td> If true, the items are assumed to be arranged vertically</td>
-</tr>
-    </tbody>
-  </table>
-</div>
-<div id='alternatives'>
-  <div class='page-header'>
-    <h1>Alternatives</h1>
-  </div>
-  <p>Listed in alphabetical order</p>
-  <ul>
-    <li>
-      <a href='http://farhadi.ir/projects/html5sortable/'>HTML5 Sortable</a>
-      ( uses native dnd events)
-    </li>
-    <li>
-      <a href='http://jqueryui.com/demos/sortable/'>jQuery UI sortable</a>
-    </li>
-    <li>
-      <a href='http://dbushell.github.com/Nestable/'>Nestable (requires no jQuery UI)</a>
-    </li>
-    <li>
-      <a href='http://mjsarfatti.com/sandbox/nestedSortable/'>nestedSortable</a>
-      (an extension of jQuery UI)
-    </li>
-    <li>
-      <a href='http://yuilibrary.com/yui/docs/sortable/'>YUI sortable</a>
-    </li>
-  </ul>
-</div>
-<footer class='footer'>
-  <p>Created by
-  <a href="https://github.com/johnny">Jonas von Andrian</a>.</p>
-  
-  <p>jquery-sortable.js is released under the
-  <a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">Modified BSD License</a>.</p>
-  
-  <p>Built with <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.
-  Icons from <a href="http://glyphicons.com/">Glyphicons Free</a>.</p>
-</footer>
+            </td>
+            <td> If true, the items are assumed to be arranged vertically</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id='alternatives'>
+        <div class='page-header'>
+          <h1>Alternatives</h1>
+        </div>
+        <p>Listed in alphabetical order</p>
+        <ul>
+          <li>
+            <a href='http://farhadi.ir/projects/html5sortable/'>HTML5 Sortable</a>
+            (uses native dnd events)
+          </li>
+          <li>
+            <a href='http://jqueryui.com/demos/sortable/'>jQuery UI sortable</a>
+          </li>
+          <li>
+            <a href='http://dbushell.github.com/Nestable/'>Nestable</a>
+            (requires no jQuery UI)
+          </li>
+          <li>
+            <a href='http://mjsarfatti.com/sandbox/nestedSortable/'>nestedSortable</a>
+            (an extension of jQuery UI)
+          </li>
+          <li>
+            <a href='http://yuilibrary.com/yui/docs/sortable/'>YUI sortable</a>
+          </li>
+        </ul>
+      </div>
+      <footer class='footer'>
+        <p>Created by
+        <a href="https://github.com/johnny">Jonas von Andrian</a>.</p>
+        
+        <p>jquery-sortable.js is released under the
+        <a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">Modified BSD License</a>.</p>
+        
+        <p>Built with <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.
+        Icons from <a href="http://glyphicons.com/">Glyphicons Free</a>.</p>
+      </footer>
     </div>
     <script src='js/application.js'></script>
   </body>
