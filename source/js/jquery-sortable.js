@@ -497,9 +497,10 @@
       } else
         while(i--){
           var index = distances[i][0],
-          distance = distances[i][1]
-          if(!distance && this.hasChildGroup(index)){
-            var found = this.getContainerGroup(index).searchValidTarget(pointer, lastPointer)
+          distance = distances[i][1],
+          childGroup = !distance && this.getChildGroup(index)
+          if(childGroup){
+            var found = childGroup.searchValidTarget(pointer, lastPointer)
             if(found)
               return true
           }
@@ -539,7 +540,7 @@
         } else
           sameResultBox.left += width / 2
       }
-      if(this.hasChildGroup(index))
+      if(this.getChildGroup(index))
         sameResultBox = emptyBox
       this.rootGroup.movePlaceholder(this, item, method, sameResultBox)
     },
@@ -563,7 +564,7 @@
         offsetParent = el.offsetParent()
       return offsetParent
     },
-    hasChildGroup: function (index) {
+    getChildGroup: function (index) {
       return this.options.nested && this.getContainerGroup(index)
     },
     getContainerGroup: function  (index) {
