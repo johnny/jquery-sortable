@@ -27,9 +27,8 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ========================================================== */
 
-!function ( $, window, undefined){
+!function ( $, window, pluginName, undefined){
   var eventNames,
-  pluginName = 'sortable',
   containerDefaults = {
     // If true, items can be dragged from this container
     drag: true,
@@ -101,7 +100,7 @@
     // Called on mousedown. If falsy value is returned, the dragging will not start.
     // If clicked on input element, ignore
     onMousedown: function ($item, _super, event) {
-      if (event.target.nodeName != 'INPUT' && event.target.nodeName != 'SELECT') {
+      if (!event.target.nodeName.match(/^(input|select)$/i)) {
         event.preventDefault()
         return true
       }
@@ -115,12 +114,11 @@
     pullPlaceholder: true,
     // Specifies serialization of the container group.
     // The pair $parent/$children is either container/items or item/subcontainers.
-    // Note that this default method only works, if every item only has one subcontainer
     serialize: function ($parent, $children, parentIsContainer) {
       var result = $.extend({}, $parent.data())
 
       if(parentIsContainer)
-        return $children
+        return [$children]
       else if ($children[0]){
         result.children = $children
         delete result.subContainer
@@ -407,7 +405,7 @@
     },
     scroll: function  (e) {
       this.clearDimensions()
-      this.clearOffsetParent()
+      this.clearOffsetParent() // TODO is this needed?
     },
     toggleListeners: function (method, events) {
       var that = this
@@ -644,4 +642,4 @@
     });
   };
 
-}(jQuery, window);
+}(jQuery, window, 'sortable');

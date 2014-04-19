@@ -4,6 +4,8 @@
   - [ ] last Pointer is NaN in search valid target
   - [ ] prevent infinite recursion
   - [ ] bootstrap example jumps up on drop
+    - (only sometimes. preventDefault() does not work if called inside drop or on containing element. Look up where the on handler attaches itself)
+    - only firefox, chrome works
 - [0/5] consider
   - [ ] better name for searchValidTarget
   - [ ] shortcut on getNearest()

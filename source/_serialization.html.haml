@@ -1,0 +1,27 @@
+%h2 Serialization and delay
+.row
+  .span12.example
+    %pre(lang="js")= example("serialization")
+  .span4
+    %ul
+      %li
+        Uses the default
+        %strong serialize
+        implementation, that reads out the
+        %strong data attributes
+    %p= show_code_button
+    %h3 Serialize result
+    %pre#serialize_output2
+  .span4
+    %ol.serialization.vertical
+      = iterate(6) do |i,name|
+        %li(data-id=i data-name=name)
+          = name
+          - if i == 3
+            %ol
+              = iterate(6) do |j, name|
+                %li(data-id="#{i}-#{j}" data-name=name)= name
+  .span4
+    %ol.serialization.vertical
+      = iterate(6,"Item") do |i,name|
+        %li(data-id=i data-name=name)= name
