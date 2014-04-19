@@ -269,8 +269,8 @@
                           groupDefaults.onDrag,
                           e)
 
-      var x = e.pageX,
-      y = e.pageY,
+      var x = e.pageX || e.originalEvent.pageX,
+      y = e.pageY || e.originalEvent.pageY,
       box = this.sameResultBox,
       t = this.options.tolerance
 
@@ -371,10 +371,7 @@
       return this.offsetParent
     },
     setPointer: function (e) {
-      var pointer = {
-        left: e.pageX,
-        top: e.pageY
-      }
+      var pointer = this.getPointer(e)
 
       if(this.$getOffsetParent()){
         var relativePointer = getRelativePosition(pointer, this.$getOffsetParent())
@@ -386,10 +383,17 @@
       this.pointer = pointer
     },
     distanceMet: function (e) {
+      var currentPointer = this.getPointer(e)
       return (Math.max(
- 				Math.abs(this.pointer.left - e.pageX),
-				Math.abs(this.pointer.top - e.pageY)
-			) >= this.options.distance)
+        Math.abs(this.pointer.left - currentPointer.left),
+        Math.abs(this.pointer.top - currentPointer.top)
+      ) >= this.options.distance)
+    },
+    getPointer: function(e) {
+      return {
+        left: e.pageX || e.originalEvent.pageX,
+        top: e.pageY || e.originalEvent.pageY
+      }
     },
     setupDelayTimer: function () {
       var that = this
@@ -456,9 +460,16 @@
       var rootGroup = this.rootGroup
 
       if( !rootGroup.dragInitDone &&
-          e.which === 1 &&
-          this.options.drag) {
+          this.options.drag &&
+          this.isValidDrag(e)) {
         rootGroup.dragInit(e, this)
+      }
+    },
+    isValidDrag: function(e) {
+      if(e.type == "touchstart"){
+        return e.originalEvent.touches.length == 1;
+      } else {
+        return e.which == 1
       }
     },
     searchValidTarget: function  (pointer, lastPointer) {
