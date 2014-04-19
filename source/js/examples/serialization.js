@@ -1,9 +1,13 @@
 $(function  () {
   var group = $("ol.serialization").sortable({
     group: 'serialization',
-    delay: 1000,
+    delay: 500,
     onDrop: function (item, container, _super) {
-      $('#serialize_output2').text(group.sortable("serialize").get().join("\n"))
+      var data = group.sortable("serialize").get();
+
+      var jsonString = JSON.stringify(data, null, ' ');
+
+      $('#serialize_output2').text(jsonString);
       _super(item, container)
     }
   })

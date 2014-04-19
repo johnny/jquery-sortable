@@ -121,10 +121,10 @@
         return [$children]
       else if ($children[0]){
         result.children = $children
-        delete result.subContainer
       }
 
-      delete result.sortable
+      delete result.subContainer
+      delete result[pluginName]
 
       return result
     },
@@ -466,11 +466,8 @@
       }
     },
     isValidDrag: function(e) {
-      if(e.type == "touchstart"){
-        return e.originalEvent.touches.length == 1;
-      } else {
-        return e.which == 1
-      }
+      return e.which == 1 ||
+        e.type == "touchstart" && e.originalEvent.touches.length == 1
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
@@ -621,6 +618,9 @@
     },
     serialize: function () {
       return this._serialize(this.el, true)
+    },
+    refresh: function() {
+      this.clearDimensions()
     },
     destroy: function () {
       this.rootGroup.destroy()
