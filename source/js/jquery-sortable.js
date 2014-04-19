@@ -565,12 +565,12 @@
       return offsetParent
     },
     getChildGroup: function (index) {
-      return this.options.nested && this.getContainerGroup(index)
+      return this.options.nested && this.getContainerGroup(this.items[index])
     },
-    getContainerGroup: function  (index) {
-      var childGroup = $.data(this.items[index], subContainerKey)
+    getContainerGroup: function  (item) {
+      var childGroup = $.data(item, subContainerKey)
       if( childGroup === undefined){
-        var childContainers = this.$getChildren(this.items[index], "container")
+        var childContainers = this.$getChildren(item, "container")
         childGroup = false
 
         if(childContainers[0]){
@@ -580,7 +580,7 @@
           })
           childGroup = childContainers[pluginName](options).data(pluginName).group
         }
-        $.data(this.items[index], subContainerKey, childGroup)
+        $.data(item, subContainerKey, childGroup)
       }
       return childGroup
     },
