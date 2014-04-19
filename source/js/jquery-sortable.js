@@ -123,8 +123,8 @@
         result.children = $children
       }
 
-      delete result.subContainer
-      delete result[pluginName]
+      delete result.subContainers
+      delete result.sortable
 
       return result
     },
@@ -139,13 +139,14 @@
     top: 0,
     bottom: 0,
     right:0
-  }
+  },
   eventNames = {
     start: "touchstart.sortable mousedown.sortable",
     drop: "touchend.sortable touchcancel.sortable mouseup.sortable",
     drag: "touchmove.sortable mousemove.sortable",
     scroll: "scroll.sortable"
-  }
+  },
+  subContainerKey = "subContainers"
 
   /*
    * a is Array [left, right, top, bottom]
@@ -209,7 +210,7 @@
     this.options = $.extend({}, groupDefaults, options)
     this.containers = []
 
-    if(!this.options.parentContainer){
+    if(!this.options.rootGroup){
       this.scrollProxy = $.proxy(this.scroll, this)
       this.dragProxy = $.proxy(this.drag, this)
       this.dropProxy = $.proxy(this.drop, this)
@@ -221,11 +222,13 @@
   }
 
   ContainerGroup.get = function  (options) {
-    if( !containerGroups[options.group]) {
+    if(!containerGroups[options.group]) {
       if(options.group === undefined)
         options.group = groupCounter ++
+
       containerGroups[options.group] = new ContainerGroup(options)
     }
+
     return containerGroups[options.group]
   }
 
@@ -233,21 +236,17 @@
     dragInit: function  (e, itemContainer) {
       this.$document = $(itemContainer.el[0].ownerDocument)
 
-      if(itemContainer.enabled()){
-        // get item to drag
-        this.item = $(e.target).closest(this.options.itemSelector)
-        this.itemContainer = itemContainer
+      // get item to drag
+      this.item = $(e.target).closest(this.options.itemSelector)
+      this.itemContainer = itemContainer
 
-        if(this.item.is(this.options.exclude) ||
-           !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
-          return
-        }
-
-        this.setPointer(e)
-        this.toggleListeners('on')
-      } else {
-        this.toggleListeners('on', ['drop'])
+      if(this.item.is(this.options.exclude) ||
+         !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
+        return
       }
+
+      this.setPointer(e)
+      this.toggleListeners('on')
 
       this.setupDelayTimer()
       this.dragInitDone = true
@@ -353,7 +352,7 @@
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
 
-        if(!this.options.parentContainer){
+        if(!this.options.rootGroup){
           while(i--){
             if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
               // If every container has the same offset parent,
@@ -411,9 +410,9 @@
       this.clearDimensions()
       this.clearOffsetParent() // TODO is this needed?
     },
-    toggleListeners: function (method, events) {
-      var that = this
-      events = events || ['drag','drop','scroll']
+    toggleListeners: function (method) {
+      var that = this,
+      events = ['drag','drop','scroll']
 
       $.each(events,function  (i,event) {
         that.$document[method](eventNames[event], that[event + 'Proxy'])
@@ -424,15 +423,21 @@
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
-      this.containerDimensions = undefined
+      this.traverse(function(object){
+        object._clearDimensions()
+      })
+    },
+    traverse: function(callback) {
+      callback(this)
       var i = this.containers.length
       while(i--){
-        this.containers[i].clearDimensions()
+        this.containers[i].traverse(callback)
       }
     },
-    destroy: function () {
-      // TODO iterate over subgroups and destroy them
-      // TODO remove all events
+    _clearDimensions: function(){
+      this.containerDimensions = undefined
+    },
+    _destroy: function () {
       containerGroups[this.options.group] = undefined
     }
   }
@@ -443,13 +448,12 @@
 
     this.group = ContainerGroup.get(this.options)
     this.rootGroup = this.options.rootGroup || this.group
-    this.parentContainer = this.options.parentContainer
     this.handle = this.rootGroup.options.handle || this.rootGroup.options.itemSelector
 
-    var itemPath = this.rootGroup.options.itemPath,
-    target = itemPath ? this.el.find(itemPath) : this.el
+    var itemPath = this.rootGroup.options.itemPath
+    this.target = itemPath ? this.el.find(itemPath) : this.el
 
-    target.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
+    this.target.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
 
     if(this.options.drop)
       this.group.containers.push(this)
@@ -459,7 +463,8 @@
     dragInit: function  (e) {
       var rootGroup = this.rootGroup
 
-      if( !rootGroup.dragInitDone &&
+      if( !this.disabled &&
+          !rootGroup.dragInitDone &&
           this.options.drag &&
           this.isValidDrag(e)) {
         rootGroup.dragInit(e, this)
@@ -479,10 +484,7 @@
         rootGroup.options.isValidTarget(rootGroup.item, this)
 
       if(!i && validTarget){
-        var itemPath = this.rootGroup.options.itemPath,
-        target = itemPath ? this.el.find(itemPath) : this.el
-
-        rootGroup.movePlaceholder(this, target, "append")
+        rootGroup.movePlaceholder(this, this.target, "append")
         return true
       } else
         while(i--){
@@ -555,25 +557,21 @@
       return this.options.nested && this.getContainerGroup(index)
     },
     getContainerGroup: function  (index) {
-      var childGroup = $.data(this.items[index], "subContainer")
+      var childGroup = $.data(this.items[index], subContainerKey)
       if( childGroup === undefined){
         var childContainers = this.$getChildren(this.items[index], "container")
         childGroup = false
 
         if(childContainers[0]){
           var options = $.extend({}, this.options, {
-            parentContainer: this,
             rootGroup: this.rootGroup,
             group: groupCounter ++
           })
           childGroup = childContainers[pluginName](options).data(pluginName).group
         }
-        $.data(this.items[index], "subContainer", childGroup)
+        $.data(this.items[index], subContainerKey, childGroup)
       }
       return childGroup
-    },
-    enabled: function () {
-      return !this.disabled && (!this.parentContainer || this.parentContainer.enabled())
     },
     $getChildren: function (parent, type) {
       var options = this.rootGroup.options,
@@ -596,34 +594,58 @@
 
       return this.rootGroup.options.serialize(parent, children, isContainer)
     },
-    clearDimensions: function  () {
+    traverse: function(callback) {
+      $.each(this.items || [], function(item){
+        var group = $.data(this, subContainerKey)
+        if(group)
+          group.traverse(callback)
+      });
+
+      callback(this)
+    },
+    _clearDimensions: function  () {
       this.itemDimensions = undefined
-      if(this.items && this.items[0]){
-        var i = this.items.length
-        while(i--){
-          var group = $.data(this.items[i], "subContainer")
-          if(group)
-            group.clearDimensions()
-        }
-      }
+    },
+    _destroy: function() {
+      var that = this;
+
+      this.target.off(eventNames.start, this.handle);
+      this.el.removeData(pluginName)
+
+      if(this.options.drop)
+        this.group.containers = $.grep(this.group.containers, function(val){
+          return val != that
+        })
+
+      $.each(this.items || [], function(){
+        $.removeData(this, subContainerKey)
+      })
     }
   }
 
   var API = {
-    enable: function  (ignoreChildren) {
-      this.disabled = false
+    enable: function() {
+      this.traverse(function(object){
+        object.disabled = false
+      })
     },
-    disable: function  (ignoreChildren) {
-      this.disabled = true
+    disable: function (){
+      this.traverse(function(object){
+        object.disabled = true
+      })
     },
     serialize: function () {
       return this._serialize(this.el, true)
     },
     refresh: function() {
-      this.clearDimensions()
+      this.traverse(function(object){
+        object._clearDimensions()
+      })
     },
     destroy: function () {
-      this.rootGroup.destroy()
+      this.traverse(function(object){
+        object._destroy();
+      })
     }
   }
 

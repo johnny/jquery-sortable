@@ -1,12 +1,10 @@
-- [0/1] exampels
-  - [ ] delay
-- [0/2] bugs
+- [0/3] bugs
   - [ ] last Pointer is NaN in search valid target
   - [ ] prevent infinite recursion
   - [ ] bootstrap example jumps up on drop
     - (only sometimes. preventDefault() does not work if called inside drop or on containing element. Look up where the on handler attaches itself)
     - only firefox, chrome works
-- [0/5] consider
+- [0/6] consider
   - [ ] better name for searchValidTarget
   - [ ] shortcut on getNearest()
     - [ ] if items, break if distance is growing again
@@ -14,3 +12,4 @@
   - [ ] only calculate top/bottom if vertical and left/right if horizontal
   - [ ] support placeholder with height/width
   - [ ] calculate item/container dimensions relative to the container => Not all centers have to be recalculated
+  - [ ] change subContainers handling, so that it becomes easier to remove them
