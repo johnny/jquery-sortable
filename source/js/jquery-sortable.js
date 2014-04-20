@@ -472,6 +472,8 @@
     var itemPath = this.rootGroup.options.itemPath
     this.target = itemPath ? this.el.find(itemPath) : this.el
 
+    this.parentDepth = this.options.parentDepth || 0
+
     this.target.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
 
     if(this.options.drop)
@@ -607,6 +609,7 @@
         if(childContainers[0]){
           var options = $.extend({}, this.options, {
             rootGroup: this.rootGroup,
+            parentDepth: this.parentDepth + 1,
             group: groupCounter ++
           })
           childGroup = childContainers[pluginName](options).data(pluginName).group
