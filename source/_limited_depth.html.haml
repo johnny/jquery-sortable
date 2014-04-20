@@ -1,0 +1,27 @@
+%h2 Limited depth nested lists
+.row
+  .span12.example
+    %pre(lang="js")= example("nested_with_switch")
+  .span4
+    %ul
+      %li
+        %strong Limit nesting depth
+        (limit is 3 in this example)
+      %li All items can be nested under any other item
+    %p= show_code_button
+  .span8
+    %ol.limited_depth.vertical
+      = iterate(6) do |i, name|
+        %li
+          = name
+          %ol
+            - if i == 3
+              = iterate(6) do |j, name|
+                %li
+                  = name
+                  %ol
+                    - if j == 3
+                      = iterate(3) do |k, name|
+                        %li
+                          = name
+                          %ol
