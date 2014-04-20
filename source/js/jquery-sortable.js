@@ -544,12 +544,15 @@
         sameResultBox = emptyBox
       this.rootGroup.movePlaceholder(this, item, method, sameResultBox)
     },
+    getItems: function() {
+      this.items = this.$getChildren(this.el, "item").filter(
+        ":not(." + this.group.options.placeholderClass + ", ." + this.group.options.draggedClass + ")"
+      ).get()
+      return this.items
+    },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.$getChildren(this.el, "item").filter(
-          ":not(." + this.group.options.placeholderClass + ", ." + this.group.options.draggedClass + ")"
-        ).get()
-        setDimensions(this.items, this.itemDimensions = [], this.options.tolerance)
+        setDimensions(this.getItems(), this.itemDimensions = [], this.options.tolerance)
       }
       return this.itemDimensions
     },
