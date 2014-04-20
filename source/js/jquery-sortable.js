@@ -402,6 +402,17 @@
         top: e.pageY || e.originalEvent.pageY
       }
     },
+    maxDepth: function () {
+      var maxDepth = 0,
+      depth,
+      i = this.containers.length
+      while(i--){
+        depth = this.containers[i].maxDepth()
+        if(depth > maxDepth)
+          maxDepth = depth
+      }
+      return maxDepth
+    },
     setupDelayTimer: function () {
       var that = this
       this.delayMet = !this.options.delay
@@ -566,6 +577,23 @@
       else
         offsetParent = el.offsetParent()
       return offsetParent
+    },
+    maxDepth: function () {
+      var that = this,
+      maxDepth = 0
+      $.each(this.getItems(), function(){
+        var itemDepth = that.itemDepth(this);
+        if (itemDepth > maxDepth)
+          maxDepth = itemDepth
+      })
+      return maxDepth
+    },
+    itemDepth: function (item) {
+      var depth = 1,
+      group = this.getContainerGroup(item)
+      if(group)
+        depth += group.maxDepth()
+      return depth
     },
     getChildGroup: function (index) {
       return this.options.nested && this.getContainerGroup(this.items[index])
