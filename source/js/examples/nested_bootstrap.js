@@ -1,7 +1,7 @@
 $(function  () {
   $("ol.nav").sortable({
     group: 'nav',
-    nested: false,
+    maxDepth: 0,
     vertical: false,
     exclude: '.divider-vertical',
     onDragStart: function($item, container, _super) {

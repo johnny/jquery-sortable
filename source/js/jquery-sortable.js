@@ -37,8 +37,8 @@
     // Exclude items from being draggable, if the
     // selector matches the item
     exclude: "",
-    // If true, search for nested containers within an item
-    nested: true,
+    // The maximum nesting depth. Set to 1 or below for no nesting.
+    maxDepth: Infinity,
     // If true, the items are assumed to be arranged vertically
     vertical: true
   }, // end container defaults
@@ -258,13 +258,13 @@
       this.dragInitDone = true
     },
     drag: function  (e) {
-      if(!this.dragging){
+      if(!this.draggingDepth){
         if(!this.distanceMet(e) || !this.delayMet)
           return
 
+        this.draggingDepth = this.itemContainer.itemDepth(this.item)
         this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart, e)
         this.item.before(this.placeholder)
-        this.dragging = true
       }
 
       this.setPointer(e)
@@ -290,7 +290,7 @@
 
       this.dragInitDone = false
 
-      if(this.dragging){
+      if(this.draggingDepth){
         // processing Drop, check if placeholder is detached
         if(this.placeholder.closest("html")[0])
           this.placeholder.before(this.item).detach()
@@ -303,7 +303,7 @@
         this.clearDimensions()
         this.clearOffsetParent()
         this.lastAppendedItem = this.sameResultBox = undefined
-        this.dragging = false
+        this.draggingDepth = false
       }
     },
     searchValidTarget: function  (pointer, lastPointer) {
@@ -598,7 +598,8 @@
       return depth
     },
     getChildGroup: function (index) {
-      return this.options.nested && this.getContainerGroup(this.items[index])
+      return this.rootGroup.draggingDepth + this.parentDepth < this.options.maxDepth &&
+        this.getContainerGroup(this.items[index])
     },
     getContainerGroup: function  (item) {
       var childGroup = $.data(item, subContainerKey)
