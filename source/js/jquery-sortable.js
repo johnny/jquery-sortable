@@ -472,7 +472,7 @@
     },
     isValidDrag: function(e) {
       return e.which == 1 ||
-        e.type == "touchstart" && e.originalEvent.touches.length == 1
+        e.type == "touchmove" && e.originalEvent.touches.length == 1
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
