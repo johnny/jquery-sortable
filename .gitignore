@@ -5,7 +5,8 @@
 /.sass-cache
 /build
 /.bundle
-
+.ruby-gemset
+.ruby-version
 
 # tempfiles
 *[~#]

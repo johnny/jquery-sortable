@@ -141,7 +141,7 @@
     right:0
   },
   eventNames = {
-    start: "touchstart.sortable mousedown.sortable",
+    start: "touchmove.sortable mousedown.sortable",
     drop: "touchend.sortable touchcancel.sortable mouseup.sortable",
     drag: "touchmove.sortable mousemove.sortable",
     scroll: "scroll.sortable"
@@ -268,8 +268,8 @@
                           groupDefaults.onDrag,
                           e)
 
-      var x = e.pageX || e.originalEvent.pageX,
-      y = e.pageY || e.originalEvent.pageY,
+      var x = e.pageX || e.originalEvent.targetTouches[0].pageX,
+      y = e.pageY || e.originalEvent.targetTouches[0].pageY,
       box = this.sameResultBox,
       t = this.options.tolerance
 
@@ -390,8 +390,8 @@
     },
     getPointer: function(e) {
       return {
-        left: e.pageX || e.originalEvent.pageX,
-        top: e.pageY || e.originalEvent.pageY
+        left: e.pageX || e.originalEvent.targetTouches[0].pageX,
+        top: e.pageY || e.originalEvent.targetTouches[0].pageY
       }
     },
     setupDelayTimer: function () {
@@ -472,7 +472,7 @@
     },
     isValidDrag: function(e) {
       return e.which == 1 ||
-        e.type == "touchstart" && e.originalEvent.touches.length == 1
+        e.type == "touchmove" && e.originalEvent.touches.length == 1
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
