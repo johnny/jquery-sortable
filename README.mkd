@@ -16,3 +16,5 @@ jquery (>= 1.7.0)
 
 jQuery Sortable is developed using [middleman](http://middlemanapp.com/).
 A **bundle install** shoud pull in everything needed.
+	bundle exec middleman server
+This will start a local web server running at: http://localhost:4567/
