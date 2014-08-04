@@ -274,8 +274,10 @@
       t = this.options.tolerance
 
       if(!box || box.top - t > y || box.bottom + t < y || box.left - t > x || box.right + t < x)
-        if(!this.searchValidTarget())
+        if(!this.searchValidTarget()){
           this.placeholder.detach()
+          this.lastAppendedItem = undefined
+        }
     },
     drop: function  (e) {
       this.toggleListeners('off')
