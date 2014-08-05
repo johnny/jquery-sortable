@@ -64,6 +64,12 @@
     itemPath: "",
     // The css selector of the items
     itemSelector: "li",
+    // The class given to "body" while an item is being dragged
+    bodyClass: "dragging",
+    // The class giving to an item while being dragged
+    draggedClass: "dragged",
+    // The class of the placeholder (must match placeholder option markup)
+    placeholderClass: "placeholder",
     // Check if the dragged item may be inside the container.
     // Use with care, since the search for a valid container entails a depth first search
     // and may be quite expensive.
@@ -89,13 +95,13 @@
         height: $item.height(),
         width: $item.width()
       })
-      $item.addClass("dragged")
-      $("body").addClass("dragging")
+      $item.addClass(container.group.options.draggedClass)
+      $("body").addClass(container.group.options.bodyClass)
     },
     // Called when the mouse button is beeing released
     onDrop: function ($item, container, _super, event) {
-      $item.removeClass("dragged").removeAttr("style")
-      $("body").removeClass("dragging")
+      $item.removeClass(container.group.options.draggedClass).removeAttr("style")
+      $("body").removeClass(container.group.options.bodyClass)
     },
     // Called on mousedown. If falsy value is returned, the dragging will not start.
     // If clicked on input element, ignore
@@ -537,7 +543,9 @@
     },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.$getChildren(this.el, "item").filter(":not(.placeholder, .dragged)").get()
+        this.items = this.$getChildren(this.el, "item").filter(
+          ":not(." + this.group.options.placeholderClass + ", ." + this.group.options.draggedClass + ")"
+        ).get()
         setDimensions(this.items, this.itemDimensions = [], this.options.tolerance)
       }
       return this.itemDimensions
