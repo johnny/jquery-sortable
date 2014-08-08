@@ -1,0 +1,27 @@
+{
+  "name": "jquery-sortable",
+  "version": "0.9.12",
+  "homepage": "http://johnny.github.io/jquery-sortable/",
+  "authors": [
+    "Jonas von Andrian"
+  ],
+  "main": "source/js/jquery-sortable.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "sortable",
+    "sort",
+    "sorting",
+    "drag",
+    "dragging"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
