@@ -1,3 +1,13 @@
+[0.9.12] expose mouse events in callbacks
+	add refresh method
+	add destroy method
+	add delay option
+	falsy return value in onMousedown prevents dragging
+	fix exclusion of items
+	fix ignore for select element (abixalmon)
+	fix touch events (prateekjadhwani)
+	fix itemPath issues (appending and dragInit)
+	improve documentation
 [0.9.11] option tolerance accepts negative values
 	rewrote enable/disable logic
 	added (item|container)Path
