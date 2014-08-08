@@ -5,18 +5,18 @@ $(function  () {
     group: 'simple_with_animation',
     pullPlaceholder: false,
     // animation on drop
-    onDrop: function  (item, targetContainer, _super) {
-      var clonedItem = $('<li/>').css({height: 0})
-      item.before(clonedItem)
-      clonedItem.animate({'height': item.height()})
-      
-      item.animate(clonedItem.position(), function  () {
-        clonedItem.detach()
-        _super(item)
+    onDrop: function  ($item, container, _super) {
+      var $clonedItem = $('<li/>').css({height: 0})
+      $item.before($clonedItem)
+      $clonedItem.animate({'height': $item.height()})
+
+      $item.animate($clonedItem.position(), function  () {
+        $clonedItem.detach()
+        _super($item, container)
       })
     },
 
-    // set item relative to cursor position
+    // set $item relative to cursor position
     onDragStart: function ($item, container, _super) {
       var offset = $item.offset(),
       pointer = container.rootGroup.pointer

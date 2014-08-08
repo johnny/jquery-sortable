@@ -2,11 +2,11 @@ $(function() {
   $("ol.simple_with_drop").sortable({
     group: 'no-drop',
     handle: 'i.icon-move',
-    onDragStart: function (item, container, _super) {
+    onDragStart: function ($item, container, _super) {
       // Duplicate items of the no drop area
       if(!container.options.drop)
-        item.clone().insertAfter(item)
-      _super(item)
+        $item.clone().insertAfter($item)
+      _super($item, container)
     }
   })
   $("ol.simple_with_no_drop").sortable({
