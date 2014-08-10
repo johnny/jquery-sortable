@@ -626,6 +626,9 @@
         this.group.containers = $.grep(this.group.containers, function(val){
           return val != that
         })
+        
+      if(this.group)
+        this.group._destroy()
 
       $.each(this.items || [], function(){
         $.removeData(this, subContainerKey)
