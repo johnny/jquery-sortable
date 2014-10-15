@@ -397,10 +397,10 @@
       ) >= this.options.distance)
     },
     getPointer: function(e) {
-      return {
-        left: e.pageX || e.originalEvent.pageX,
-        top: e.pageY || e.originalEvent.pageY
-      }
+        return {
+            "left": (typeof(event.touches) != "undefined")?event.touches[0].pageX:event.clientX,
+            "top": ((typeof(event.touches) != "undefined")?event.touches[0].pageY:event.clientY) + window.scrollY
+        };
     },
     setupDelayTimer: function () {
       var that = this
