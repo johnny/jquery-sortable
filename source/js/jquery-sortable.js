@@ -40,7 +40,9 @@
     // If true, search for nested containers within an item
     nested: true,
     // If true, the items are assumed to be arranged vertically
-    vertical: true
+    vertical: true,
+    // Wether or not to prevent default on touchstart, allowing for drag on mobile devices
+    touchDrag: true,
   }, // end container defaults
   groupDefaults = {
     // This is executed after the placeholder has been moved.
@@ -250,6 +252,9 @@
          !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
         return
       }
+      // lets touchstart drags work on mobile
+      if (event.type == 'touchstart' && this.options.touchDrag)
+        e.preventDefault()
 
       this.setPointer(e)
       this.toggleListeners('on')
@@ -274,8 +279,8 @@
                           groupDefaults.onDrag,
                           e)
 
-      var x = e.pageX || e.originalEvent.pageX,
-      y = e.pageY || e.originalEvent.pageY,
+      var x = e.pageX || e.originalEvent.touches[0].pageX,
+      y = e.pageY || e.originalEvent.touches[0].pageY,
       box = this.sameResultBox,
       t = this.options.tolerance
 
@@ -398,8 +403,8 @@
     },
     getPointer: function(e) {
       return {
-        left: e.pageX || e.originalEvent.pageX,
-        top: e.pageY || e.originalEvent.pageY
+        left: e.pageX || e.originalEvent.touches[0].pageX,
+        top: e.pageY || e.originalEvent.touches[0].pageY
       }
     },
     setupDelayTimer: function () {
