@@ -5,7 +5,7 @@
   "authors": [
     "Jonas von Andrian"
   ],
-  "main": "source/js/jquery-sortable.js",
+  "main": "./source/js/jquery-sortable.js",
   "moduleType": [
     "globals"
   ],
