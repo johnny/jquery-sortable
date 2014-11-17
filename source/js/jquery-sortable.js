@@ -116,7 +116,7 @@
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element.
     // The placeholder must have the class "placeholder"
-    placeholder: '<li class="placeholder"/>',
+    placeholder: '<li class="placeholder"></li>',
     // If true, the position of the placeholder is calculated on every mousemove.
     // If false, it is only calculated when the mouse is above a container.
     pullPlaceholder: true,
@@ -295,11 +295,10 @@
         // processing Drop, check if placeholder is detached
         if(this.placeholder.closest("html")[0]){
           this.placeholder.before(this.item).detach()
-          this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e)
         } else {
           this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel, e)
-          this.options.onDrop(this.item, this.itemContainer, groupDefaults.onDrop, e)
         }
+        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e)
 
         // cleanup
         this.clearDimensions()
@@ -399,9 +398,10 @@
       ) >= this.options.distance)
     },
     getPointer: function(e) {
+      var o = e.originalEvent || e.originalEvent.touches && e.originalEvent.touches[0]
       return {
-        left: e.pageX || e.originalEvent.pageX || e.originalEvent.touches[0].pageX,
-        top: e.pageY || e.originalEvent.pageY || e.originalEvent.touches[0].pageY
+        left: e.pageX || o.pageX,
+        top: e.pageY || o.pageY
       }
     },
     setupDelayTimer: function () {
