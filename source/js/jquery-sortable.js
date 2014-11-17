@@ -37,7 +37,9 @@
     // Exclude items from being draggable, if the
     // selector matches the item
     exclude: "",
-    // If true, search for nested containers within an item
+    // If true, search for nested containers within an item.If you nest containers,
+    // either the original selector with which you call the plugin must only match the top containers,
+    // or you need to specify a group (see the bootstrap nav example)
     nested: true,
     // If true, the items are assumed to be arranged vertically
     vertical: true
@@ -70,8 +72,6 @@
     bodyClass: "dragging",
     // The class giving to an item while being dragged
     draggedClass: "dragged",
-    // The class of the placeholder (must match placeholder option markup)
-    placeholderClass: "placeholder",
     // Check if the dragged item may be inside the container.
     // Use with care, since the search for a valid container entails a depth first search
     // and may be quite expensive.
@@ -113,6 +113,8 @@
         return true
       }
     },
+    // The class of the placeholder (must match placeholder option markup)
+    placeholderClass: "placeholder",
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element.
     // The placeholder must have the class "placeholder"
