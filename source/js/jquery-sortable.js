@@ -60,7 +60,9 @@
     delay: 0,
     // The css selector of the drag handle
     handle: "",
-    // The exact css path between the item and its subcontainers
+    // The exact css path between the item and its subcontainers.
+    // It should only match the immediate items of a container.
+    // No item of a subcontainer should be matched. E.g. for ol>div>li the itemPath is "> div"
     itemPath: "",
     // The css selector of the items
     itemSelector: "li",
@@ -274,12 +276,11 @@
                           groupDefaults.onDrag,
                           e)
 
-      var x = e.pageX || e.originalEvent.pageX,
-      y = e.pageY || e.originalEvent.pageY,
+      var p = this.getPointer(e),
       box = this.sameResultBox,
       t = this.options.tolerance
 
-      if(!box || box.top - t > y || box.bottom + t < y || box.left - t > x || box.right + t < x)
+      if(!box || box.top - t > p.top || box.bottom + t < p.top || box.left - t > p.left || box.right + t < p.left)
         if(!this.searchValidTarget()){
           this.placeholder.detach()
           this.lastAppendedItem = undefined
@@ -399,8 +400,8 @@
     },
     getPointer: function(e) {
       return {
-        left: e.pageX || e.originalEvent.pageX,
-        top: e.pageY || e.originalEvent.pageY
+        left: e.pageX || e.originalEvent.pageX || e.originalEvent.touches[0].pageX,
+        top: e.pageY || e.originalEvent.pageY || e.originalEvent.touches[0].pageY
       }
     },
     setupDelayTimer: function () {
