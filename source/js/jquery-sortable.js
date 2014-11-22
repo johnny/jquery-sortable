@@ -589,14 +589,22 @@
     },
     $getChildren: function (parent, type) {
       var options = this.rootGroup.options,
-      path = options[type + "Path"],
-      selector = options[type + "Selector"]
-
-      parent = $(parent)
-      if(path)
-        parent = parent.find(path)
-
-      return parent.children(selector)
+        path = options[type + "Path"],
+        selector = options[type + "Selector"];
+      parent = $(parent);
+      if (path) parent = parent.find(path);
+      var $els = parent.children(selector),
+        $dragged = parent.children('.dragged'),
+        nuEls = [],
+        targetItem = this.target.find('.' + this.group.options.draggedClass)[0];
+      for (var i = $els.length - 1; i >= 0; i--) {
+        var el = $els[i],
+          target = targetItem,
+          sameAsTarget = (el == target);
+        if (el.classList.contains('placeholder')) el = target;
+        if (!sameAsTarget) nuEls.push(el);
+      }
+      return $(nuEls.reverse());
     },
     _serialize: function (parent, isContainer) {
       var that = this,
