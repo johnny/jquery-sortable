@@ -245,21 +245,21 @@
   ContainerGroup.prototype = {
     dragInit: function  (e, itemContainer) {
       this.$document = $(itemContainer.el[0].ownerDocument)
-
       // get item to drag
-      this.item = $(e.target).closest(this.options.itemSelector)
-      this.itemContainer = itemContainer
-
-      if(this.item.is(this.options.exclude) ||
-         !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
-        return
+      var closestItem = $(e.target).closest(this.options.itemSelector);
+      // using the length of this item, prevents the plugin from being started if there is no handle being clicked on.
+      // this may also be helpful in instantiating multidrag.
+      if (closestItem.length) {
+        this.item = closestItem;
+        this.itemContainer = itemContainer;
+        if (this.item.is(this.options.exclude) || !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)) {
+            return;
+        }
+        this.setPointer(e);
+        this.toggleListeners('on');
+        this.setupDelayTimer();
+        this.dragInitDone = true;
       }
-
-      this.setPointer(e)
-      this.toggleListeners('on')
-
-      this.setupDelayTimer()
-      this.dragInitDone = true
     },
     drag: function  (e) {
       if(!this.dragging){
@@ -589,14 +589,22 @@
     },
     $getChildren: function (parent, type) {
       var options = this.rootGroup.options,
-      path = options[type + "Path"],
-      selector = options[type + "Selector"]
-
-      parent = $(parent)
-      if(path)
-        parent = parent.find(path)
-
-      return parent.children(selector)
+        path = options[type + "Path"],
+        selector = options[type + "Selector"];
+      parent = $(parent);
+      if (path) parent = parent.find(path);
+      var $els = parent.children(selector),
+        $dragged = parent.children('.dragged'),
+        nuEls = [],
+        targetItem = this.target.find('.' + this.group.options.draggedClass)[0];
+      for (var i = $els.length - 1; i >= 0; i--) {
+        var el = $els[i],
+          target = targetItem,
+          sameAsTarget = (el == target);
+        if (el.classList.contains('placeholder')) el = target;
+        if (!sameAsTarget) nuEls.push(el);
+      }
+      return $(nuEls.reverse());
     },
     _serialize: function (parent, isContainer) {
       var that = this,
