@@ -247,19 +247,20 @@
       this.$document = $(itemContainer.el[0].ownerDocument)
 
       // get item to drag
-      this.item = $(e.target).closest(this.options.itemSelector)
-      this.itemContainer = itemContainer
-
-      if(this.item.is(this.options.exclude) ||
-         !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
-        return
+      var closestItem = $(e.target).closest(this.options.itemSelector);
+      // using the length of this item, prevents the plugin from being started if there is no handle being clicked on.
+      // this may also be helpful in instantiating multidrag.
+      if (closestItem.length) {
+        this.item = closestItem;
+        this.itemContainer = itemContainer;
+        if (this.item.is(this.options.exclude) || !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)) {
+            return;
+        }
+        this.setPointer(e);
+        this.toggleListeners('on');
+        this.setupDelayTimer();
+        this.dragInitDone = true;
       }
-
-      this.setPointer(e)
-      this.toggleListeners('on')
-
-      this.setupDelayTimer()
-      this.dragInitDone = true
     },
     drag: function  (e) {
       if(!this.dragging){
