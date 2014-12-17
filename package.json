@@ -20,7 +20,7 @@
   "author": [
     "Jonas von Andrian"
   ],
-  "license": "MIT",
+  "license": "BSD-3",
   "bugs": {
     "url": "https://github.com/johnny/jquery-sortable/issues"
   },
