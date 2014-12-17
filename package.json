@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/johnny/jquery-sortable/issues"
   },
-  "homepage": "https://github.com/johnny/jquery-sortable"
+  "homepage": "https://github.com/johnny/jquery-sortable",
+  "dependencies": {
+    "jquery": "^2.1.2"
+  }
 }

@@ -5,6 +5,7 @@
 /.sass-cache
 /build
 /.bundle
+/node_modules
 
 
 # tempfiles
