@@ -86,6 +86,7 @@
     // The Placeholder has not been moved yet.
     onDrag: function ($item, position, _super, event) {
       $item.css(position)
+      event.preventDefault()
     },
     // Called after the drag has been started,
     // that is the mouse button is beeing held down and
@@ -109,7 +110,6 @@
     // Ignore if element clicked is input, select or textarea
     onMousedown: function ($item, _super, event) {
       if (!event.target.nodeName.match(/^(input|select|textarea)$/i)) {
-        event.preventDefault()
         return true
       }
     },
@@ -254,7 +254,7 @@
         this.item = closestItem;
         this.itemContainer = itemContainer;
         if (this.item.is(this.options.exclude) || !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)) {
-            return;
+          return;
         }
         this.setPointer(e);
         this.toggleListeners('on');
@@ -401,10 +401,11 @@
       ) >= this.options.distance)
     },
     getPointer: function(e) {
-      var o = e.originalEvent || e.originalEvent.touches && e.originalEvent.touches[0]
+      var o = e.originalEvent,
+        t = (e.originalEvent.touches && e.originalEvent.touches[0]) || {};
       return {
-        left: e.pageX || o.pageX,
-        top: e.pageY || o.pageY
+        left: e.pageX || o.pageX || t.pageX,
+        top: e.pageY || o.pageY || t.pageY
       }
     },
     setupDelayTimer: function () {
