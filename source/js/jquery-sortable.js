@@ -110,6 +110,7 @@
     // Ignore if element clicked is input, select or textarea
     onMousedown: function ($item, _super, event) {
       if (!event.target.nodeName.match(/^(input|select|textarea)$/i)) {
+        if (event.type.match(/^mouse/)) event.preventDefault()
         return true
       }
     },
