@@ -90,6 +90,12 @@ set :js_dir, 'js'
 
 set :images_dir, 'img'
 
+def update_version(file)
+  content = File.read(file).gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
+  File.open(file, 'w') do |file|
+    file.puts content
+  end
+end
 # Build-specific configuration
 configure :build do
   filename = 'source/js/jquery-sortable.js'
@@ -108,11 +114,10 @@ configure :build do
 
   `gzip -c source/js/jquery-sortable-min.js > source/js/jquery-sortable-min.js.gz`
 
-  manifest = 'sortable.jquery.json'
-  content = File.read(manifest).gsub(/("version": "|blob\/)[\d\.]+/, '\1' + VERSION)
-  File.open(manifest, 'w') do |file|
-    file.puts content
-  end
+  ['sortable.jquery.json',
+   'bower.json',
+   'package.json'
+  ].each { |package_file| update_version(package_file) }
 
   # For example, change the Compass output style for deployment
   # activate :minify_css

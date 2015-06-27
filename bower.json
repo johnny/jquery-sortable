@@ -16,7 +16,7 @@
     "drag",
     "dragging"
   ],
-  "license": "MIT",
+  "license": "BSD-3",
   "ignore": [
     "**/.*",
     "node_modules",
