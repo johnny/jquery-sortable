@@ -1,5 +1,5 @@
 /* ===================================================
- *  jquery-sortable.js v0.9.12
+ *  jquery-sortable.js v0.9.13
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -38,7 +38,9 @@
     // Exclude items from being draggable, if the
     // selector matches the item
     exclude: "",
-    // If true, search for nested containers within an item
+    // If true, search for nested containers within an item.If you nest containers,
+    // either the original selector with which you call the plugin must only match the top containers,
+    // or you need to specify a group (see the bootstrap nav example)
     nested: true,
     // If true, the items are assumed to be arranged vertically
     vertical: true
@@ -61,10 +63,16 @@
     delay: 0,
     // The css selector of the drag handle
     handle: "",
-    // The exact css path between the item and its subcontainers
+    // The exact css path between the item and its subcontainers.
+    // It should only match the immediate items of a container.
+    // No item of a subcontainer should be matched. E.g. for ol>div>li the itemPath is "> div"
     itemPath: "",
     // The css selector of the items
     itemSelector: "li",
+    // The class given to "body" while an item is being dragged
+    bodyClass: "dragging",
+    // The class giving to an item while being dragged
+    draggedClass: "dragged",
     // Check if the dragged item may be inside the container.
     // Use with care, since the search for a valid container entails a depth first search
     // and may be quite expensive.
@@ -81,35 +89,37 @@
       $item.css(position)
     },
     // Called after the drag has been started,
-    // that is the mouse button is beeing held down and
+    // that is the mouse button is being held down and
     // the mouse is moving.
     // The container is the closest initialized container.
     // Therefore it might not be the container, that actually contains the item.
     onDragStart: function ($item, container, _super, event) {
       $item.css({
-        height: $item.height(),
-        width: $item.width()
+        height: $item.outerHeight(),
+        width: $item.outerWidth()
       })
-      $item.addClass("dragged")
-      $("body").addClass("dragging")
+      $item.addClass(container.group.options.draggedClass)
+      $("body").addClass(container.group.options.bodyClass)
     },
-    // Called when the mouse button is beeing released
+    // Called when the mouse button is being released
     onDrop: function ($item, container, _super, event) {
-      $item.removeClass("dragged").removeAttr("style")
-      $("body").removeClass("dragging")
+      $item.removeClass(container.group.options.draggedClass).removeAttr("style")
+      $("body").removeClass(container.group.options.bodyClass)
     },
     // Called on mousedown. If falsy value is returned, the dragging will not start.
-    // If clicked on input element, ignore
+    // Ignore if element clicked is input, select or textarea
     onMousedown: function ($item, _super, event) {
-      if (!event.target.nodeName.match(/^(input|select)$/i)) {
+      if (!event.target.nodeName.match(/^(input|select|textarea)$/i)) {
         event.preventDefault()
         return true
       }
     },
+    // The class of the placeholder (must match placeholder option markup)
+    placeholderClass: "placeholder",
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element.
     // The placeholder must have the class "placeholder"
-    placeholder: '<li class="placeholder"/>',
+    placeholder: '<li class="placeholder"></li>',
     // If true, the position of the placeholder is calculated on every mousemove.
     // If false, it is only calculated when the mouse is above a container.
     pullPlaceholder: true,
@@ -238,19 +248,20 @@
       this.$document = $(itemContainer.el[0].ownerDocument)
 
       // get item to drag
-      this.item = $(e.target).closest(this.options.itemSelector)
-      this.itemContainer = itemContainer
-
-      if(this.item.is(this.options.exclude) ||
-         !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)){
-        return
+      var closestItem = $(e.target).closest(this.options.itemSelector);
+      // using the length of this item, prevents the plugin from being started if there is no handle being clicked on.
+      // this may also be helpful in instantiating multidrag.
+      if (closestItem.length) {
+        this.item = closestItem;
+        this.itemContainer = itemContainer;
+        if (this.item.is(this.options.exclude) || !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)) {
+            return;
+        }
+        this.setPointer(e);
+        this.toggleListeners('on');
+        this.setupDelayTimer();
+        this.dragInitDone = true;
       }
-
-      this.setPointer(e)
-      this.toggleListeners('on')
-
-      this.setupDelayTimer()
-      this.dragInitDone = true
     },
     drag: function  (e) {
       if(!this.dragging){
@@ -269,14 +280,15 @@
                           groupDefaults.onDrag,
                           e)
 
-      var x = e.pageX || e.originalEvent.pageX,
-      y = e.pageY || e.originalEvent.pageY,
+      var p = this.getPointer(e),
       box = this.sameResultBox,
       t = this.options.tolerance
 
-      if(!box || box.top - t > y || box.bottom + t < y || box.left - t > x || box.right + t < x)
-        if(!this.searchValidTarget())
+      if(!box || box.top - t > p.top || box.bottom + t < p.top || box.left - t > p.left || box.right + t < p.left)
+        if(!this.searchValidTarget()){
           this.placeholder.detach()
+          this.lastAppendedItem = undefined
+        }
     },
     drop: function  (e) {
       this.toggleListeners('off')
@@ -285,11 +297,11 @@
 
       if(this.dragging){
         // processing Drop, check if placeholder is detached
-        if(this.placeholder.closest("html")[0])
+        if(this.placeholder.closest("html")[0]){
           this.placeholder.before(this.item).detach()
-        else
+        } else {
           this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel, e)
-
+        }
         this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e)
 
         // cleanup
@@ -390,9 +402,10 @@
       ) >= this.options.distance)
     },
     getPointer: function(e) {
+      var o = e.originalEvent || e.originalEvent.touches && e.originalEvent.touches[0]
       return {
-        left: e.pageX || e.originalEvent.pageX,
-        top: e.pageY || e.originalEvent.pageY
+        left: e.pageX || o.pageX,
+        top: e.pageY || o.pageY
       }
     },
     setupDelayTimer: function () {
@@ -538,7 +551,9 @@
     },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.$getChildren(this.el, "item").filter(":not(.placeholder, .dragged)").get()
+        this.items = this.$getChildren(this.el, "item").filter(
+          ":not(." + this.group.options.placeholderClass + ", ." + this.group.options.draggedClass + ")"
+        ).get()
         setDimensions(this.items, this.itemDimensions = [], this.options.tolerance)
       }
       return this.itemDimensions

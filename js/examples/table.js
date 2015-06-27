@@ -14,17 +14,17 @@ $(function () {
     itemSelector: 'th',
     placeholder: '<th class="placeholder"/>',
     vertical: false,
-    onDragStart: function (item, group, _super) {
-      oldIndex = item.index()
-      item.appendTo(item.parent())
-      _super(item)
+    onDragStart: function ($item, container, _super) {
+      oldIndex = $item.index()
+      $item.appendTo($item.parent())
+      _super($item, container)
     },
-    onDrop: function  (item, container, _super) {
+    onDrop: function  ($item, container, _super) {
       var field,
-      newIndex = item.index()
-      
+      newIndex = $item.index()
+
       if(newIndex != oldIndex)
-        item.closest('table').find('tbody tr').each(function (i, row) {
+        $item.closest('table').find('tbody tr').each(function (i, row) {
           row = $(row)
           field = row.children().eq(oldIndex)
           if(newIndex)
@@ -33,7 +33,7 @@ $(function () {
             row.prepend(field)
         })
 
-      _super(item)
+      _super($item, container)
     }
   })
 })
