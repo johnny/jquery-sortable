@@ -8,8 +8,7 @@ $(function  () {
       var jsonString = JSON.stringify(data, null, ' ');
 
       $('#serialize_output2').text(jsonString);
-      _super($item, container)
+      _super($item, container);
     }
-  })
-})
-;
+  });
+});

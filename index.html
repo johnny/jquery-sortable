@@ -248,8 +248,8 @@
             <h3>Call the initializer</h3>
             <div class="CodeRay">
   <div class="code"><pre><span class="predefined">$</span>(<span class="keyword">function</span>  () {
-  <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.example</span><span class="delimiter">&quot;</span></span>).sortable()
-})</pre></div>
+  <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.example</span><span class="delimiter">&quot;</span></span>).sortable();
+});</pre></div>
 </div>
 
           </div>
@@ -264,42 +264,42 @@
           <div class='row'>
             <div class="span12 example">
               <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> adjustment
+  <div class="code"><pre><span class="keyword">var</span> adjustment;
 
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_animation</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">simple_with_animation</span><span class="delimiter">'</span></span>,
   <span class="key">pullPlaceholder</span>: <span class="predefined-constant">false</span>,
   <span class="comment">// animation on drop</span>
   <span class="function">onDrop</span>: <span class="keyword">function</span>  (<span class="predefined">$item</span>, container, _super) {
-    <span class="keyword">var</span> <span class="predefined">$clonedItem</span> = <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">&lt;li/&gt;</span><span class="delimiter">'</span></span>).css({<span class="key">height</span>: <span class="integer">0</span>})
-    <span class="predefined">$item</span>.before(<span class="predefined">$clonedItem</span>)
-    <span class="predefined">$clonedItem</span>.animate({<span class="key"><span class="delimiter">'</span><span class="content">height</span><span class="delimiter">'</span></span>: <span class="predefined">$item</span>.height()})
+    <span class="keyword">var</span> <span class="predefined">$clonedItem</span> = <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">&lt;li/&gt;</span><span class="delimiter">'</span></span>).css({<span class="key">height</span>: <span class="integer">0</span>});
+    <span class="predefined">$item</span>.before(<span class="predefined">$clonedItem</span>);
+    <span class="predefined">$clonedItem</span>.animate({<span class="key"><span class="delimiter">'</span><span class="content">height</span><span class="delimiter">'</span></span>: <span class="predefined">$item</span>.height()});
 
     <span class="predefined">$item</span>.animate(<span class="predefined">$clonedItem</span>.position(), <span class="keyword">function</span>  () {
-      <span class="predefined">$clonedItem</span>.detach()
-      _super(<span class="predefined">$item</span>, container)
-    })
+      <span class="predefined">$clonedItem</span>.detach();
+      _super(<span class="predefined">$item</span>, container);
+    });
   },
 
   <span class="comment">// set $item relative to cursor position</span>
   <span class="function">onDragStart</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
     <span class="keyword">var</span> offset = <span class="predefined">$item</span>.offset(),
-    pointer = container.rootGroup.pointer
+        pointer = container.rootGroup.pointer;
 
     adjustment = {
       <span class="key">left</span>: pointer.left - offset.left,
       <span class="key">top</span>: pointer.top - offset.top
-    }
+    };
 
-    _super(<span class="predefined">$item</span>, container)
+    _super(<span class="predefined">$item</span>, container);
   },
   <span class="function">onDrag</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, position) {
     <span class="predefined">$item</span>.css({
       <span class="key">left</span>: position.left - adjustment.left,
       <span class="key">top</span>: position.top - adjustment.top
-    })
+    });
   }
-})</pre></div>
+});</pre></div>
 </div>
 
             </div>
@@ -353,18 +353,18 @@
   <span class="function">onDragStart</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
     <span class="comment">// Duplicate items of the no drop area</span>
     <span class="keyword">if</span>(!container.options.drop)
-      <span class="predefined">$item</span>.clone().insertAfter(<span class="predefined">$item</span>)
-    _super(<span class="predefined">$item</span>, container)
+      <span class="predefined">$item</span>.clone().insertAfter(<span class="predefined">$item</span>);
+    _super(<span class="predefined">$item</span>, container);
   }
-})
+});
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_no_drop</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">no-drop</span><span class="delimiter">'</span></span>,
   <span class="key">drop</span>: <span class="predefined-constant">false</span>
-})
+});
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.simple_with_no_drag</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">no-drop</span><span class="delimiter">'</span></span>,
   <span class="key">drag</span>: <span class="predefined-constant">false</span>
-})</pre></div>
+});</pre></div>
 </div>
 
             </div>
@@ -454,28 +454,28 @@
           <div class='row'>
             <div class="span12 example">
               <div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> oldContainer
+  <div class="code"><pre><span class="keyword">var</span> oldContainer;
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.nested_with_switch</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nested</span><span class="delimiter">'</span></span>,
   <span class="function">afterMove</span>: <span class="keyword">function</span> (placeholder, container) {
     <span class="keyword">if</span>(oldContainer != container){
       <span class="keyword">if</span>(oldContainer)
-        oldContainer.el.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>)
-      container.el.addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>)
+        oldContainer.el.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>);
+      container.el.addClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>);
 
-      oldContainer = container
+      oldContainer = container;
     }
   },
   <span class="function">onDrop</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
-    container.el.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>)
-    _super(<span class="predefined">$item</span>, container)
+    container.el.removeClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>);
+    _super(<span class="predefined">$item</span>, container);
   }
-})
+});
 
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">.switch-container</span><span class="delimiter">&quot;</span></span>).on(<span class="string"><span class="delimiter">&quot;</span><span class="content">click</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.switch</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>  (e) {
-  <span class="keyword">var</span> method = <span class="predefined">$</span>(<span class="local-variable">this</span>).hasClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>) ? <span class="string"><span class="delimiter">&quot;</span><span class="content">enable</span><span class="delimiter">&quot;</span></span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">disable</span><span class="delimiter">&quot;</span></span>
-  <span class="predefined">$</span>(e.delegateTarget).next().sortable(method)
-})</pre></div>
+  <span class="keyword">var</span> method = <span class="predefined">$</span>(<span class="local-variable">this</span>).hasClass(<span class="string"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>) ? <span class="string"><span class="delimiter">&quot;</span><span class="content">enable</span><span class="delimiter">&quot;</span></span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">disable</span><span class="delimiter">&quot;</span></span>;
+  <span class="predefined">$</span>(e.delegateTarget).next().sortable(method);
+});</pre></div>
 </div>
 
             </div>
@@ -570,21 +570,21 @@
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">limited_drop_targets</span><span class="delimiter">'</span></span>,
   <span class="function">isValidTarget</span>: <span class="keyword">function</span>  (<span class="predefined">$item</span>, container) {
     <span class="keyword">if</span>(<span class="predefined">$item</span>.is(<span class="string"><span class="delimiter">&quot;</span><span class="content">.highlight</span><span class="delimiter">&quot;</span></span>))
-      <span class="keyword">return</span> <span class="predefined-constant">true</span>
-    <span class="keyword">else</span> {
-      <span class="keyword">return</span> <span class="predefined">$item</span>.parent(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol</span><span class="delimiter">&quot;</span></span>)[<span class="integer">0</span>] == container.el[<span class="integer">0</span>]
-    }
+      <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+    <span class="keyword">else</span>
+      <span class="keyword">return</span> <span class="predefined">$item</span>.parent(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol</span><span class="delimiter">&quot;</span></span>)[<span class="integer">0</span>] == container.el[<span class="integer">0</span>];
   },
   <span class="function">onDrop</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
-    <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">#serialize_output</span><span class="delimiter">'</span></span>).text(group.sortable(<span class="string"><span class="delimiter">&quot;</span><span class="content">serialize</span><span class="delimiter">&quot;</span></span>).get().join(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>))
-    _super(<span class="predefined">$item</span>, container)
+    <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">#serialize_output</span><span class="delimiter">'</span></span>).text(
+      group.sortable(<span class="string"><span class="delimiter">&quot;</span><span class="content">serialize</span><span class="delimiter">&quot;</span></span>).get().join(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>));
+    _super(<span class="predefined">$item</span>, container);
   },
   <span class="function">serialize</span>: <span class="keyword">function</span> (parent, children, isContainer) {
-    <span class="keyword">return</span> isContainer ? children.join() : parent.text()
+    <span class="keyword">return</span> isContainer ? children.join() : parent.text();
   },
   <span class="key">tolerance</span>: <span class="integer">6</span>,
   <span class="key">distance</span>: <span class="integer">10</span>
-})</pre></div>
+});</pre></div>
 </div>
 
             </div>
@@ -673,17 +673,18 @@
   <span class="key">vertical</span>: <span class="predefined-constant">false</span>,
   <span class="key">exclude</span>: <span class="string"><span class="delimiter">'</span><span class="content">.divider-vertical</span><span class="delimiter">'</span></span>,
   <span class="function">onDragStart</span>: <span class="keyword">function</span>(<span class="predefined">$item</span>, container, _super) {
-    <span class="predefined">$item</span>.find(<span class="string"><span class="delimiter">'</span><span class="content">ol.dropdown-menu</span><span class="delimiter">'</span></span>).sortable(<span class="string"><span class="delimiter">'</span><span class="content">disable</span><span class="delimiter">'</span></span>)
-    _super(<span class="predefined">$item</span>, container)
+    <span class="predefined">$item</span>.find(<span class="string"><span class="delimiter">'</span><span class="content">ol.dropdown-menu</span><span class="delimiter">'</span></span>).sortable(<span class="string"><span class="delimiter">'</span><span class="content">disable</span><span class="delimiter">'</span></span>);
+    _super(<span class="predefined">$item</span>, container);
   },
   <span class="function">onDrop</span>: <span class="keyword">function</span>(<span class="predefined">$item</span>, container, _super) {
-    <span class="predefined">$item</span>.find(<span class="string"><span class="delimiter">'</span><span class="content">ol.dropdown-menu</span><span class="delimiter">'</span></span>).sortable(<span class="string"><span class="delimiter">'</span><span class="content">enable</span><span class="delimiter">'</span></span>)
-    _super(<span class="predefined">$item</span>, container)
+    <span class="predefined">$item</span>.find(<span class="string"><span class="delimiter">'</span><span class="content">ol.dropdown-menu</span><span class="delimiter">'</span></span>).sortable(<span class="string"><span class="delimiter">'</span><span class="content">enable</span><span class="delimiter">'</span></span>);
+    _super(<span class="predefined">$item</span>, container);
   }
-})
+});
+
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">ol.dropdown-menu</span><span class="delimiter">&quot;</span></span>).sortable({
   <span class="key">group</span>: <span class="string"><span class="delimiter">'</span><span class="content">nav</span><span class="delimiter">'</span></span>
-})</pre></div>
+});</pre></div>
 </div>
 
             </div>
@@ -769,9 +770,9 @@
     <span class="keyword">var</span> jsonString = JSON.stringify(data, <span class="predefined-constant">null</span>, <span class="string"><span class="delimiter">'</span><span class="content"> </span><span class="delimiter">'</span></span>);
 
     <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">#serialize_output2</span><span class="delimiter">'</span></span>).text(jsonString);
-    _super(<span class="predefined">$item</span>, container)
+    _super(<span class="predefined">$item</span>, container);
   }
-})</pre></div>
+});</pre></div>
 </div>
 
             </div>
@@ -844,37 +845,38 @@
   <span class="key">itemPath</span>: <span class="string"><span class="delimiter">'</span><span class="content">&gt; tbody</span><span class="delimiter">'</span></span>,
   <span class="key">itemSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">tr</span><span class="delimiter">'</span></span>,
   <span class="key">placeholder</span>: <span class="string"><span class="delimiter">'</span><span class="content">&lt;tr class=&quot;placeholder&quot;/&gt;</span><span class="delimiter">'</span></span>
-})
+});
 
 <span class="comment">// Sortable column heads</span>
-<span class="keyword">var</span> oldIndex
+<span class="keyword">var</span> oldIndex;
 <span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.sorted_head tr</span><span class="delimiter">'</span></span>).sortable({
   <span class="key">containerSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">tr</span><span class="delimiter">'</span></span>,
   <span class="key">itemSelector</span>: <span class="string"><span class="delimiter">'</span><span class="content">th</span><span class="delimiter">'</span></span>,
   <span class="key">placeholder</span>: <span class="string"><span class="delimiter">'</span><span class="content">&lt;th class=&quot;placeholder&quot;/&gt;</span><span class="delimiter">'</span></span>,
   <span class="key">vertical</span>: <span class="predefined-constant">false</span>,
   <span class="function">onDragStart</span>: <span class="keyword">function</span> (<span class="predefined">$item</span>, container, _super) {
-    oldIndex = <span class="predefined">$item</span>.index()
-    <span class="predefined">$item</span>.appendTo(<span class="predefined">$item</span>.parent())
-    _super(<span class="predefined">$item</span>, container)
+    oldIndex = <span class="predefined">$item</span>.index();
+    <span class="predefined">$item</span>.appendTo(<span class="predefined">$item</span>.parent());
+    _super(<span class="predefined">$item</span>, container);
   },
   <span class="function">onDrop</span>: <span class="keyword">function</span>  (<span class="predefined">$item</span>, container, _super) {
     <span class="keyword">var</span> field,
-    newIndex = <span class="predefined">$item</span>.index()
+        newIndex = <span class="predefined">$item</span>.index();
 
-    <span class="keyword">if</span>(newIndex != oldIndex)
+    <span class="keyword">if</span>(newIndex != oldIndex) {
       <span class="predefined">$item</span>.closest(<span class="string"><span class="delimiter">'</span><span class="content">table</span><span class="delimiter">'</span></span>).find(<span class="string"><span class="delimiter">'</span><span class="content">tbody tr</span><span class="delimiter">'</span></span>).each(<span class="keyword">function</span> (i, row) {
-        row = <span class="predefined">$</span>(row)
-        field = row.children().eq(oldIndex)
-        <span class="keyword">if</span>(newIndex)
-          field.before(row.children()[newIndex])
-        <span class="keyword">else</span>
-          row.prepend(field)
-      })
+        row = <span class="predefined">$</span>(row);
+        <span class="keyword">if</span>(newIndex &lt; oldIndex) {
+          row.children().eq(newIndex).before(row.children()[oldIndex]);
+        } <span class="keyword">else</span> <span class="keyword">if</span> (newIndex &gt; oldIndex) {
+          row.children().eq(newIndex).after(row.children()[oldIndex]);
+        }
+      });
+    }
 
-    _super(<span class="predefined">$item</span>, container)
+    _super(<span class="predefined">$item</span>, container);
   }
-})</pre></div>
+});</pre></div>
 </div>
 
             </div>
@@ -940,32 +942,39 @@
                   <tr>
                     <th>A Column</th>
                     <th>B Column</th>
+                    <th>C Column</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>A Item 1</td>
                     <td>B Item 1</td>
+                    <td>C Item 1</td>
                   </tr>
                   <tr>
                     <td>A Item 2</td>
                     <td>B Item 2</td>
+                    <td>C Item 2</td>
                   </tr>
                   <tr>
                     <td>A Item 3</td>
                     <td>B Item 3</td>
+                    <td>C Item 3</td>
                   </tr>
                   <tr>
                     <td>A Item 4</td>
                     <td>B Item 4</td>
+                    <td>C Item 4</td>
                   </tr>
                   <tr>
                     <td>A Item 5</td>
                     <td>B Item 5</td>
+                    <td>C Item 5</td>
                   </tr>
                   <tr>
                     <td>A Item 6</td>
                     <td>B Item 6</td>
+                    <td>C Item 6</td>
                   </tr>
                 </tbody>
               </table>

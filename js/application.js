@@ -1112,8 +1112,7 @@ colors = jQuery.Color.names = {
 
 
 !function ( $, window, pluginName, undefined){
-  var eventNames,
-  containerDefaults = {
+  var containerDefaults = {
     // If true, items can be dragged from this container
     drag: true,
     // If true, items can be droped onto this container
@@ -1776,31 +1775,29 @@ colors = jQuery.Color.names = {
 
 }(jQuery, window, 'sortable');
 $(function  () {
-  $("ol.example").sortable()
-})
-;
+  $("ol.example").sortable();
+});
 $(function  () {
   var group = $("ol.limited_drop_targets").sortable({
     group: 'limited_drop_targets',
     isValidTarget: function  ($item, container) {
       if($item.is(".highlight"))
-        return true
-      else {
-        return $item.parent("ol")[0] == container.el[0]
-      }
+        return true;
+      else
+        return $item.parent("ol")[0] == container.el[0];
     },
     onDrop: function ($item, container, _super) {
-      $('#serialize_output').text(group.sortable("serialize").get().join("\n"))
-      _super($item, container)
+      $('#serialize_output').text(
+        group.sortable("serialize").get().join("\n"));
+      _super($item, container);
     },
     serialize: function (parent, children, isContainer) {
-      return isContainer ? children.join() : parent.text()
+      return isContainer ? children.join() : parent.text();
     },
     tolerance: 6,
     distance: 10
-  })
-})
-;
+  });
+});
 $(function  () {
   $("ol.nav").sortable({
     group: 'nav',
@@ -1808,44 +1805,43 @@ $(function  () {
     vertical: false,
     exclude: '.divider-vertical',
     onDragStart: function($item, container, _super) {
-      $item.find('ol.dropdown-menu').sortable('disable')
-      _super($item, container)
+      $item.find('ol.dropdown-menu').sortable('disable');
+      _super($item, container);
     },
     onDrop: function($item, container, _super) {
-      $item.find('ol.dropdown-menu').sortable('enable')
-      _super($item, container)
+      $item.find('ol.dropdown-menu').sortable('enable');
+      _super($item, container);
     }
-  })
+  });
+  
   $("ol.dropdown-menu").sortable({
     group: 'nav'
-  })
-})
-;
+  });
+});
 $(function () {
-  var oldContainer
+  var oldContainer;
   $("ol.nested_with_switch").sortable({
     group: 'nested',
     afterMove: function (placeholder, container) {
       if(oldContainer != container){
         if(oldContainer)
-          oldContainer.el.removeClass("active")
-        container.el.addClass("active")
+          oldContainer.el.removeClass("active");
+        container.el.addClass("active");
 
-        oldContainer = container
+        oldContainer = container;
       }
     },
     onDrop: function ($item, container, _super) {
-      container.el.removeClass("active")
-      _super($item, container)
+      container.el.removeClass("active");
+      _super($item, container);
     }
-  })
+  });
 
   $(".switch-container").on("click", ".switch", function  (e) {
-    var method = $(this).hasClass("active") ? "enable" : "disable"
-    $(e.delegateTarget).next().sortable(method)
-  })
-})
-;
+    var method = $(this).hasClass("active") ? "enable" : "disable";
+    $(e.delegateTarget).next().sortable(method);
+  });
+});
 $(function  () {
   var group = $("ol.serialization").sortable({
     group: 'serialization',
@@ -1856,50 +1852,48 @@ $(function  () {
       var jsonString = JSON.stringify(data, null, ' ');
 
       $('#serialize_output2').text(jsonString);
-      _super($item, container)
+      _super($item, container);
     }
-  })
-})
-;
+  });
+});
 $(function  () {
-  var adjustment
+  var adjustment;
 
   $("ol.simple_with_animation").sortable({
     group: 'simple_with_animation',
     pullPlaceholder: false,
     // animation on drop
     onDrop: function  ($item, container, _super) {
-      var $clonedItem = $('<li/>').css({height: 0})
-      $item.before($clonedItem)
-      $clonedItem.animate({'height': $item.height()})
+      var $clonedItem = $('<li/>').css({height: 0});
+      $item.before($clonedItem);
+      $clonedItem.animate({'height': $item.height()});
 
       $item.animate($clonedItem.position(), function  () {
-        $clonedItem.detach()
-        _super($item, container)
-      })
+        $clonedItem.detach();
+        _super($item, container);
+      });
     },
 
     // set $item relative to cursor position
     onDragStart: function ($item, container, _super) {
       var offset = $item.offset(),
-      pointer = container.rootGroup.pointer
+          pointer = container.rootGroup.pointer;
 
       adjustment = {
         left: pointer.left - offset.left,
         top: pointer.top - offset.top
-      }
+      };
 
-      _super($item, container)
+      _super($item, container);
     },
     onDrag: function ($item, position) {
       $item.css({
         left: position.left - adjustment.left,
         top: position.top - adjustment.top
-      })
+      });
     }
-  })
-})
-;
+  });
+});
 $(function() {
   $("ol.simple_with_drop").sortable({
     group: 'no-drop',
@@ -1907,20 +1901,19 @@ $(function() {
     onDragStart: function ($item, container, _super) {
       // Duplicate items of the no drop area
       if(!container.options.drop)
-        $item.clone().insertAfter($item)
-      _super($item, container)
+        $item.clone().insertAfter($item);
+      _super($item, container);
     }
-  })
+  });
   $("ol.simple_with_no_drop").sortable({
     group: 'no-drop',
     drop: false
-  })
+  });
   $("ol.simple_with_no_drag").sortable({
     group: 'no-drop',
     drag: false
-  })
-})
-;
+  });
+});
 $(function () {
   // Sortable rows
   $('.sorted_table').sortable({
@@ -1928,39 +1921,39 @@ $(function () {
     itemPath: '> tbody',
     itemSelector: 'tr',
     placeholder: '<tr class="placeholder"/>'
-  })
+  });
 
   // Sortable column heads
-  var oldIndex
+  var oldIndex;
   $('.sorted_head tr').sortable({
     containerSelector: 'tr',
     itemSelector: 'th',
     placeholder: '<th class="placeholder"/>',
     vertical: false,
     onDragStart: function ($item, container, _super) {
-      oldIndex = $item.index()
-      $item.appendTo($item.parent())
-      _super($item, container)
+      oldIndex = $item.index();
+      $item.appendTo($item.parent());
+      _super($item, container);
     },
     onDrop: function  ($item, container, _super) {
       var field,
-      newIndex = $item.index()
+          newIndex = $item.index();
 
-      if(newIndex != oldIndex)
+      if(newIndex != oldIndex) {
         $item.closest('table').find('tbody tr').each(function (i, row) {
-          row = $(row)
-          field = row.children().eq(oldIndex)
-          if(newIndex)
-            field.before(row.children()[newIndex])
-          else
-            row.prepend(field)
-        })
+          row = $(row);
+          if(newIndex < oldIndex) {
+            row.children().eq(newIndex).before(row.children()[oldIndex]);
+          } else if (newIndex > oldIndex) {
+            row.children().eq(newIndex).after(row.children()[oldIndex]);
+          }
+        });
+      }
 
-      _super($item, container)
+      _super($item, container);
     }
-  })
-})
-;
+  });
+});
 
 
 
@@ -1972,10 +1965,9 @@ $(function () {
 
 $(function  () {
   if(!/test/.test(window.location.pathname))
-    $('body').scrollspy()
+    $('body').scrollspy();
   $('.show-code').on('click', function  () {
-    $(this).closest('.row').children('.example').slideToggle()
-  })
-  $('ol.default').sortable()
-})
-;
+    $(this).closest('.row').children('.example').slideToggle();
+  });
+  $('ol.default').sortable();
+});

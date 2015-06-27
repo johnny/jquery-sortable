@@ -34,8 +34,7 @@
 
 
 !function ( $, window, pluginName, undefined){
-  var eventNames,
-  containerDefaults = {
+  var containerDefaults = {
     // If true, items can be dragged from this container
     drag: true,
     // If true, items can be droped onto this container
@@ -706,7 +705,6 @@ $(function () {
 		itemSelector: '.part, .layout',
     containerSelector: '.region',
 		nested: true,
-		placeholder: '<div class="placeholder">Drop here</div>',
+		placeholder: '<div class="placeholder">Drop here</div>'
 	});
-})
-;
+});
