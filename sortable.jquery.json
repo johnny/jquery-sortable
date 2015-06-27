@@ -9,14 +9,14 @@
     "drag",
     "drop"
   ],
-  "version": "0.9.12",
+  "version": "0.9.13",
   "author": {
     "name": "Jonas von Andrian"
   },
   "licenses": [
     {
       "type": "BSD-3",
-      "url": "https://github.com/johnny/jquery-sortable/blob/0.9.12/LICENSE"
+      "url": "https://github.com/johnny/jquery-sortable/blob/0.9.13/LICENSE"
     }
   ],
   "bugs": "https://github.com/johnny/jquery-sortable/issues",

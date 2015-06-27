@@ -1,5 +1,5 @@
 /* ===================================================
- *  jquery-sortable.js v0.9.12
+ *  jquery-sortable.js v0.9.13
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
