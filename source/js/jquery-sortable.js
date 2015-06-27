@@ -88,7 +88,7 @@
       $item.css(position)
     },
     // Called after the drag has been started,
-    // that is the mouse button is beeing held down and
+    // that is the mouse button is being held down and
     // the mouse is moving.
     // The container is the closest initialized container.
     // Therefore it might not be the container, that actually contains the item.
@@ -100,7 +100,7 @@
       $item.addClass(container.group.options.draggedClass)
       $("body").addClass(container.group.options.bodyClass)
     },
-    // Called when the mouse button is beeing released
+    // Called when the mouse button is being released
     onDrop: function ($item, container, _super, event) {
       $item.removeClass(container.group.options.draggedClass).removeAttr("style")
       $("body").removeClass(container.group.options.bodyClass)
