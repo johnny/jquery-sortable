@@ -1,0 +1,31 @@
+{
+  "name": "jquery-sortable",
+  "version": "0.9.12",
+  "description": "jquery plugin for sortable, nestable lists",
+  "main": "./source/js/jquery-sortable.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnny/jquery-sortable.git"
+  },
+  "keywords": [
+    "sortable",
+    "sort",
+    "sorting",
+    "drag",
+    "dragging"
+  ],
+  "author": [
+    "Jonas von Andrian"
+  ],
+  "license": "BSD-3",
+  "bugs": {
+    "url": "https://github.com/johnny/jquery-sortable/issues"
+  },
+  "homepage": "https://github.com/johnny/jquery-sortable",
+  "dependencies": {
+    "jquery": "^2.1.2"
+  }
+}
