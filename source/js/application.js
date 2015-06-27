@@ -9,9 +9,9 @@
 
 $(function  () {
   if(!/test/.test(window.location.pathname))
-    $('body').scrollspy()
+    $('body').scrollspy();
   $('.show-code').on('click', function  () {
-    $(this).closest('.row').children('.example').slideToggle()
-  })
-  $('ol.default').sortable()
-})
+    $(this).closest('.row').children('.example').slideToggle();
+  });
+  $('ol.default').sortable();
+});

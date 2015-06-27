@@ -7,6 +7,6 @@ $(function () {
 		itemSelector: '.part, .layout',
     containerSelector: '.region',
 		nested: true,
-		placeholder: '<div class="placeholder">Drop here</div>',
+		placeholder: '<div class="placeholder">Drop here</div>'
 	});
-})
+});

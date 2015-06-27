@@ -47,7 +47,7 @@ helpers do
   end
   def example(name)
     content = escape_file("js/examples/"+ name + ".js")
-    content.match(/\A\$\(function\s*\(\)\s*\{\s*(.*)\s*\}\s*\)\s*\z/mi)[1].gsub(/^  /, "")
+    content.match(/\A\$\(function\s*\(\)\s*\{\s*(.*)\s*\}\s*\);\s*\z/mi)[1].gsub(/^  /, "")
   end
   def show_code_button
     content_tag( :div,

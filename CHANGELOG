@@ -1,28 +1,37 @@
-[0.9.12] expose mouse events in callbacks
-	add refresh method
-	add destroy method
-	add delay option
-	falsy return value in onMousedown prevents dragging
-	fix exclusion of items
-	fix ignore for select element (abixalmon)
-	fix touch events (prateekjadhwani)
-	fix itemPath issues (appending and dragInit)
-	improve documentation
-[0.9.11] option tolerance accepts negative values
-	rewrote enable/disable logic
-	added (item|container)Path
+[0.9.13] fix hovering over empty container (Jonny Gerig Meyer)
+         allow custom drag classes (Jonny Gerig Meyer)
+         support text areas inside sortables (Isaac Kearse)
+         fix drag with placeholder issue (Michael McLaughlin)
+         user outer dimensions for dragged item (Jared Mellentine)
+         support npm and bower (Patrick Gunderson, Shaun Dern)
+         fix issue with legacy jQuery 1.10
+         fix for mobile chrome
 
-[0.9.10]Fix Array.indexOf() error in IE < 9 (Dev-Speranza)
-	serialize() assumes one subcontainer per item
-	remove call to stopPropagation()
-	Added onMousedown()
+[0.9.12] expose mouse events in callbacks
+         add refresh method
+	       add destroy method
+	       add delay option
+	       falsy return value in onMousedown prevents dragging
+	       fix exclusion of items
+	       fix ignore for select element (abixalmon)
+	       fix touch events (prateekjadhwani)
+	       fix itemPath issues (appending and dragInit)
+         improve documentation
+[0.9.11] option tolerance accepts negative values
+	       rewrote enable/disable logic
+	       added (item|container)Path
+
+[0.9.10] Fix Array.indexOf() error in IE < 9 (Dev-Speranza)
+	       serialize() assumes one subcontainer per item
+	       remove call to stopPropagation()
+	       Added onMousedown()
 
 [0.9.9]	Added options tolerance and distance
-	Do not modify Array.prototype (by Joakin)
-	serialize respects exclude option
+	      Do not modify Array.prototype (by Joakin)
+	      serialize respects exclude option
 
 [0.9.8]	Added Serialization
-	Added onCancel
+	      Added onCancel
 
 [0.9.7]	Support iFrame and Touch events
-	Better behavior if the CSS position changes
+	      Better behavior if the CSS position changes
