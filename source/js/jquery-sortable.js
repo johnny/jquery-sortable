@@ -675,6 +675,12 @@
   $.fn[pluginName] = function(methodOrOptions) {
     var args = Array.prototype.slice.call(arguments, 1)
 
+    // add option 'clear' to clear containerGroups for Turbolinks
+    if(typeof methodOrOptions === 'object' && methodOrOptions.clear){
+      containerGroups = [];
+      groupCounter = 0;
+    }
+    
     return this.map(function(){
       var $t = $(this),
       object = $t.data(pluginName)
