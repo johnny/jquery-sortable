@@ -1,5 +1,5 @@
 /* ===================================================
- *  jquery-sortable.js v0.9.12
+ *  jquery-sortable.js v0.9.13
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -289,7 +289,7 @@
         else
           this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel, e)
 
-        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e)
+        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e, this)
 
         // cleanup
         this.clearDimensions()
@@ -345,7 +345,16 @@
       return this.containerDimensions
     },
     getContainer: function  (element) {
-      return element.closest(this.options.containerSelector).data(pluginName)
+		// get the real container of this item
+		var container = '',
+		parent = element;
+		while(!container.length && !parent.is('body')){
+			parent = parent.parent();
+			if(typeof parent.data(pluginName) != 'undefined'){
+				container = parent.data(pluginName);
+			}
+		}
+      return container
     },
     $getOffsetParent: function  () {
       if(this.offsetParent === undefined){
