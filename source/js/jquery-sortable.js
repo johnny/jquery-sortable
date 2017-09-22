@@ -652,7 +652,7 @@
       return this._serialize(this.el, true)
     },
     refresh: function() {
-      this.traverse(function(object){
+      this.group.traverse(function(object){
         object._clearDimensions()
       })
     },
