@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/johnny/jquery-sortable",
   "dependencies": {
-    "jquery": "^2.1.2 || ^3.0.0"
+    "jquery": ">=2.1.2 || >=3.0.0"
   }
 }
