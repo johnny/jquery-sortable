@@ -107,7 +107,7 @@
     // Called on mousedown. If falsy value is returned, the dragging will not start.
     // Ignore if element clicked is input, select or textarea
     onMousedown: function ($item, _super, event) {
-      if (!event.target.nodeName.match(/^(input|select|textarea)$/i)) {
+      if (!event.target.nodeName.match(/^(input|select|textarea|option)$/i)) {
         event.preventDefault()
         return true
       }
