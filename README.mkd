@@ -6,7 +6,7 @@ Supports nested lists and pure drag/drop containers.
 
 jQuery Sortable does not depend on jQuery UI and works well with Twitter's Bootstrap (You can even sort the Bootstrap navigation).
 
-More information can be found on [http://johnny.github.com/jquery-sortable/](http://johnny.github.com/jquery-sortable/).
+More information can be found on [http://johnny.github.io/jquery-sortable/](http://johnny.github.io/jquery-sortable/).
 
 ## Dependencies
 
